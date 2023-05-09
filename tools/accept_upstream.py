@@ -52,7 +52,7 @@ if __name__ == '__main__':
 
     # Fetch commit information
     commits = http.get(f'https://api.github.com/repos/{upstream}/pulls/{pr}/commits').json()
-    author = commits[0]['commit']['author']
+    author = commits[-1]['commit']['author']
 
     # Create commit message
     title = info["title"].replace('"', '\\"')
