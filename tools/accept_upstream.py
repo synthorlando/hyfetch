@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import json
 import os
 import shlex
 from subprocess import check_output
@@ -52,7 +53,7 @@ if __name__ == '__main__':
 
     # Fetch commit information
     commits = http.get(f'https://api.github.com/repos/{upstream}/pulls/{pr}/commits').json()
-    author = commits[-1]['commit']['author']
+    author = json.loads(os.environ.get("override_author")) or commits[-1]['commit']['author']
 
     # Create commit message
     title = info["title"].replace('"', '\\"')
