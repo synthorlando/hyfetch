@@ -1,6 +1,8 @@
 # Start the server with:
 #
 # uvicorn tools.gh_moderator:app --reload --port 59523
+#
+# pip install openai pygithub fastapi uvicorn hypy_utils
 
 import hashlib
 import hmac
@@ -10,7 +12,7 @@ from datetime import datetime
 from pathlib import Path
 
 import openai
-import toml
+import tomllib as toml
 from fastapi import FastAPI, Request, Response
 from github import Github
 from hypy_utils import write, json_stringify
@@ -23,7 +25,7 @@ log = setup_logger()
 
 
 def read_config():
-    with open(Path.home() / ".config/gh_moderator.toml") as f:
+    with open(Path.home() / ".config/gh_moderator.toml", "rb") as f:
         return toml.load(f)
 
 
