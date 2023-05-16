@@ -1765,7 +1765,7 @@ get_title() {
         ;;
         *)
             hostname=${HOSTNAME:-$(hostname)}
-            hostname=${hostname%.*}
+            hostname=${hostname%%.*}
         ;;
     esac
 
