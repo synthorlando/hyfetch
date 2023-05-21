@@ -65,9 +65,11 @@ def create_config() -> Config:
     # 0. Check term size
     try:
         term_len, term_lines = os.get_terminal_size().columns, os.get_terminal_size().lines
-        if term_len < 2 * asc_width + 4 or term_lines < 30:
+        term_len_min = 2 * asc_width + 4
+        term_lines_min = 30
+        if term_len < term_len_min or term_lines < term_lines_min:
             printc(f'&cWarning: Your terminal is too small ({term_len} * {term_lines}). \n'
-                   f'Please resize it for better experience.')
+                   f'Please resize it to at least ({term_len_min} * {term_lines_min}) for better experience.')
             input('Press enter to ignore...')
     except:
         # print('Warning: We cannot detect your terminal size.')
