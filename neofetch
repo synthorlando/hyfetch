@@ -4404,7 +4404,7 @@ END
             profile_filename="${profile_filename/$'\n'*}"
 
             [[ $profile_filename ]] && \
-                term_font="$(awk -F '=|,' '/Font=/ {print $2,$3}' "$profile_filename")"
+                term_font="$(awk -F '=|,' '/^Font=/ {print $2,$3}' "$profile_filename")"
         ;;
 
         "lxterminal"*)
