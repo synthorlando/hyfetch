@@ -34,12 +34,12 @@ def start_animation():
     text_start_x = w // 2 - text_width // 2
     text_end_x = text_start_x + text_width
 
-    for i in range(blocks):
-        colors += PRESETS['rainbow'].colors
-        colors += PRESETS['transgender'].colors
+    # Add everything in PRESETS to colors
+    colors = [c for preset in PRESETS.values() for c in preset.colors]
 
     black = RGB(0, 0, 0)
     white = RGB(255, 255, 255)
+    gold = RGB.from_hex("#FFE09B")
 
     def draw_frame():
         buf = ""
@@ -48,7 +48,7 @@ def start_animation():
         for y in range(h):
             # Print the starting color
             buf += colors[((frame + y) // block_width) % len(colors)].to_ansi_rgb(foreground=False)
-            buf += white.to_ansi_rgb(foreground=True)
+            buf += gold.to_ansi_rgb(foreground=True)
 
             # Loop over the width
             x = 0
