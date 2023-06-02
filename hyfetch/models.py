@@ -17,6 +17,7 @@ class Config:
     color_align: ColorAlignment = field(default_factory=lambda: ColorAlignment('horizontal'))
     backend: BackendLiteral = "neofetch"
     distro: str | None = None
+    pride_month_shown: list[int] = field(default_factory=list)
 
     @classmethod
     def from_dict(cls, d: dict):

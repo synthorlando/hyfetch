@@ -2,13 +2,14 @@
 from __future__ import annotations
 
 import argparse
+import datetime
 import json
 import random
 import traceback
 from itertools import permutations
 from math import ceil
 
-from . import termenv, neofetch_util
+from . import termenv, neofetch_util, pride_month
 from .color_scale import Scale
 from .color_util import clear_screen
 from .constants import *
@@ -311,6 +312,7 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument('--c-scale', dest='scale', help=f'Lighten colors by a multiplier', type=float)
     parser.add_argument('--c-set-l', dest='light', help=f'Set lightness value of the colors', type=float)
     parser.add_argument('-V', '--version', dest='version', action='store_true', help=f'Check version')
+    parser.add_argument('--june', action='store_true', help=f'Show pride month easter egg')
     parser.add_argument('--debug', action='store_true', help=f'Debug mode')
 
     parser.add_argument('--distro', '--test-distro', dest='distro', help=f'Test for a specific distro')
@@ -368,6 +370,20 @@ def run():
 
     # Load config or create config
     config = create_config() if args.config else check_config(args.config_file)
+
+    # Check if it's June (pride month)
+    now = datetime.datetime.now()
+    if now.month == 6 and now.year not in config.pride_month_shown:
+        args.june = True
+
+    if args.june:
+        pride_month.start_animation()
+        print()
+        print("Happy pride month!")
+        print("(You can always view the animation again with `hyfetch --june`)")
+        print()
+        config.pride_month_shown.append(now.year)
+        config.save()
 
     # Use a custom distro
     GLOBAL_CFG.override_distro = args.distro or config.distro
