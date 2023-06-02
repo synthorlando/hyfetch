@@ -338,20 +338,21 @@ def get_distro_name():
     return run_neofetch_cmd('ascii_distro_name', True)
 
 
-def run(asc: str, backend: BackendLiteral):
+def run(asc: str, backend: BackendLiteral, args: str = ''):
     if backend == "neofetch":
-        return run_neofetch(asc)
+        return run_neofetch(asc, args)
     if backend == "fastfetch":
-        return run_fastfetch(asc)
+        return run_fastfetch(asc, args)
     if backend == "fastfetch-old":
-        return run_fastfetch(asc, legacy=True)
+        return run_fastfetch(asc, args, legacy=True)
 
 
-def run_neofetch(asc: str):
+def run_neofetch(asc: str, args: str = ''):
     """
     Run neofetch with colors
 
     :param asc: Ascii art
+    :param args: Additional arguments to pass to neofetch
     """
     # Escape backslashes here because backslashes are escaped in neofetch for printf
     asc = asc.replace('\\', '\\\\')
@@ -363,14 +364,17 @@ def run_neofetch(asc: str):
         path.write_text(asc)
 
         # Call neofetch with the temp file
-        run_neofetch_cmd(f'--ascii --source {path.absolute()} --ascii-colors')
+        if args:
+            args = ' ' + args
+        run_neofetch_cmd(f'--ascii --source {path.absolute()} --ascii-colors' + args)
 
 
-def run_fastfetch(asc: str, legacy: bool = False):
+def run_fastfetch(asc: str, args: str = '', legacy: bool = False):
     """
     Run neofetch with colors
 
     :param asc: Ascii art
+    :param args: Additional arguments to pass to fastfetch
     :param legacy: Set true when using fastfetch < 1.8.0
     """
     # Write temp file
@@ -380,7 +384,7 @@ def run_fastfetch(asc: str, legacy: bool = False):
         path.write_text(asc)
 
         # Call fastfetch with the temp file
-        proc = subprocess.run(['fastfetch', '--raw' if legacy else '--file-raw', path.absolute()])
+        proc = subprocess.run(['fastfetch', '--raw' if legacy else '--file-raw', path.absolute(), *shlex.split(args)])
         if proc.returncode == 144:
             printc("&6Error code 144 detected: Please upgrade fastfetch to >=1.8.0 or use the 'fastfetch-old' backend")
 

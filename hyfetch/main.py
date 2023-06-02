@@ -309,6 +309,7 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument('-p', '--preset', help=f'Use preset', choices=list(PRESETS.keys()))
     parser.add_argument('-m', '--mode', help=f'Color mode', choices=['8bit', 'rgb'])
     parser.add_argument('-b', '--backend', help=f'Choose a *fetch backend', choices=['neofetch', 'fastfetch', 'fastfetch-old'])
+    parser.add_argument('--args', help=f'Additional arguments pass-through to backend')
     parser.add_argument('--c-scale', dest='scale', help=f'Lighten colors by a multiplier', type=float)
     parser.add_argument('--c-set-l', dest='light', help=f'Set lightness value of the colors', type=float)
     parser.add_argument('--c-overlay', action='store_true', dest='overlay', help=f'Use experimental overlay color adjusting instead of HSL lightness')
@@ -417,7 +418,7 @@ def run():
     try:
         asc = get_distro_ascii() if not args.ascii_file else Path(args.ascii_file).read_text("utf-8")
         asc = config.color_align.recolor_ascii(asc, preset)
-        neofetch_util.run(asc, config.backend)
+        neofetch_util.run(asc, config.backend, args.args or '')
     except Exception as e:
         print(f'Error: {e}')
         traceback.print_exc()
