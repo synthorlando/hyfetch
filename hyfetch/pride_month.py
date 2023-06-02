@@ -2,7 +2,7 @@ import math
 from time import sleep
 
 from hyfetch import presets
-from hyfetch.color_util import RGB, color
+from hyfetch.color_util import RGB, color, printc
 from hyfetch.constants import IS_WINDOWS
 from hyfetch.neofetch_util import term_size
 from hyfetch.presets import PRESETS
@@ -117,7 +117,8 @@ def start_animation():
         pass
 
     # Clear the screen
-    print("\033[2J\033[H", end="")
+    printc("&r")
+    print("\033[2J\033[H", end="", flush=True)
 
 
 if __name__ == '__main__':
