@@ -19,6 +19,8 @@ def start_animation():
     text_height = len(text_lines)
     text_width = len(text_lines[0])
 
+    notice = "Press enter to continue"
+
     speed = 2
     frame_delay = 1 / 25
 
@@ -83,12 +85,16 @@ def start_animation():
 
         print(buf, end='', flush=True)
 
-    while 1:
+    try:
+        while 1:
+            # Clear the screen
+            print("\033[2J\033[H", end="")
+            draw_frame()
+            frame += speed
+            sleep(frame_delay)
+    except KeyboardInterrupt:
         # Clear the screen
         print("\033[2J\033[H", end="")
-        draw_frame()
-        frame += speed
-        sleep(frame_delay)
 
 
 if __name__ == '__main__':
