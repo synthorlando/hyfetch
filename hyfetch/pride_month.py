@@ -1,3 +1,4 @@
+import math
 from time import sleep
 
 from hyfetch import presets
@@ -52,14 +53,15 @@ def start_animation():
             # Loop over the width
             x = 0
             while x < w:
+                idx = frame + x + y + int(math.sin(y + 0.5 * frame) * 2)
                 y_text = text_start_y <= y < text_end_y
 
                 border = 1 + int(not (y == text_start_y or y == text_end_y - 1))
 
                 # If it's a switching point
-                if (frame + x + y) % block_width == 0 or x == text_start_x - border or x == text_end_x + border:
+                if idx % block_width == 0 or x == text_start_x - border or x == text_end_x + border:
                     # Print the color at the current frame
-                    c = colors[((frame + x + y) // block_width) % len(colors)]
+                    c = colors[(idx // block_width) % len(colors)]
                     if y_text and text_start_x - border <= x < text_end_x + border:
                         # buf += c.set_light(0.3).to_ansi_rgb(foreground=False)
                         buf += c.overlay(black, 0.5).to_ansi_rgb(foreground=False)
