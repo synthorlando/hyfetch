@@ -100,10 +100,11 @@ Note: You can install the latest nightly version by using:
 pip install git+https://github.com/hykilpikonna/hyfetch.git@master
 ```
 
-* 🌈 Add pride month easter-egg animation!
+* 🌈 Add pride month easter-egg animation! ⭐️
 * 🌈 Autocompletion for bash, zsh, tcsh (#96)
 * 🌈 Add nix profile installation method (#114)
-* 🌈 Add experimental color overlay function for more accurate lightness adjusting (use the `--c-overlay` option)
+* 🌈 Add experimental color overlay function for more accurate lightness adjusting (using `--c-overlay`)
+* 🌈 Allow neofetch argument passthrough (using `--args='...'`)
 * 🌈 Show recommended terminal size (#129)
 * 🌈 Update issue & pull request templates
 * 🖼 Hostname - Fix FQDN substitution
