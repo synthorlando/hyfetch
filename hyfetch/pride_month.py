@@ -8,12 +8,12 @@ from hyfetch.presets import PRESETS
 
 def start_animation():
     text = r"""
- .======================================================. 
- | .  .              .__       .     .  .       , .   | | 
- | |__| _.._ ._   .  [__)._.* _| _   |\/| _ ._ -+-|_  | | 
- | |  |(_][_)[_)\_|  |   [  |(_](/,  |  |(_)[ ) | [ ) * | 
- |        |  |  ._|                                     | 
- '======================================================' """.strip("\n")
+.======================================================.
+| .  .              .__       .     .  .       , .   | |
+| |__| _.._ ._   .  [__)._.* _| _   |\/| _ ._ -+-|_  | |
+| |  |(_][_)[_)\_|  |   [  |(_](/,  |  |(_)[ ) | [ ) * |
+|        |  |  ._|                                     |
+'======================================================'""".strip("\n")
     text_lines = text.split("\n")
     text_height = len(text_lines)
     text_width = len(text_lines[0])
@@ -52,22 +52,23 @@ def start_animation():
             # Loop over the width
             x = 0
             while x < w:
-                is_text = text_start_y <= y < text_end_y and text_start_x <= x < text_end_x
+                y_text = text_start_y <= y < text_end_y
+
+                border = 1 + int(not (y == text_start_y or y == text_end_y - 1))
 
                 # If it's a switching point
-                if (frame + x + y) % block_width == 0 or x == text_start_x or x == text_end_x:
+                if (frame + x + y) % block_width == 0 or x == text_start_x - border or x == text_end_x + border:
                     # Print the color at the current frame
                     c = colors[((frame + x + y) // block_width) % len(colors)]
-                    if is_text:
+                    if y_text and text_start_x - border <= x < text_end_x + border:
                         # buf += c.set_light(0.3).to_ansi_rgb(foreground=False)
                         buf += c.overlay(black, 0.5).to_ansi_rgb(foreground=False)
                     else:
                         buf += c.to_ansi_rgb(foreground=False)
 
                 # If text should be printed, print text
-                if text_start_y <= y < text_end_y and text_start_x <= x < text_end_x:
+                if y_text and text_start_x <= x < text_end_x:
                     # Add white background
-                    # buf += RGB(255, 255, 255).to_ansi_rgb(foreground=False)
                     buf += text_lines[y - text_start_y][x - text_start_x]
                 else:
                     buf += ' '
