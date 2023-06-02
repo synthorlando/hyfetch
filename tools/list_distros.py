@@ -15,7 +15,7 @@ from hypy_utils import write
 from hyfetch.distros import AsciiArt
 
 RE_SPLIT = regex.compile('EOF[ \n]*?;;')
-RE_COLORS = regex.compile("""(?<=set_colors )[a-z\\d ]+(?=\n)""")
+RE_COLORS = regex.compile("""(?<=set_colors )[\"#a-z\\d ]+(?=\n)""")
 
 
 def substr(s: str, start: str, end: str | None = None):
