@@ -124,6 +124,27 @@ class ColorProfile:
         at_least, at_most = (True, None) if term.lower() == 'dark' else (None, True)
         return self.set_light_raw(light, at_least, at_most)
 
+    def overlay_raw(self, color: RGB, alpha: float) -> 'ColorProfile':
+        """
+        Overlay a color on top of the color profile
+
+        :param color: Color to overlay
+        :param alpha: Alpha value (0-1)
+        :return: New color profile (original isn't modified)
+        """
+        return ColorProfile([c.overlay(color, alpha) for c in self.colors])
+
+    def overlay_dl(self, light: float, term: LightDark | None = None):
+        """
+        Same as set_light_dl except that this function uses RGB overlaying instead of HSL lightness change
+        """
+        term = term or GLOBAL_CFG.light_dark()
+        assert term.lower() in ['light', 'dark']
+
+        # If it's light bg, overlay black, else overlay white
+        overlay_color = RGB.from_hex('#000000' if term.lower() == 'light' else '#FFFFFF')
+        return self.overlay_raw(overlay_color, abs(light - 0.5) * 2)
+
     def set_light_dl_def(self, term: LightDark | None = None):
         """
         Set default lightness with respect to dark/light terminals
