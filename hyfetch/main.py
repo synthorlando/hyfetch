@@ -199,17 +199,6 @@ def create_config() -> Config:
 
         def_lightness = GLOBAL_CFG.default_lightness(light_dark)
 
-        # # Print cats with overlay_dl instead of set_light_dl
-        # num_cols = (term_size()[0] // (TEST_ASCII_WIDTH + 2)) or 1
-        # mn, mx = 0.15, 0.85
-        # ratios = [col / num_cols for col in range(num_cols)]
-        # ratios = [(r * (mx - mn) / 2 + mn) if is_light else ((r * (mx - mn) + (mx + mn)) / 2) for r in ratios]
-        # lines = [ColorAlignment('horizontal').recolor_ascii(TEST_ASCII.replace(
-        #     '{txt}', f'{r * 100:.0f}%'.center(5)), _prs.overlay_dl(r, light_dark)).split('\n') for r in ratios]
-        # [printc('  '.join(line)) for line in zip(*lines)]
-        #
-        # def_lightness = GLOBAL_CFG.default_lightness(light_dark)
-
         while True:
             print()
             printc(f'Which brightness level looks the best? (Default: {def_lightness * 100:.0f}% for {light_dark} mode)')
