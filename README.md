@@ -100,14 +100,21 @@ Note: You can install the latest nightly version by using:
 pip install git+https://github.com/hykilpikonna/hyfetch.git@master
 ```
 
+* 🌈 Add pride month easter-egg animation!
 * 🌈 Autocompletion for bash, zsh, tcsh (#96)
 * 🌈 Add nix profile installation method (#114)
+* 🌈 Add experimental color overlay function for more accurate lightness adjusting (use the `--c-overlay` option)
+* 🌈 Show recommended terminal size (#129)
+* 🌈 Update issue & pull request templates
+* 🖼 Hostname - Fix FQDN substitution
 * 🖼 Version - Fix Windows version detection (dylanaraps/neofetch#2309)
 * 🖼 Packages - Fix winget stuck on agreement (#82)
 * 🖼 Distro - Fix Windows text encoding (#115)
 * 🖼 Distro - Add Astra Linux (dylanaraps/neofetch#2313)
 * 🖼 Distro - Add FemboyOS (#121)
+* 🖼 Distro - Add Nobara Linux (dylanaraps/neofetch#2326)
 * 🖼 Font - Fix Konsole ppid detection (#116)
+* 🖼 Font - Fix Konsole terminal font detection (#127)
 * 🖼 Image - Optimize sixel image display (dylanaraps/neofetch#2316)
 
 <!-- CHANGELOG STARTS HERE --->
