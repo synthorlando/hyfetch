@@ -90,7 +90,6 @@ Updates to `neowofetch` begins with the emoji 🖼️
 
 * [ ] (Important!) Refactor flag storage & coloring to support non-stride patterns
 * [ ] Config menu: Allow left-right arrow keys for pagination
-* [ ] Neofetch argument pass through
 
 ### Nightly
 
