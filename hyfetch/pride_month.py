@@ -47,6 +47,10 @@ def start_animation():
     text_start_x = w // 2 - text_width // 2
     text_end_x = text_start_x + text_width
 
+    notice_start_x = w - len(notice) - 1
+    notice_end_x = w - 1
+    notice_y = h - 1
+
     # Add everything in PRESETS to colors
     colors = [c for preset in PRESETS.values() for c in preset.colors]
 
@@ -71,10 +75,12 @@ def start_animation():
                 border = 1 + int(not (y == text_start_y or y == text_end_y - 1))
 
                 # If it's a switching point
-                if idx % block_width == 0 or x == text_start_x - border or x == text_end_x + border:
+                if idx % block_width == 0 or x == text_start_x - border or x == text_end_x + border \
+                        or x == notice_start_x - 1 or x == notice_end_x + 1:
                     # Print the color at the current frame
                     c = colors[(idx // block_width) % len(colors)]
-                    if y_text and text_start_x - border <= x < text_end_x + border:
+                    if (y_text and text_start_x - border <= x < text_end_x + border) \
+                            or (y == notice_y and notice_start_x - 1 <= x < notice_end_x + 1):
                         # buf += c.set_light(0.3).to_ansi_rgb(foreground=False)
                         buf += c.overlay(black, 0.5).to_ansi_rgb(foreground=False)
                     else:
@@ -84,6 +90,8 @@ def start_animation():
                 if y_text and text_start_x <= x < text_end_x:
                     # Add white background
                     buf += text_lines[y - text_start_y][x - text_start_x]
+                elif y == notice_y and notice_start_x <= x < notice_end_x:
+                    buf += notice[x - notice_start_x]
                 else:
                     buf += ' '
 
