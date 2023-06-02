@@ -1,5 +1,4 @@
 import math
-import random
 from time import sleep
 
 from hyfetch import presets
@@ -35,19 +34,14 @@ def start_animation():
     text_start_x = w // 2 - text_width // 2
     text_end_x = text_start_x + text_width
 
-    colors += PRESETS['rainbow'].colors
-    colors += PRESETS['transgender'].colors
-    colors += PRESETS['nonbinary'].colors
-    colors += PRESETS['agender'].colors
-    last_idx = len(colors) - 1
-
-    preset_items = set(PRESETS.items())
+    for i in range(blocks):
+        colors += PRESETS['rainbow'].colors
+        colors += PRESETS['transgender'].colors
 
     black = RGB(0, 0, 0)
     white = RGB(255, 255, 255)
 
     def draw_frame():
-        nonlocal colors, last_idx
         buf = ""
 
         # Loop over the height
@@ -66,27 +60,13 @@ def start_animation():
 
                 # If it's a switching point
                 if idx % block_width == 0 or x == text_start_x - border or x == text_end_x + border:
-                    cidx = (idx // block_width) % len(colors)
-
                     # Print the color at the current frame
-                    c = colors[cidx]
+                    c = colors[(idx // block_width) % len(colors)]
                     if y_text and text_start_x - border <= x < text_end_x + border:
                         # buf += c.set_light(0.3).to_ansi_rgb(foreground=False)
                         buf += c.overlay(black, 0.5).to_ansi_rgb(foreground=False)
                     else:
                         buf += c.to_ansi_rgb(foreground=False)
-
-                    # If it's the last color of the last line, check if it's time to randomize new colors
-                    if y == h - 1 and x > w - speed - 1:
-                        # If idx = last_idx, it's time to randomize
-                        if cidx == last_idx:
-                            print("Hit")
-                            input()
-                            # Randomize colors
-                            new = random.choice(list(preset_items))[1].colors
-                            for c in new:
-                                colors[last_idx] = c
-                                last_idx = (last_idx + 1) % len(colors)
 
                 # If text should be printed, print text
                 if y_text and text_start_x <= x < text_end_x:
@@ -105,7 +85,7 @@ def start_animation():
 
     while 1:
         # Clear the screen
-        # print("\033[2J\033[H", end="")
+        print("\033[2J\033[H", end="")
         draw_frame()
         frame += speed
         sleep(frame_delay)
