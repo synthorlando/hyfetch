@@ -99,25 +99,27 @@ Note: You can install the latest nightly version by using:
 pip install git+https://github.com/hykilpikonna/hyfetch.git@master
 ```
 
+<!-- CHANGELOG STARTS HERE --->
+
+### 1.4.9
+
 * 🌈 Add pride month easter-egg animation! ⭐️
-* 🌈 Autocompletion for bash, zsh, tcsh (#96)
-* 🌈 Add nix profile installation method (#114)
+* 🌈 Autocompletion for bash, zsh, tcsh ([#96](https://github.com/hykilpikonna/hyfetch/pull/96))
+* 🌈 Add nix profile installation method ([#114](https://github.com/hykilpikonna/hyfetch/pull/114))
 * 🌈 Add experimental color overlay function for more accurate lightness adjusting (using `--c-overlay`)
 * 🌈 Allow neofetch argument passthrough (using `--args='...'`)
-* 🌈 Show recommended terminal size (#129)
+* 🌈 Show recommended terminal size ([#129](https://github.com/hykilpikonna/hyfetch/pull/129))
 * 🌈 Update issue & pull request templates
 * 🖼 Hostname - Fix FQDN substitution
-* 🖼 Version - Fix Windows version detection (dylanaraps/neofetch#2309)
-* 🖼 Packages - Fix winget stuck on agreement (#82)
-* 🖼 Distro - Fix Windows text encoding (#115)
-* 🖼 Distro - Add Astra Linux (dylanaraps/neofetch#2313)
-* 🖼 Distro - Add FemboyOS (#121)
-* 🖼 Distro - Add Nobara Linux (dylanaraps/neofetch#2326)
-* 🖼 Font - Fix Konsole ppid detection (#116)
-* 🖼 Font - Fix Konsole terminal font detection (#127)
-* 🖼 Image - Optimize sixel image display (dylanaraps/neofetch#2316)
-
-<!-- CHANGELOG STARTS HERE --->
+* 🖼 Version - Fix Windows version detection ([dylanaraps#2309](https://github.com/dylanaraps/neofetch/pull/2309))
+* 🖼 Packages - Fix winget stuck on agreement ([#82](https://github.com/hykilpikonna/hyfetch/pull/82))
+* 🖼 Distro - Fix Windows text encoding ([#115](https://github.com/hykilpikonna/hyfetch/pull/115))
+* 🖼 Distro - Add Astra Linux ([dylanaraps#2313](https://github.com/dylanaraps/neofetch/pull/2313))
+* 🖼 Distro - Add FemboyOS ([#121](https://github.com/hykilpikonna/hyfetch/pull/121))
+* 🖼 Distro - Add Nobara Linux ([dylanaraps#2326](https://github.com/dylanaraps/neofetch/pull/2326))
+* 🖼 Font - Fix Konsole ppid detection ([#116](https://github.com/hykilpikonna/hyfetch/pull/116))
+* 🖼 Font - Fix Konsole terminal font detection ([#127](https://github.com/hykilpikonna/hyfetch/pull/127))
+* 🖼 Image - Optimize sixel image display ([dylanaraps#2316](https://github.com/dylanaraps/neofetch/pull/2316))
 
 ### 1.4.8
 

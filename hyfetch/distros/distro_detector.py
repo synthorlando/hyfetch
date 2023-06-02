@@ -468,6 +468,10 @@ def detect(name: str) -> AsciiArt | None:
         from .feren import feren
         return feren
     
+    if name.startswith('femboyos'):
+        from .femboyos import femboyos
+        return femboyos
+    
     if name.startswith('finnix'):
         from .finnix import finnix
         return finnix
@@ -800,6 +804,10 @@ def detect(name: str) -> AsciiArt | None:
         from .nixos import nixos
         return nixos
     
+    if name.startswith('nobara'):
+        from .nobara import nobara
+        return nobara
+    
     if name.startswith('nomadbsd'):
         from .nomadbsd import nomadbsd
         return nomadbsd
@@ -1055,6 +1063,10 @@ def detect(name: str) -> AsciiArt | None:
     if name.startswith('rosa'):
         from .rosa import rosa
         return rosa
+    
+    if name.startswith('astra linux'):
+        from .astra_linux import astra_linux
+        return astra_linux
     
     if name.startswith('sabotage'):
         from .sabotage import sabotage
