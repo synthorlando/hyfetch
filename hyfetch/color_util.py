@@ -239,3 +239,13 @@ class RGB:
 
     def is_light(self):
         return self.hsl().l > 0.5
+
+    def overlay(self, color: 'RGB', alpha: float) -> 'RGB':
+        """
+        Overlay a color on top of this color
+
+        :param color: Overlay color
+        :param alpha: Overlay alpha
+        :return: New color (original isn't modified)
+        """
+        return RGB(*[round((1 - alpha) * v1 + alpha * v2) for v1, v2 in zip(self, color)])
