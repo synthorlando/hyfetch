@@ -3,8 +3,19 @@ from time import sleep
 
 from hyfetch import presets
 from hyfetch.color_util import RGB, color
+from hyfetch.constants import IS_WINDOWS
 from hyfetch.neofetch_util import term_size
 from hyfetch.presets import PRESETS
+
+
+def key_pressed():
+    if IS_WINDOWS:
+        import msvcrt
+        return msvcrt.kbhit()  # Non-blocking check for key press
+    else:
+        import select
+        import sys
+        return select.select([sys.stdin], [], [], 0) == ([sys.stdin], [], [])
 
 
 def start_animation():
@@ -40,8 +51,7 @@ def start_animation():
     colors = [c for preset in PRESETS.values() for c in preset.colors]
 
     black = RGB(0, 0, 0)
-    white = RGB(255, 255, 255)
-    gold = RGB.from_hex("#FFE09B")
+    fg = RGB.from_hex("#FFE09B")
 
     def draw_frame():
         buf = ""
@@ -50,7 +60,7 @@ def start_animation():
         for y in range(h):
             # Print the starting color
             buf += colors[((frame + y) // block_width) % len(colors)].to_ansi_rgb(foreground=False)
-            buf += gold.to_ansi_rgb(foreground=True)
+            buf += fg.to_ansi_rgb(foreground=True)
 
             # Loop over the width
             x = 0
@@ -92,9 +102,14 @@ def start_animation():
             draw_frame()
             frame += speed
             sleep(frame_delay)
+
+            if key_pressed():
+                break
     except KeyboardInterrupt:
-        # Clear the screen
-        print("\033[2J\033[H", end="")
+        pass
+
+    # Clear the screen
+    print("\033[2J\033[H", end="")
 
 
 if __name__ == '__main__':
