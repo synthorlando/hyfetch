@@ -119,6 +119,9 @@ class ColorProfile:
         :param term: Terminal color (can be "dark" or "light")
         :return: New color profile (original isn't modified)
         """
+        if GLOBAL_CFG.use_overlay:
+            return self.overlay_dl(light, term)
+
         term = term or GLOBAL_CFG.light_dark()
         assert term.lower() in ['light', 'dark']
         at_least, at_most = (True, None) if term.lower() == 'dark' else (None, True)

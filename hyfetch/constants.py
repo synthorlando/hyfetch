@@ -35,6 +35,7 @@ class GlobalConfig:
     override_distro: str | None
     debug: bool
     is_light: bool
+    use_overlay: bool
 
     def light_dark(self) -> LightDark:
         return 'light' if self.is_light else 'dark'
@@ -45,6 +46,6 @@ class GlobalConfig:
         return 0.65 if term.lower() == 'dark' else 0.4
 
 
-GLOBAL_CFG = GlobalConfig(color_mode='8bit', override_distro=None, debug=False, is_light=False)
+GLOBAL_CFG = GlobalConfig(color_mode='8bit', override_distro=None, debug=False, is_light=False, use_overlay=False)
 
 MINGIT_URL = 'https://github.com/git-for-windows/git/releases/download/v2.37.2.windows.2/MinGit-2.37.2.2-busybox-32-bit.zip'
