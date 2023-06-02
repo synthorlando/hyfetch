@@ -376,7 +376,7 @@ def run():
 
     # Check if it's June (pride month)
     now = datetime.datetime.now()
-    if now.month == 6 and now.year not in config.pride_month_shown:
+    if now.month == 6 and now.year not in config.pride_month_shown and os.isatty(sys.stdout.fileno()):
         args.june = True
 
     if args.june:
