@@ -199,6 +199,17 @@ def create_config() -> Config:
 
         def_lightness = GLOBAL_CFG.default_lightness(light_dark)
 
+        # # Print cats with overlay_dl instead of set_light_dl
+        # num_cols = (term_size()[0] // (TEST_ASCII_WIDTH + 2)) or 1
+        # mn, mx = 0.15, 0.85
+        # ratios = [col / num_cols for col in range(num_cols)]
+        # ratios = [(r * (mx - mn) / 2 + mn) if is_light else ((r * (mx - mn) + (mx + mn)) / 2) for r in ratios]
+        # lines = [ColorAlignment('horizontal').recolor_ascii(TEST_ASCII.replace(
+        #     '{txt}', f'{r * 100:.0f}%'.center(5)), _prs.overlay_dl(r, light_dark)).split('\n') for r in ratios]
+        # [printc('  '.join(line)) for line in zip(*lines)]
+        #
+        # def_lightness = GLOBAL_CFG.default_lightness(light_dark)
+
         while True:
             print()
             printc(f'Which brightness level looks the best? (Default: {def_lightness * 100:.0f}% for {light_dark} mode)')
@@ -311,6 +322,7 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument('-b', '--backend', help=f'Choose a *fetch backend', choices=['neofetch', 'fastfetch', 'fastfetch-old'])
     parser.add_argument('--c-scale', dest='scale', help=f'Lighten colors by a multiplier', type=float)
     parser.add_argument('--c-set-l', dest='light', help=f'Set lightness value of the colors', type=float)
+    parser.add_argument('--c-overlay', action='store_true', dest='overlay', help=f'Use experimental overlay color adjusting instead of HSL lightness')
     parser.add_argument('-V', '--version', dest='version', action='store_true', help=f'Check version')
     parser.add_argument('--june', action='store_true', help=f'Show pride month easter egg')
     parser.add_argument('--debug', action='store_true', help=f'Debug mode')
@@ -344,6 +356,7 @@ def run():
 
     # Use a custom distro
     GLOBAL_CFG.override_distro = args.distro
+    GLOBAL_CFG.use_overlay = args.overlay
 
     if args.version:
         print(f'Version is {VERSION}')
