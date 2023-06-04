@@ -836,7 +836,7 @@ image_source="auto"
 # NOTE: AIX, AlmaLinux, Alpine, Alter, Amazon, AmogOS, Anarchy, Android, Antergos, antiX, AOSC OS,
 # AOSC OS/Retro, Aperio GNU/Linux, Aperture, Apricity, Arch, ArchBox, Archcraft, archcraft_ascii,
 # archcraft_minimal, ARCHlabs, ArchMerge, ArchStrike, ArcoLinux, ArseLinux, Artix, Arya, Asahi,
-# Aster, AsteroidOS, astOS, Astra Linux, Bedrock, BigLinux, Bitrig, BlackArch, blackPanther, BLAG,
+# Aster, AsteroidOS, astOS, Astra Linux, Athena, Bedrock, BigLinux, Bitrig, BlackArch, blackPanther, BLAG,
 # BlankOn, BlueLight, Bodhi, bonsai, BSD, BunsenLabs, CachyOS, Calculate, CalinixOS, Carbs, CBL-
 # Mariner, CelOS, Center, CentOS, Chakra, ChaletOS, Chapeau, ChonkySealOS, Chrom, Cleanjaro, Clear
 # Linux OS, ClearOS, Clover, Cobalt, Condres, Container Linux by CoreOS, CRUX, Crystal Linux,
@@ -6181,7 +6181,7 @@ ASCII:
                                 Aperture, Apricity, Arch, ArchBox, Archcraft, archcraft_ascii,
                                 archcraft_minimal, ARCHlabs, ArchMerge, ArchStrike, ArcoLinux,
                                 ArseLinux, Artix, Arya, Asahi, Aster, AsteroidOS, astOS, Astra
-                                Linux, Bedrock, BigLinux, Bitrig, BlackArch, blackPanther, BLAG,
+                                Linux, Athena, Bedrock, BigLinux, Bitrig, BlackArch, blackPanther, BLAG,
                                 BlankOn, BlueLight, Bodhi, bonsai, BSD, BunsenLabs, CachyOS,
                                 Calculate, CalinixOS, Carbs, CBL-Mariner, CelOS, Center, CentOS,
                                 Chakra, ChaletOS, Chapeau, ChonkySealOS, Chrom, Cleanjaro, Clear
@@ -7638,6 +7638,36 @@ ${c1}        OMMc   ...
 ${c1}         xMMx
 ${c1}          ;XMN:
 ${c1}            ,.
+EOF
+        ;;
+        
+        "Athena"*)
+            set_colors 7 3
+            read -rd '' ascii_data <<'EOF'
+${c1}    .          ..
+${c1}   :####:     ####.
+${c1}  .################
+${c1} :##################
+${c1}.###################.
+${c1}########     #######
+${c1}#######  ${c2}####${c1} #####
+${c1}:#######.      ####
+${c1} #########  ${c2}#${c1}   ##   #
+${c1} #######   ${c2}##${c1}      ####
+${c1}########  ${c2}####${c1}    #######
+${c1}########  ${c2}#####${c1}   ########
+${c1}########  ${c2}#######${c1}  #######
+${c1} #######  ${c2}########${c1}  #######
+${c1} ########  ${c2}#########${c1}  ######
+${c1}  ########  ${c2}#########${c1}  #####
+${c1}    #######  ${c2}#########${c1}  ####
+${c1}     #######  ${c2}#########${c1}  ##
+${c1}       #######  ${c2}########${c1} ##
+${c1}          ###### ${c2}########${c1} #
+${c1}               ### ${c2}#######${c1}
+${c1}                     ${c2}######${c1}
+${c1}                        ${c2}####${c1}
+${c1}                          ${c2}##${c1}
 EOF
         ;;
 
