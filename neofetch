@@ -836,7 +836,7 @@ image_source="auto"
 # NOTE: AIX, AlmaLinux, Alpine, Alter, Amazon, AmogOS, Anarchy, Android, Antergos, antiX, AOSC OS,
 # AOSC OS/Retro, Aperio GNU/Linux, Aperture, Apricity, Arch, ArchBox, Archcraft, archcraft_ascii,
 # archcraft_minimal, ARCHlabs, ArchMerge, ArchStrike, ArcoLinux, ArseLinux, Artix, Arya, Asahi,
-# Aster, AsteroidOS, astOS, Astra Linux, Bedrock, BigLinux, Bitrig, BlackArch, blackPanther, BLAG,
+# Aster, AsteroidOS, astOS, Astra Linux, Athena, Bedrock, BigLinux, Bitrig, BlackArch, blackPanther, BLAG,
 # BlankOn, BlueLight, Bodhi, bonsai, BSD, BunsenLabs, CachyOS, Calculate, CalinixOS, Carbs, CBL-
 # Mariner, CelOS, Center, CentOS, Chakra, ChaletOS, Chapeau, ChonkySealOS, Chrom, Cleanjaro, Clear
 # Linux OS, ClearOS, Clover, Cobalt, Condres, Container Linux by CoreOS, CRUX, Crystal Linux,
@@ -1345,23 +1345,24 @@ get_distro() {
 
         "Mac OS X"|"macOS")
             case $osx_version in
-                10.4*)  codename="Mac OS X Tiger" ;;
-                10.5*)  codename="Mac OS X Leopard" ;;
+                10.4*)  codename="Mac OS X Tiger"        ;;
+                10.5*)  codename="Mac OS X Leopard"      ;;
                 10.6*)  codename="Mac OS X Snow Leopard" ;;
-                10.7*)  codename="Mac OS X Lion" ;;
-                10.8*)  codename="OS X Mountain Lion" ;;
-                10.9*)  codename="OS X Mavericks" ;;
-                10.10*) codename="OS X Yosemite" ;;
-                10.11*) codename="OS X El Capitan" ;;
-                10.12*) codename="macOS Sierra" ;;
-                10.13*) codename="macOS High Sierra" ;;
-                10.14*) codename="macOS Mojave" ;;
-                10.15*) codename="macOS Catalina" ;;
-                10.16*) codename="macOS Big Sur" ;;
-                11.*)  codename="macOS Big Sur" ;;
-                12.*)  codename="macOS Monterey" ;;
-                13.*)  codename="macOS Ventura" ;;
-                *)      codename=macOS ;;
+                10.7*)  codename="Mac OS X Lion"         ;;
+                10.8*)  codename="OS X Mountain Lion"    ;;
+                10.9*)  codename="OS X Mavericks"        ;;
+                10.10*) codename="OS X Yosemite"         ;;
+                10.11*) codename="OS X El Capitan"       ;;
+                10.12*) codename="macOS Sierra"          ;;
+                10.13*) codename="macOS High Sierra"     ;;
+                10.14*) codename="macOS Mojave"          ;;
+                10.15*) codename="macOS Catalina"        ;;
+                10.16*) codename="macOS Big Sur"         ;;
+                11.*)   codename="macOS Big Sur"         ;;
+                12.*)   codename="macOS Monterey"        ;;
+                13.*)   codename="macOS Ventura"         ;;
+                14.*)   codename="macOS Sonoma"          ;;
+                *)      codename="macOS"                 ;;
             esac
 
             distro="$codename $osx_version ($osx_build)"
@@ -6181,7 +6182,7 @@ ASCII:
                                 Aperture, Apricity, Arch, ArchBox, Archcraft, archcraft_ascii,
                                 archcraft_minimal, ARCHlabs, ArchMerge, ArchStrike, ArcoLinux,
                                 ArseLinux, Artix, Arya, Asahi, Aster, AsteroidOS, astOS, Astra
-                                Linux, Bedrock, BigLinux, Bitrig, BlackArch, blackPanther, BLAG,
+                                Linux, Athena, Bedrock, BigLinux, Bitrig, BlackArch, blackPanther, BLAG,
                                 BlankOn, BlueLight, Bodhi, bonsai, BSD, BunsenLabs, CachyOS,
                                 Calculate, CalinixOS, Carbs, CBL-Mariner, CelOS, Center, CentOS,
                                 Chakra, ChaletOS, Chapeau, ChonkySealOS, Chrom, Cleanjaro, Clear
@@ -7638,6 +7639,36 @@ ${c1}        OMMc   ...
 ${c1}         xMMx
 ${c1}          ;XMN:
 ${c1}            ,.
+EOF
+        ;;
+        
+        "Athena"*)
+            set_colors 7 3
+            read -rd '' ascii_data <<'EOF'
+${c1}    .          ..
+${c1}   :####:     ####.
+${c1}  .################
+${c1} :##################
+${c1}.###################.
+${c1}########     #######
+${c1}#######  ${c2}####${c1} #####
+${c1}:#######.      ####
+${c1} #########  ${c2}#${c1}   ##   #
+${c1} #######   ${c2}##${c1}      ####
+${c1}########  ${c2}####${c1}    #######
+${c1}########  ${c2}#####${c1}   ########
+${c1}########  ${c2}#######${c1}  #######
+${c1} #######  ${c2}########${c1}  #######
+${c1} ########  ${c2}#########${c1}  ######
+${c1}  ########  ${c2}#########${c1}  #####
+${c1}    #######  ${c2}#########${c1}  ####
+${c1}     #######  ${c2}#########${c1}  ##
+${c1}       #######  ${c2}########${c1} ##
+${c1}          ###### ${c2}########${c1} #
+${c1}               ### ${c2}#######${c1}
+${c1}                     ${c2}######${c1}
+${c1}                        ${c2}####${c1}
+${c1}                          ${c2}##${c1}
 EOF
         ;;
 
