@@ -984,6 +984,11 @@ background_color=
 stdout="auto"
 EOF
 
+# If /etc/neofetch/default.conf exist, set config variable to its content
+if [[ -f /etc/neofetch/default.conf ]]; then
+    config="$(< /etc/neofetch/default.conf)"
+fi
+
 # DETECT INFORMATION
 
 get_os() {
