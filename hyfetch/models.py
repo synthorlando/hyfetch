@@ -18,6 +18,7 @@ class Config:
     backend: BackendLiteral = "neofetch"
     distro: str | None = None
     pride_month_shown: list[int] = field(default_factory=list)
+    pride_month_disable: bool = False
 
     @classmethod
     def from_dict(cls, d: dict):
@@ -26,4 +27,4 @@ class Config:
 
     def save(self):
         CONFIG_PATH.parent.mkdir(exist_ok=True, parents=True)
-        CONFIG_PATH.write_text(json_stringify(self), 'utf-8')
+        CONFIG_PATH.write_text(json_stringify(self, indent=4), 'utf-8')

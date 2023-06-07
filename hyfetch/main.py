@@ -379,13 +379,14 @@ def run():
     if now.month == 6 and now.year not in config.pride_month_shown and os.isatty(sys.stdout.fileno()):
         args.june = True
 
-    if args.june:
+    if args.june and not config.pride_month_disable:
         pride_month.start_animation()
         print()
         print("Happy pride month!")
         print("(You can always view the animation again with `hyfetch --june`)")
         print()
-        config.pride_month_shown.append(now.year)
+        if now.year not in config.pride_month_shown:
+            config.pride_month_shown.append(now.year)
         config.save()
 
     # Use a custom distro
