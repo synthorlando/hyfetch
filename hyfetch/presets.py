@@ -623,7 +623,7 @@ PRESETS: dict[str, ColorProfile] = {
     ]),
 
     # used https://twitter.com/foxbrained/status/1667621855518236674/photo/1 as source and colorpicked
-    'nonhumanunity' : ColorProfile([
+    'nonhuman-unity' : ColorProfile([
         "#177B49",
         "#FFFFFF",
         "#593C90"
