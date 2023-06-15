@@ -2064,6 +2064,9 @@ get_packages() {
             # This is the only standard location for appimages.
             # See: https://github.com/AppImage/AppImageKit/wiki
             manager=appimage && has appimaged && dir ~/.local/bin/*.[Aa]pp[Ii]mage
+
+            # Has devbox & is initialized
+            has devbox && [[ "$(devbox global list)" != *"not activated"* ]] && tot devbox global list
         ;;
 
         "Mac OS X"|"macOS"|MINIX)
