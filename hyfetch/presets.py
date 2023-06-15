@@ -622,6 +622,13 @@ PRESETS: dict[str, ColorProfile] = {
         "#0B130C"
     ]),
 
+    # used https://twitter.com/foxbrained/status/1667621855518236674/photo/1 as source and colorpicked
+    'therian' : ColorProfile([
+        "#177B49",
+        "#FFFFFF",
+        "#593C90"
+    ]),
+
     # Meme flags
     'beiyang': ColorProfile([
         '#DF1B12',
