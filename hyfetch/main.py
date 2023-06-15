@@ -376,7 +376,8 @@ def run():
 
     # Check if it's June (pride month)
     now = datetime.datetime.now()
-    if now.month == 6 and now.year not in config.pride_month_shown and os.isatty(sys.stdout.fileno()):
+    june_path = CACHE_PATH / f'animation-displayed-{now.year}'
+    if now.month == 6 and now.year not in config.pride_month_shown and not june_path.is_file() and os.isatty(sys.stdout.fileno()):
         args.june = True
 
     if args.june and not config.pride_month_disable:
@@ -385,9 +386,10 @@ def run():
         print("Happy pride month!")
         print("(You can always view the animation again with `hyfetch --june`)")
         print()
-        if now.year not in config.pride_month_shown:
-            config.pride_month_shown.append(now.year)
-        config.save()
+
+        if not june_path.is_file():
+            june_path.parent.mkdir(parents=True, exist_ok=True)
+            june_path.touch()
 
     # Use a custom distro
     GLOBAL_CFG.override_distro = args.distro or config.distro

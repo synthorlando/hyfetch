@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from .types import LightDark
+from .__version__ import VERSION
 
 CONFIG_PATH = Path.home() / '.config/hyfetch.json'
 
