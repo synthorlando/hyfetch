@@ -1,11 +1,11 @@
 from __future__ import annotations
 
+import os
 import platform
 from dataclasses import dataclass
 from pathlib import Path
 
 from .types import LightDark
-from .__version__ import VERSION
 
 CONFIG_PATH = Path.home() / '.config/hyfetch.json'
 
@@ -27,6 +27,8 @@ _/\_\_   _/_/\_
 TEST_ASCII_WIDTH = max(len(line) for line in TEST_ASCII.split('\n'))
 DEFAULT_DARK_L = 0.
 IS_WINDOWS = platform.system() == 'Windows'
+
+CACHE_PATH = Path(os.getenv("LOCALAPPDATA") or os.getenv("XDG_CACHE_HOME") or Path.home() / '.cache') / 'hyfetch'
 
 @dataclass
 class GlobalConfig:
