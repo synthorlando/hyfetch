@@ -1946,7 +1946,8 @@ get_packages() {
     }
 
     # OS-independent package managers.
-    has pipx && tot pipx list --short
+    has pipx  && tot pipx list --short
+    has cargo && _cargopkgs="$(cargo install --list | grep -v '^ ')" && tot echo "$_cargopkgs"
 
     # OS-specific package managers.
     case $os in
@@ -2054,7 +2055,6 @@ get_packages() {
             has flatpak && tot flatpak list
             has spm     && tot spm list -i
             has puyo    && dir ~/.puyo/installed
-            has cargo   && _cargopkgs="$(cargo install --list | grep -v '^ ')" && tot echo "$_cargopkgs"
 
             # Snap hangs if the command is run without the daemon running.
             # Only run snap if the daemon is also running.
