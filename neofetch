@@ -1933,6 +1933,14 @@ get_packages() {
         ((packages+=${#pkgs[@]}));
         pac "$((${#pkgs[@]}-pkgs_h))";
     }
+    # Similar with tot but do nothing if the command fails
+    tot-safe() {
+        if pkgs="$("$@")"; then
+            pkgs=$(echo "$pkgs" | wc -l)
+            ((packages+=pkgs))
+            pac "$((pkgs-pkgs_h))";
+        fi
+    }
 
     # Redefine tot() and dir() for Bedrock Linux.
     [[ -f /bedrock/etc/bedrock-release && $PATH == */bedrock/cross/* ]] && {
@@ -1981,7 +1989,7 @@ get_packages() {
             has pisi       && tot pisi li
             has pacstall   && tot pacstall -L
             has bulge      && tot bulge list
-            has pm         && tot pm list packages
+            has pm         && tot-safe pm list packages
             has evox       && tot cat /var/evox/packages/DB
             has tea        && tot find "$HOME/.tea" -maxdepth 2 -mindepth 2 -type d
 
