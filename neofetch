@@ -1953,7 +1953,8 @@ get_packages() {
     }
 
     # OS-independent package managers.
-    has pipx && tot pipx list --short
+    has pipx  && tot pipx list --short
+    has cargo && _cargopkgs="$(cargo install --list | grep -v '^ ')" && tot echo "$_cargopkgs"
 
     # OS-specific package managers.
     case $os in
@@ -2061,7 +2062,6 @@ get_packages() {
             has flatpak && tot flatpak list
             has spm     && tot spm list -i
             has puyo    && dir ~/.puyo/installed
-            has cargo   && dir "${CARGO_HOME:-$HOME/.cargo}/bin/"*
 
             # Snap hangs if the command is run without the daemon running.
             # Only run snap if the daemon is also running.
@@ -11902,6 +11902,31 @@ ${c1} /🐦🐦🐦$ /🐦/🐦                /🐦🐦🐦  /🐦🐦🐦
 |__/     |__|__/  \__/\_______/\______/ \______/       .
 EOF
         ;;
+        
+        "phyOS"*)
+            set_colors 33 33 7 1
+            read -rd '' ascii_data <<'EOF'
+${c1}            '
+.^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^.^^^^^.
+ :777777777777777777777777777777^~7777:
+  .~~~~~~~~~~~~~~~~~~~~~^~7777!:!777!.
+    ~7!!!!!!!!!!!!!!!!!^:!777~^!777~
+     ^77777!!!!!!!!!7!^^7777^^7777^
+      ^7777~.~~~~^.  .~7777^~7777:
+       :!777~^!777~. !777!:~777!:
+        .!777!:~777!:~77~:!777!.
+          ~777!^~7777:^~^!777~
+           ^7777^^7777^^7777^
+            :7777~^!7777777:
+             .!777!:!7777!.
+              .~777!:~77~.
+                ~7777^~~
+                 ^7777.
+                  :77:
+                   ..
+EOF
+        ;;
+
 
         "PNM Linux"* | "WHPNM Linux"*)
             set_colors 33 9 15 202
