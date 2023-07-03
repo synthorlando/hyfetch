@@ -345,7 +345,29 @@ def run(asc: str, backend: BackendLiteral, args: str = ''):
         return run_fastfetch(asc, args)
     if backend == "fastfetch-old":
         return run_fastfetch(asc, args, legacy=True)
+    if backend == "qwqfetch":
+        return run_qwqfetch(asc, args)
 
+
+def run_neofetch(asc: str, args: str = ''):
+    """
+    Run neofetch with colors
+
+    :param preset: Color palette
+    :param alignment: Color alignment settings
+    """
+    asc = asc.replace('\\', '\\\\')
+
+    # call qwqfetch to print string
+    try:
+        from qwqfetch import src
+        # distro_detector only return a bash variable
+        # so we use qwqfetch builtin distro detector
+        print(src.get_result(asc))  
+    except ImportError as e:  # module not found etc
+        print("qwqfetch is not installed. Install it by executing:")  # use print to output hint directly
+        print("pip install git+https://github.com/nexplorer-3e/qwqfetch")  # TODO: public repo
+        raise e
 
 def run_neofetch(asc: str, args: str = ''):
     """
