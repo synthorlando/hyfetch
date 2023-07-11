@@ -349,7 +349,7 @@ def run(asc: str, backend: BackendLiteral, args: str = ''):
         return run_qwqfetch(asc, args)
 
 
-def run_neofetch(asc: str, args: str = ''):
+def run_qwqfetch(asc: str, args: str = ''):
     """
     Run neofetch with colors
 
@@ -360,10 +360,10 @@ def run_neofetch(asc: str, args: str = ''):
 
     # call qwqfetch to print string
     try:
-        from qwqfetch import src
+        import qwqfetch
         # distro_detector only return a bash variable
         # so we use qwqfetch builtin distro detector
-        print(src.get_result(asc))  
+        print(qwqfetch.get_ascres(asc))  
     except ImportError as e:  # module not found etc
         print("qwqfetch is not installed. Install it by executing:")  # use print to output hint directly
         print("pip install git+https://github.com/nexplorer-3e/qwqfetch")  # TODO: public repo
