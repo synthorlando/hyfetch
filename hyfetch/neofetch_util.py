@@ -252,7 +252,7 @@ def ensure_git_bash() -> Path:
 
         # No installation found, download a portable installation
         print('Git installation not found. Git is required to use HyFetch/neofetch on Windows')
-        if literal_input('Would you like to install a minimal package for Git? (if no is selected colors almost certianly won\'t work)', ['yes', 'no'], 'yes', False) == 'yes':
+        if literal_input('Would you like to install a minimal package for Git? (if no is selected colors almost certainly won\'t work)', ['yes', 'no'], 'yes', False) == 'yes':
             print('Downloading a minimal portable package for Git...')
             from urllib.request import urlretrieve
             urlretrieve(MINGIT_URL, pkg_path)
