@@ -7576,10 +7576,9 @@ EOF
         ;;
 
         "Kerbl"*)
-            set_colors 6 6 7 1
-            read -rd '' ascii_data <<'EOF'
-${c1}                   
-            .:^^^^^:.  
+            set_colors 33
+            read -rd '' ascii_data <<'EOF'                  
+${c1}             .:^^^^^:.  
          :~7?????????7~:
        .~7?77777777777?7~.
       .:^:::::::::::::::^:.
