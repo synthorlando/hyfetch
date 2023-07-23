@@ -101,6 +101,25 @@ pip install git+https://github.com/hykilpikonna/hyfetch.git@master
 
 <!-- CHANGELOG STARTS HERE --->
 
+* 🌈 Add option to disable pride month animation (#134)
+* 🌈 Fix: Should not assume ~/.config is writable (#136)
+* 🖼 OS - Update macOS version name list (#132)
+* 🖼 Distro - Add Windows 95 ASCII logo (dylanaraps/neofetch#2346)
+* 🖼 Distro - Smoothen the Tumbleweed logo (dylanaraps/neofetch#2342)
+* 🖼 Distro - Add ParchLinux (dylanaraps/neofetch#2045)
+* 🖼 Distro - Add OpenKylin logo (dylanaraps/neofetch#2341)
+* 🖼 Distro - Add PhyOS (#142)
+* 🖼 Distro - Add Athena OS (#130)
+* 🖼 Version - Fix a typo that broke OS detection on WSL (#155)
+* 🖼 Packages - Implement --package_separate flag (#135)
+* 🖼 Packages - Separate flatpak-system and flatpak-user (#135)
+* 🖼 Packages - Add steam as a package manager (#152)
+* 🖼 Packages - Add squirrel package manager (#153)
+* 🖼 Packages - Make cargo run on all systems (#146)
+* 🖼 Packages - Fix cargo package count (#144)
+* 🖼 Packages - Add Devbox package manager (#137)
+* 🖼 Config - Allow specifying default config to copy to ~/.config (#133)
+
 ### 1.4.9
 
 * 🌈 Add pride month easter-egg animation! ⭐️
