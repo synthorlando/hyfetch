@@ -2028,6 +2028,16 @@ get_packages() {
             shopt -u nullglob
             }
 
+            # Steam games
+            STEAM_P=".local/share/Steam/steamapps/common"
+            if [[ -d "$HOME/$STEAM_P" ]]; then
+                manager=steam && dir "$HOME/$STEAM_P/*/"
+            elif [[ -d "$HOME/.var/app/com.valvesoftware.Steam/$STEAM_P" ]]; then
+                manager=steam && dir "$HOME/.var/app/com.valvesoftware.Steam/$STEAM_P/*/"
+            elif [[ -d "$HOME/.steam/steam/steamapps/common" ]]; then
+                manager=steam && dir "$HOME/.steam/steam/steamapps/common/*/"
+            fi
+
             # Other (Needs complex command)
             has kpm-pkg && ((packages+=$(kpm  --get-selections | grep -cv deinstall$)))
 
