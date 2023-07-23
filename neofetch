@@ -2079,7 +2079,10 @@ get_packages() {
             esac
 
             # List these last as they accompany regular package managers.
-            has flatpak && tot flatpak list
+            has flatpak && {
+                manager=flatpak-system  && tot flatpak list --system
+                manager=flatpak-user    && tot flatpak list --user
+            }
             has spm     && tot spm list -i
             has puyo    && dir ~/.puyo/installed
 
