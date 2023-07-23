@@ -1277,7 +1277,8 @@ get_distro() {
 
                 windows_version_verbose=$(reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -v ProductName | grep REG_)
                 windows_version_verbose=$(trim "${windows_version_verbose/ProductName}")
-                windows_version_verbose=$(trim "${windows_version_verbose/REG_SZ}") buildnumber=$(reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -v CurrentBuildNumber | grep REG_)
+                windows_version_verbose=$(trim "${windows_version_verbose/REG_SZ}")
+                buildnumber=$(reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -v CurrentBuildNumber | grep REG_)
                 windows_version_verbose=$(trim "${windows_version_verbose/Windows}")
                 windows_buildnumber=$(reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -v CurrentBuildNumber | grep REG_)               
                 windows_buildnumber=${buildnumber/CurrentBuildNumber}
