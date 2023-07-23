@@ -8,7 +8,7 @@ neofetch with pride flags <3
 
 This repo also serves as an updated version of the original `neofetch` since the upstream [dylanaraps/neofetch](https://github.com/dylanaraps/neofetch) doesn't seem to be maintained anymore (as of Jul 30, 2022, the original repo hasn't merged a pull request for 6 months). If you only want to use the updated neofetch without pride flags, you can use the `neofetch` script from this repo. To prevent command name conflict, I call it `neowofetch` :)
 
-* Method 1: `pip install hyfetch` then run `neowofetch`
+* Method 1: `pip install -U hyfetch` then run `neowofetch`
 * Method 2: `npx neowofetch`
 * Method 3: `P="$HOME/.local/bin/neowofetch" curl -L nf.hydev.org -o $P && chmod +x $P`
 * Method 4: Run without install `bash <(curl -sL nf.hydev.org)`
@@ -21,7 +21,7 @@ This repo also serves as an updated version of the original `neofetch` since the
 Install Python >= 3.7 first. Then, just do:
 
 ```sh
-pip install hyfetch
+pip install -U hyfetch
 ```
 
 ### Method 2: Install using system package manager
@@ -101,9 +101,11 @@ pip install git+https://github.com/hykilpikonna/hyfetch.git@master
 
 <!-- CHANGELOG STARTS HERE --->
 
+* 🌈 Add support for qwqfetch backend (#148)
+* 🌈 Add nonhuman-unity flag (#139)
 * 🌈 Add option to disable pride month animation (#134)
 * 🌈 Fix: Should not assume ~/.config is writable (#136)
-* 🖼 OS - Update macOS version name list (#132)
+* 🖼 OS - Update macOS version name list (#140)
 * 🖼 Distro - Add Windows 95 ASCII logo (dylanaraps/neofetch#2346)
 * 🖼 Distro - Smoothen the Tumbleweed logo (dylanaraps/neofetch#2342)
 * 🖼 Distro - Add ParchLinux (dylanaraps/neofetch#2045)
@@ -118,6 +120,7 @@ pip install git+https://github.com/hykilpikonna/hyfetch.git@master
 * 🖼 Packages - Make cargo run on all systems (#146)
 * 🖼 Packages - Fix cargo package count (#144)
 * 🖼 Packages - Add Devbox package manager (#137)
+* 🖼 Packages - Fix phantom package when pm command fails (#145)
 * 🖼 Config - Allow specifying default config to copy to ~/.config (#133)
 
 ### 1.4.9
