@@ -1992,6 +1992,7 @@ get_packages() {
             has bulge      && tot bulge list
             has pm         && tot-safe pm list packages
             has evox       && tot cat /var/evox/packages/DB
+            has squirrel   && tot ls /var/packages
             has tea        && tot find "$HOME/.tea" -maxdepth 2 -mindepth 2 -type d
 
             # Using the dnf package cache is much faster than rpm.
