@@ -860,7 +860,7 @@ image_source="auto"
 # Hyperbola, iglunix, instantOS, IRIX, Itc, januslinux, Kaisen, Kali, KaOS, KDE, Kibojoe, Kogaion,
 # Korora, KrassOS, KSLinux, Kubuntu, LangitKetujuh, LaxerOS, LEDE, LibreELEC, Linspire, Linux, Linux
 # Lite, Linux Mint, Linux Mint Old, Live Raizo, LMDE, Lubuntu, Lunar, mac, Mageia, MagpieOS,
-# Mandriva, Manjaro, MassOS, MatuusOS, Maui, Mer, Minix, MIRACLE LINUX, MX, Namib, NekOS, Neptune,
+# Mandriva, Manjaro, MassOS, MatuusOS, Maui, Meowix, Mer, Minix, MIRACLE LINUX, MX, Namib, NekOS, Neptune,
 # NetBSD, Netrunner, Nitrux, NixOS, Nobara, NomadBSD, Nurunner, NuTyX, Obarun, OBRevenge, OmniOS,
 # Open Source Media Center, OpenBSD, openEuler, OpenIndiana, openmamba, OpenMandriva, OpenStage,
 # openSUSE, openSUSE Leap, openSUSE Tumbleweed, OpenWrt, OPNsense, Oracle, orchid, OS Elbrus,
@@ -6278,7 +6278,7 @@ ASCII:
                                 LangitKetujuh, LaxerOS, LEDE, LibreELEC, Linspire, Linux, Linux
                                 Lite, Linux Mint, Linux Mint Old, Live Raizo, LMDE, Lubuntu, Lunar,
                                 mac, Mageia, MagpieOS, Mandriva, Manjaro, MassOS, MatuusOS, Maui,
-                                Mer, Minix, MIRACLE LINUX, MX, Namib, NekOS, Neptune, NetBSD,
+                                Meowix, Mer, Minix, MIRACLE LINUX, MX, Namib, NekOS, Neptune, NetBSD,
                                 Netrunner, Nitrux, NixOS, Nobara, NomadBSD, Nurunner, NuTyX, Obarun,
                                 OBRevenge, OmniOS, Open Source Media Center, OpenBSD, openEuler,
                                 OpenIndiana, openmamba, OpenMandriva, OpenStage, openSUSE, openSUSE
@@ -10737,6 +10737,22 @@ ${c1}             `.-://////:--`
       `:+oooooooooooooooooooooo+:`
          .:+oooooooooooooooo+:.
              `.-://////:-.`
+EOF
+        ;;
+
+        "Meowix"*)
+            set_colors 1 3 3 4
+            read -rd '' ascii_data <<'EOF'
+${c1}         #${c2}%            ${c3}&${c4}*
+${c1}        ##${c2}%%          ${c3}&&${c4}**
+${c1}       ##  ${c2}%%        ${c3}&&  ${c4}**
+${c1}      ##    ${c2}%%      ${c3}&&    ${c4}**
+${c1}     ##      ${c2}%%    ${c3}&&      ${c4}**
+${c1}    ##        ${c2}%%  ${c3}&&        ${c4}**
+${c1}   ##          ${c2}%%${c3}&&          ${c4}**
+${c1}  ##            ${c2}%%            ${c4}**
+${c1} ##                            ${c4}**
+${c1}##                              ${c4}**
 EOF
         ;;
 
