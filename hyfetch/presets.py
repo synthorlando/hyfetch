@@ -597,6 +597,18 @@ PRESETS: dict[str, ColorProfile] = {
         "#2f3fb9"
     ]),
 
+    'gynesexual': ColorProfile([
+        "#F4A9B7",
+        "#903F2B",
+        "#5B953B",
+    ]),
+
+    'androsexual': ColorProfile([
+        "#01CCFF",
+        "#603524",
+        "#B799DE",
+    ]),
+
     # gendervoid and related flags sourced from: https://gender.fandom.com/wiki/Gendervoid
     'gendervoid' : ColorProfile([
         "#081149",

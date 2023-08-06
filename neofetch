@@ -214,6 +214,18 @@ mem_precision=2
 package_managers="on"
 
 
+# Show separate user and system packages for supported package managers
+# 
+# Default: 'on'
+# Values:  'on', 'off'
+# Flag:    --package_separate
+#
+# Example:
+# on:  '8 packages (flatpak-system), 9 packages (flatpak-user)'
+# off: '17 packages (flatpak)'
+package_separate="on"
+
+
 # Shell
 
 
@@ -848,7 +860,7 @@ image_source="auto"
 # Hyperbola, iglunix, instantOS, IRIX, Itc, januslinux, Kaisen, Kali, KaOS, KDE, Kibojoe, Kogaion,
 # Korora, KrassOS, KSLinux, Kubuntu, LangitKetujuh, LaxerOS, LEDE, LibreELEC, Linspire, Linux, Linux
 # Lite, Linux Mint, Linux Mint Old, Live Raizo, LMDE, Lubuntu, Lunar, mac, Mageia, MagpieOS,
-# Mandriva, Manjaro, MassOS, MatuusOS, Maui, Mer, Minix, MIRACLE LINUX, MX, Namib, NekOS, Neptune,
+# Mandriva, Manjaro, MassOS, MatuusOS, Maui, Meowix, Mer, Minix, MIRACLE LINUX, MX, Namib, NekOS, Neptune,
 # NetBSD, Netrunner, Nitrux, NixOS, Nobara, NomadBSD, Nurunner, NuTyX, Obarun, OBRevenge, OmniOS,
 # Open Source Media Center, OpenBSD, openEuler, OpenIndiana, openmamba, OpenMandriva, OpenStage,
 # openSUSE, openSUSE Leap, openSUSE Tumbleweed, OpenWrt, OPNsense, Oracle, orchid, OS Elbrus,
@@ -1277,7 +1289,8 @@ get_distro() {
 
                 windows_version_verbose=$(reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -v ProductName | grep REG_)
                 windows_version_verbose=$(trim "${windows_version_verbose/ProductName}")
-                windows_version_verbose=$(trim "${windows_version_verbose/REG_SZ}")buildnumber=$(reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -v CurrentBuildNumber | grep REG_)
+                windows_version_verbose=$(trim "${windows_version_verbose/REG_SZ}")
+                buildnumber=$(reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -v CurrentBuildNumber | grep REG_)
                 windows_version_verbose=$(trim "${windows_version_verbose/Windows}")
                 windows_buildnumber=$(reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -v CurrentBuildNumber | grep REG_)               
                 windows_buildnumber=${buildnumber/CurrentBuildNumber}
@@ -1991,6 +2004,7 @@ get_packages() {
             has bulge      && tot bulge list
             has pm         && tot-safe pm list packages
             has evox       && tot cat /var/evox/packages/DB
+            has squirrel   && tot ls /var/packages
             has tea        && tot find "$HOME/.tea" -maxdepth 2 -mindepth 2 -type d
 
             # Using the dnf package cache is much faster than rpm.
@@ -2026,24 +2040,65 @@ get_packages() {
             shopt -u nullglob
             }
 
+            # Steam games
+            STEAM_P=".local/share/Steam/steamapps/common"
+            if [[ -d "$HOME/$STEAM_P" ]]; then
+                manager=steam && dir "$HOME/$STEAM_P/*/"
+            elif [[ -d "$HOME/.var/app/com.valvesoftware.Steam/$STEAM_P" ]]; then
+                manager=steam && dir "$HOME/.var/app/com.valvesoftware.Steam/$STEAM_P/*/"
+            elif [[ -d "$HOME/.steam/steam/steamapps/common" ]]; then
+                manager=steam && dir "$HOME/.steam/steam/steamapps/common/*/"
+            fi
+
             # Other (Needs complex command)
             has kpm-pkg && ((packages+=$(kpm  --get-selections | grep -cv deinstall$)))
 
-            has guix && {
-                manager=guix-system && tot guix package -p /run/current-system/profile -I
-                manager=guix-user   && tot guix package -I
-                manager=guix-home   && tot guix package -p ~/.guix-home/profile -I
-            }
-
-            has nix-store && {
-                nix-user-pkgs() {
-                    nix-store -qR ~/.nix-profile
-                    nix-store -qR /etc/profiles/per-user/"$USER"
+            # Separate system and user packages
+            if [[ $package_separate == on ]]; then
+                has guix && {
+                    manager=guix-system && tot guix package -p /run/current-system/profile -I
+                    manager=guix-user   && tot guix package -I
+                    manager=guix-home   && tot guix package -p ~/.guix-home/profile -I
                 }
-                manager=nix-system  && tot nix-store -qR /run/current-system/sw
-                manager=nix-user    && tot nix-user-pkgs
-                manager=nix-default && tot nix-store -qR /nix/var/nix/profiles/default
-            }
+
+                has nix-store && {
+                    nix-user-pkgs() {
+                        nix-store -qR ~/.nix-profile
+                        nix-store -qR /etc/profiles/per-user/"$USER"
+                    }
+                    manager=nix-system  && tot nix-store -qR /run/current-system/sw
+                    manager=nix-user    && tot nix-user-pkgs
+                    manager=nix-default && tot nix-store -qR /nix/var/nix/profiles/default
+                }
+
+                has flatpak && {
+                    manager=flatpak-system  && tot flatpak list --system
+                    manager=flatpak-user    && tot flatpak list --user
+                }
+            else
+                has guix && {
+                    guix-all() {
+                        guix package -p /run/current-system/profile -I
+                        guix package -I
+                        guix package -p ~/.guix-home/profile -I
+                    }
+                    manager=guix && tot guix-all
+                }
+
+                has nix-store && {
+                    nix-all() {
+                        nix-store -qR ~/.nix-profile
+                        nix-store -qR /etc/profiles/per-user/"$USER"
+                        nix-store -qR /run/current-system/sw
+                        nix-store -qR /nix/var/nix/profiles/default
+                    }
+                    manager=nix && tot nix-all
+                }
+
+                has flatpak && {
+                    manager=flatpak && tot flatpak list
+                }
+            fi
 
             # pkginfo is also the name of a python package manager which is painfully slow.
             # TODO: Fix this somehow.
@@ -2067,7 +2122,6 @@ get_packages() {
             esac
 
             # List these last as they accompany regular package managers.
-            has flatpak && tot flatpak list
             has spm     && tot spm list -i
             has puyo    && dir ~/.puyo/installed
 
@@ -6057,6 +6111,7 @@ INFO:
 
     --title_fqdn on/off         Hide/Show Fully Qualified Domain Name in title.
     --package_managers on/off   Hide/Show Package Manager names. (on, tiny, off)
+    --package_separate on/off   Whether to separate system/user modes for supported package managers
     --os_arch on/off            Hide/Show OS architecture.
     --speed_type type           Change the type of cpu speed to display.
                                 Possible values: current, min, max, bios,
@@ -6223,7 +6278,7 @@ ASCII:
                                 LangitKetujuh, LaxerOS, LEDE, LibreELEC, Linspire, Linux, Linux
                                 Lite, Linux Mint, Linux Mint Old, Live Raizo, LMDE, Lubuntu, Lunar,
                                 mac, Mageia, MagpieOS, Mandriva, Manjaro, MassOS, MatuusOS, Maui,
-                                Mer, Minix, MIRACLE LINUX, MX, Namib, NekOS, Neptune, NetBSD,
+                                Meowix, Mer, Minix, MIRACLE LINUX, MX, Namib, NekOS, Neptune, NetBSD,
                                 Netrunner, Nitrux, NixOS, Nobara, NomadBSD, Nurunner, NuTyX, Obarun,
                                 OBRevenge, OmniOS, Open Source Media Center, OpenBSD, openEuler,
                                 OpenIndiana, openmamba, OpenMandriva, OpenStage, openSUSE, openSUSE
@@ -6317,6 +6372,7 @@ get_args() {
             # Info
             "--title_fqdn") title_fqdn="$2" ;;
             "--package_managers") package_managers="$2" ;;
+            "--package_separate") package_separate="$2" ;;
             "--os_arch") os_arch="$2" ;;
             "--cpu_cores") cpu_cores="$2" ;;
             "--cpu_speed") cpu_speed="$2" ;;
@@ -9227,6 +9283,30 @@ wWW${c2}N${c1}WWWWw
 EOF
         ;;
 
+        "EvolutionOS"*)
+            set_colors 4 7
+            read -rd '' ascii_data <<'EOF'
+${c1}\e[1;32m      dddddddddddddddddddddddd
+  .dddd''''''''''''''''''''''dddd.
+  dd:   dddddddddddddddddddd;   dd:
+  dd:   ldl:''''''''''''''''    dd:
+  dd:   ldl:                    dd:
+  dd:   ldl:                    dd:
+  dd:   ldl:                    dd:
+  dd:   ldl:                    dd:
+  dd:   ldl: ddddddd;  ddddd;   dd:
+  dd:   ldl: '''''''   '''''    dd:
+  dd:   ldl:                    dd:
+  dd:   ldl:                    dd:
+  dd:   ldl:                    dd:
+  dd:   ldl:                    dd:
+  dd:   ldl: ddddddddddddddd;   dd:
+  dddd:.'''  '''''''''''''''  dddd:
+     dddddddddddddddddddddddddd;;'
+      '''''''''''''''''''''''''\e[0m
+EOF
+        ;;
+
         "Exherbo"*)
             set_colors 4 7 1
             read -rd '' ascii_data <<'EOF'
@@ -10701,6 +10781,22 @@ ${c1}             `.-://////:--`
 EOF
         ;;
 
+        "Meowix"*)
+            set_colors 1 3 3 4
+            read -rd '' ascii_data <<'EOF'
+${c1}         #${c2}%            ${c3}&${c4}*
+${c1}        ##${c2}%%          ${c3}&&${c4}**
+${c1}       ##  ${c2}%%        ${c3}&&  ${c4}**
+${c1}      ##    ${c2}%%      ${c3}&&    ${c4}**
+${c1}     ##      ${c2}%%    ${c3}&&      ${c4}**
+${c1}    ##        ${c2}%%  ${c3}&&        ${c4}**
+${c1}   ##          ${c2}%%${c3}&&          ${c4}**
+${c1}  ##            ${c2}%%            ${c4}**
+${c1} ##                            ${c4}**
+${c1}##                              ${c4}**
+EOF
+        ;;
+
         "Mer"*)
             set_colors 4 7 1
             read -rd '' ascii_data <<'EOF'
@@ -11486,7 +11582,7 @@ ${c1}                 /(/
 EOF
         ;;
 
-        "OpenWrt"*)
+        *"Wrt"*)
             set_colors 4 7 1
             read -rd '' ascii_data <<'EOF'
 ${c1} _______
@@ -13327,17 +13423,17 @@ EOF
             read -rd '' ascii_data <<'EOF'
 ${c2}                                     ......
      .,cdxxxoc,.               .:kKMMMNWMMMNk:.
-    cKMMN0OOOKWMMXo. ;        ;0MWk:.      .:OMMk.
-  ;WMK;.       .lKMMNM,     :NMK,             .OMW;
- cMW;            'WMMMN   ,XMK,                 oMM'
-.MMc               ..;l. xMN:                    KM0
-'MM.                   'NMO                      oMM
+    cKMMN0OOOKWMMXo. A        ;0MWk:'      ':OMMk.
+  ;WMK;'       'lKMMNM,     :NMK'             'OMW;
+ cMW;             WMMMN   ,XMK'                 oMM.
+.MMc             ''^*~l. xMN:                    KM0
+'MM.                   .NMO                      oMM
 .MM,                 .kMMl                       xMN
- KM0               .kMM0. .dl:,..               .WMd
- .XM0.           ,OMMK,    OMMMK.              .XMK
-   oWMO:.    .;xNMMk,       NNNMKl.          .xWMx
-     :ONMMNXMMMKx;          .  ,xNMWKkxllox0NMWk,
-         .....                    .:dOOXXKOxl,
+ KM0               .kMM0' .dl>~,.               .WMd
+ 'XM0.           ,OMMK'    OMMM7'              .XMK
+   *WMO:.    .;xNMMk'       NNNMKl.          .xWMx
+     ^ONMMNXMMMKx;          V  'xNMWKkxllox0NMWk'
+         '''''                    ':dOOXXKOxl'
 EOF
         ;;
 
@@ -14289,6 +14385,30 @@ llllllllllllll  lllllllllllllllllll
        `' \\*::  :ccllllllllllllllll
                        ````''*::cll
                                  ``
+EOF
+        ;;
+
+        "Windows95")
+            set_colors 6 4 3 2 1 0
+            read -rd '' ascii_data <<'EOF'
+${c6}                           ___
+                      .--=+++++=-:.
+   .              _ *%@@@@@@@@@@@@@@*
+    *:+:.__ :+* @@@ @"${c5}_*&%${c6}@@${c4}%&&&*${c6}"@@@
+     "+.-#+ +%* " _ ${c5}++&&&%${c6}@@${c4}%&&&&&#${c6}@@
+${c5}   "          , ${c6}%@@ ${c5}&&&&&%${c6}@@${c4}%&&&&&#${c6}@@
+${c5}      *  oo  *# ${c6}" _ ${c5}&&&&&%${c6}@@${c4}%&&&&&#${c6}@@
+${c5}   "          , ${c6}%@@ ${c5}&&&&"${c6}@@@@#*${c4}"&&&${c6}@@
+   .${c5}  *  oo  *# ${c6}" _ %@@@@@@@@@@@@@@@@
+    *:+:.__ :=* %@@ @"${c1}**&%${c6}@@${c3}%&&&*${c6}"@@@
+     "+.-#+ +%* " _ ${c1}&&&&&%${c6}@@${c3}%&&&&&#${c6}@@
+${c1}   "          , ${c6}%@@ ${c1}&&&&&%${c6}@@${c3}%&&&&&#${c6}@@
+${c1}      *  oo  *# ${c6}" _ ${c1}&&&&&%${c6}@@${c3}%&&&&&#${c6}@@
+${c1}   "          , ${c6}%@@ ${c1}&&*"${c6}%@@@@@@${c3}"*%&${c6}@@
+   .${c1}  *  oo  *# ${c6}" _ @@@@@@@@@@@@@@@@@
+    *:+:.__ :+# @@@ @%#=+""""""+==%#@
+     "+.-#+ +%* %+" "             ":@
+          " "
 EOF
         ;;
 
