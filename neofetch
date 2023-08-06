@@ -5152,7 +5152,7 @@ print_ascii() {
             strip_escape_codes "${line}" line
             # Use patterns to replace color codes that the above line did not catch
             line=${line//\\033\[*([0-9;])[JKmsu]/}
-            line=${line//\[*([0-9;])[JKmsu]/}
+            line="$(printf %b "$line" | sed -E 's/'"$(printf %b '\x1B')"'\[*[0-9;]+[JKmsu]//g')"
             ((++lines,${#line}>ascii_len)) && ascii_len="${#line}"
         done <<< "${ascii_data//\$\{??\}}"
     fi
