@@ -3943,8 +3943,13 @@ get_style() {
                     qt_theme="$(grep "^${kde}" "$kde_config_file")"
                     qt_theme="${qt_theme/*=}"
 
-                    kde_theme="$(grep "^${kde}" "$kde_config_file")"
-                    kde_theme="${kde_theme/*=}"
+                    if [[ "$kde" == "widgetStyle" ]] && [[ $(grep "\[Theme\]" $HOME/.config/plasmarc) ]]; then
+                        kde_theme="$(awk '/name=/ {gsub(/name=/,"",$0);print $0;exit}' $HOME/.config/plasmarc)"
+                    else
+                        kde_theme="$(grep "^${kde}" "$kde_config_file")"
+                        kde_theme="${kde_theme/*=}"
+                    fi
+
                     if [[ "$kde" == "font" ]]; then
                         kde_font_size="${kde_theme#*,}"
                         kde_font_size="${kde_font_size/,*}"
@@ -3961,7 +3966,7 @@ get_style() {
                         kde_theme="$(grep "${kde}" "$kde_config_file")"
                         kde_theme="${kde_theme/*=}"
                     fi
-                    kde_theme="$kde_theme [KDE], "
+                    #kde_theme="$kde_theme [KDE], "
                 else
                     err "Theme: KDE config files not found, skipping."
                 fi
@@ -4132,11 +4137,13 @@ get_style() {
         gtk2_theme="$(trim "$gtk2_theme")"
         gtk3_theme="$(trim "$gtk3_theme")"
         qt_theme="$(trim "$qt_theme")"
+        kde_theme="$(trim "$kde_theme")"
 
         # Remove quotes.
         gtk2_theme="$(trim_quotes "$gtk2_theme")"
         gtk3_theme="$(trim_quotes "$gtk3_theme")"
         qt_theme="$(trim_quotes "$qt_theme")"
+        kde_theme="$(trim_quotes "$kde_theme")"
 
         # Handle Qt theme engines that load external themes
         case "$qt_theme" in
@@ -4155,6 +4162,7 @@ get_style() {
         [[ "$gtk2" == "off" ]] && unset gtk2_theme
         [[ "$gtk3" == "off" ]] && unset gtk3_theme
         [[ "$qt"  ==  "off" ]] && unset qt_theme
+        # TODO: kde theme visibility
 
         # Format the string based on which themes exist.
         # append_theme theme toolkit
@@ -4170,6 +4178,7 @@ get_style() {
         }
         theme=''
         local cur_theme=''
+        append_theme "$kde_theme" 'KDE'
         append_theme "$fly_theme" 'Fly'
         append_theme "$qt_theme" 'Qt'
         append_theme "$gtk2_theme" 'GTK2'
