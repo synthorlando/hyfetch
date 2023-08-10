@@ -3943,8 +3943,8 @@ get_style() {
                     qt_theme="$(grep "^${kde}" "$kde_config_file")"
                     qt_theme="${qt_theme/*=}"
 
-                    if [[ "$kde" == "widgetStyle" ]] && [[ $(grep "\[Theme\]" $HOME/.config/plasmarc) ]]; then
-                        kde_theme="$(awk '/name=/ {gsub(/name=/,"",$0);print $0;exit}' $HOME/.config/plasmarc)"
+                    if [[ "$kde" == "widgetStyle" ]] && grep -q "\[Theme\]" "$HOME/.config/plasmarc"; then
+                        kde_theme="$(awk '/name=/ {gsub(/name=/,"",$0);print $0;exit}' "$HOME/.config/plasmarc")"
                     else
                         kde_theme="$(grep "^${kde}" "$kde_config_file")"
                         kde_theme="${kde_theme/*=}"
