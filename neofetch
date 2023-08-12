@@ -214,6 +214,18 @@ mem_precision=2
 package_managers="on"
 
 
+# Show separate user and system packages for supported package managers
+# 
+# Default: 'on'
+# Values:  'on', 'off'
+# Flag:    --package_separate
+#
+# Example:
+# on:  '8 packages (flatpak-system), 9 packages (flatpak-user)'
+# off: '17 packages (flatpak)'
+package_separate="on"
+
+
 # Shell
 
 
@@ -836,7 +848,7 @@ image_source="auto"
 # NOTE: AIX, AlmaLinux, Alpine, Alter, Amazon, AmogOS, Anarchy, Android, Antergos, antiX, AOSC OS,
 # AOSC OS/Retro, Aperio GNU/Linux, Aperture, Apricity, Arch, ArchBox, Archcraft, archcraft_ascii,
 # archcraft_minimal, ARCHlabs, ArchMerge, ArchStrike, ArcoLinux, ArseLinux, Artix, Arya, Asahi,
-# Aster, AsteroidOS, astOS, Astra Linux, Bedrock, BigLinux, Bitrig, BlackArch, blackPanther, BLAG,
+# Aster, AsteroidOS, astOS, Astra Linux, Athena, Bedrock, BigLinux, Bitrig, BlackArch, blackPanther, BLAG,
 # BlankOn, BlueLight, Bodhi, bonsai, BSD, BunsenLabs, CachyOS, Calculate, CalinixOS, Carbs, CBL-
 # Mariner, CelOS, Center, CentOS, Chakra, ChaletOS, Chapeau, ChonkySealOS, Chrom, Cleanjaro, Clear
 # Linux OS, ClearOS, Clover, Cobalt, Condres, Container Linux by CoreOS, CRUX, Crystal Linux,
@@ -848,7 +860,7 @@ image_source="auto"
 # Hyperbola, iglunix, instantOS, IRIX, Itc, januslinux, Kaisen, Kali, KaOS, KDE, Kibojoe, Kogaion,
 # Korora, KrassOS, KSLinux, Kubuntu, LangitKetujuh, LaxerOS, LEDE, LibreELEC, Linspire, Linux, Linux
 # Lite, Linux Mint, Linux Mint Old, Live Raizo, LMDE, Lubuntu, Lunar, mac, Mageia, MagpieOS,
-# Mandriva, Manjaro, MassOS, MatuusOS, Maui, Mer, Minix, MIRACLE LINUX, MX, Namib, NekOS, Neptune,
+# Mandriva, Manjaro, MassOS, MatuusOS, Maui, Meowix, Mer, Minix, MIRACLE LINUX, MX, Namib, NekOS, Neptune,
 # NetBSD, Netrunner, Nitrux, NixOS, Nobara, NomadBSD, Nurunner, NuTyX, Obarun, OBRevenge, OmniOS,
 # Open Source Media Center, OpenBSD, openEuler, OpenIndiana, openmamba, OpenMandriva, OpenStage,
 # openSUSE, openSUSE Leap, openSUSE Tumbleweed, OpenWrt, OPNsense, Oracle, orchid, OS Elbrus,
@@ -983,6 +995,11 @@ background_color=
 # Values: 'auto', 'on', 'off'
 stdout="auto"
 EOF
+
+# If /etc/neofetch/default.conf exist, set config variable to its content
+if [[ -f /etc/neofetch/default.conf ]]; then
+    config="$(< /etc/neofetch/default.conf)"
+fi
 
 # DETECT INFORMATION
 
@@ -1272,7 +1289,8 @@ get_distro() {
 
                 windows_version_verbose=$(reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -v ProductName | grep REG_)
                 windows_version_verbose=$(trim "${windows_version_verbose/ProductName}")
-                windows_version_verbose=$(trim "${windows_version_verbose/REG_SZ}")buildnumber=$(reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -v CurrentBuildNumber | grep REG_)
+                windows_version_verbose=$(trim "${windows_version_verbose/REG_SZ}")
+                buildnumber=$(reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -v CurrentBuildNumber | grep REG_)
                 windows_version_verbose=$(trim "${windows_version_verbose/Windows}")
                 windows_buildnumber=$(reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -v CurrentBuildNumber | grep REG_)               
                 windows_buildnumber=${buildnumber/CurrentBuildNumber}
@@ -1345,23 +1363,24 @@ get_distro() {
 
         "Mac OS X"|"macOS")
             case $osx_version in
-                10.4*)  codename="Mac OS X Tiger" ;;
-                10.5*)  codename="Mac OS X Leopard" ;;
+                10.4*)  codename="Mac OS X Tiger"        ;;
+                10.5*)  codename="Mac OS X Leopard"      ;;
                 10.6*)  codename="Mac OS X Snow Leopard" ;;
-                10.7*)  codename="Mac OS X Lion" ;;
-                10.8*)  codename="OS X Mountain Lion" ;;
-                10.9*)  codename="OS X Mavericks" ;;
-                10.10*) codename="OS X Yosemite" ;;
-                10.11*) codename="OS X El Capitan" ;;
-                10.12*) codename="macOS Sierra" ;;
-                10.13*) codename="macOS High Sierra" ;;
-                10.14*) codename="macOS Mojave" ;;
-                10.15*) codename="macOS Catalina" ;;
-                10.16*) codename="macOS Big Sur" ;;
-                11.*)  codename="macOS Big Sur" ;;
-                12.*)  codename="macOS Monterey" ;;
-                13.*)  codename="macOS Ventura" ;;
-                *)      codename=macOS ;;
+                10.7*)  codename="Mac OS X Lion"         ;;
+                10.8*)  codename="OS X Mountain Lion"    ;;
+                10.9*)  codename="OS X Mavericks"        ;;
+                10.10*) codename="OS X Yosemite"         ;;
+                10.11*) codename="OS X El Capitan"       ;;
+                10.12*) codename="macOS Sierra"          ;;
+                10.13*) codename="macOS High Sierra"     ;;
+                10.14*) codename="macOS Mojave"          ;;
+                10.15*) codename="macOS Catalina"        ;;
+                10.16*) codename="macOS Big Sur"         ;;
+                11.*)   codename="macOS Big Sur"         ;;
+                12.*)   codename="macOS Monterey"        ;;
+                13.*)   codename="macOS Ventura"         ;;
+                14.*)   codename="macOS Sonoma"          ;;
+                *)      codename="macOS"                 ;;
             esac
 
             distro="$codename $osx_version ($osx_build)"
@@ -1505,7 +1524,17 @@ get_model() {
                 fi
 
                 case $model in
+                    Mac14,15):              "MacBook Air (15-inch, M2, 2023)" ;;
+                    Mac14,14):              "Mac Studio (M2 Max, 2023)" ;;
+                    Mac14,13):              "Mac Studio (M2 Ultra, 2023)" ;;
+                    Mac14,8):               "Mac Pro (2023)" ;;
+                    Mac14,6 | Mac14,10):    "MacBook Pro (16-inch, 2023)" ;;
+                    Mac14,5 | Mac14,9):     "MacBook Pro (14-inch, 2023)" ;;
+                    Mac14,12 | Mac14,3):    "Mac mini (2023)" ;;
                     Mac14,7):               "MacBook Pro (13-inch, M2, 2022)" ;;
+                    Mac14,2):               "MacBook Air (M2, 2022)" ;;
+                    Mac13,1):               "Mac Studio (M1 Max, 2022)" ;;
+                    Mac13,2):               "Mac Studio (M1 Ultra, 2022)" ;;
                     MacBookPro18,[3-4]):    "MacBook Pro (14-inch, 2021)" ;;
                     MacBookPro18,[1-2]):    "MacBook Pro (16-inch, 2021)" ;;
                     MacBookPro17,1):        "MacBook Pro (13-inch, M1, 2020)" ;;
@@ -1542,7 +1571,6 @@ get_model() {
                     MacBookPro5,2):         "MacBook Pro (17-inch, Mid/Early 2009)" ;;
                     MacBookPro5,1):         "MacBook Pro (15-inch, Late 2008)" ;;
                     MacBookPro4,1):         "MacBook Pro (17/15-inch, Early 2008)" ;;
-                    Mac14,2):               "MacBook Air (M2, 2022)" ;;
                     MacBookAir10,1):        "MacBook Air (M1, 2020)" ;;
                     MacBookAir9,1):         "MacBook Air (Retina, 13-inch, 2020)" ;;
                     MacBookAir8,2):         "MacBook Air (Retina, 13-inch, 2019)" ;;
@@ -1564,14 +1592,12 @@ get_model() {
                     MacBook7,1):            "MacBook (13-inch, Mid 2010)" ;;
                     MacBook6,1):            "MacBook (13-inch, Late 2009)" ;;
                     MacBook5,2):            "MacBook (13-inch, Early/Mid 2009)" ;;
-                    Mac13,1):               "Mac Studio (2022, Two USB-C front ports)" ;;
-                    Mac13,2):               "Mac Studio (2022, Two Thunderbolt 4 front ports)" ;;
                     Macmini9,1):            "Mac mini (M1, 2020)" ;;
                     Macmini8,1):            "Mac mini (2018)" ;;
                     Macmini7,1):            "Mac mini (Mid 2014)" ;;
                     Macmini6,[1-2]):        "Mac mini (Late 2012)" ;;
                     Macmini5,[1-2]):        "Mac mini (Mid 2011)" ;;
-                    Macmini4,1):            "Mac mini (Mid 2010)" ;;
+                    Macmini4,1):            "MacPromini (Mid 2010)" ;;
                     Macmini3,1):            "Mac mini (Early/Late 2009)" ;;
                     MacPro7,1):             "Mac Pro (2019)" ;;
                     MacPro6,1):             "Mac Pro (Late 2013)" ;;
@@ -1920,6 +1946,14 @@ get_packages() {
         ((packages+=${#pkgs[@]}));
         pac "$((${#pkgs[@]}-pkgs_h))";
     }
+    # Similar with tot but do nothing if the command fails
+    tot-safe() {
+        if pkgs="$("$@")"; then
+            pkgs=$(echo "$pkgs" | wc -l)
+            ((packages+=pkgs))
+            pac "$((pkgs-pkgs_h))";
+        fi
+    }
 
     # Redefine tot() and dir() for Bedrock Linux.
     [[ -f /bedrock/etc/bedrock-release && $PATH == */bedrock/cross/* ]] && {
@@ -1940,7 +1974,8 @@ get_packages() {
     }
 
     # OS-independent package managers.
-    has pipx && tot pipx list --short
+    has pipx  && tot pipx list --short
+    has cargo && _cargopkgs="$(cargo install --list | grep -v '^ ')" && tot echo "$_cargopkgs"
 
     # OS-specific package managers.
     case $os in
@@ -1967,8 +2002,9 @@ get_packages() {
             has pisi       && tot pisi li
             has pacstall   && tot pacstall -L
             has bulge      && tot bulge list
-            has pm         && tot pm list packages
+            has pm         && tot-safe pm list packages
             has evox       && tot cat /var/evox/packages/DB
+            has squirrel   && tot ls /var/packages
             has tea        && tot find "$HOME/.tea" -maxdepth 2 -mindepth 2 -type d
 
             # Using the dnf package cache is much faster than rpm.
@@ -1996,7 +2032,7 @@ get_packages() {
             has tekel   && dir "/data/app/$USER/* /data/app/system/*"
             has crew    && dir "${CREW_PREFIX:-/usr/local}/etc/crew/meta/*.filelist"
             has pkgtool && dir "/var/log/packages/*"
-            has scratch && dir "/var/lib/scratchpkg/index/*/.pkginfo"
+            has scratch && dir "/var/lib/scratchpkg/db/*"
             has kagami  && dir "/var/lib/kagami/pkgs/*"
             has cave    && dir "/var/db/paludis/repositories/cross-installed/*/data/*/ \
                                /var/db/paludis/repositories/installed/data/*/"
@@ -2004,24 +2040,65 @@ get_packages() {
             shopt -u nullglob
             }
 
+            # Steam games
+            STEAM_P=".local/share/Steam/steamapps/common"
+            if [[ -d "$HOME/$STEAM_P" ]]; then
+                manager=steam && dir "$HOME/$STEAM_P/*/"
+            elif [[ -d "$HOME/.var/app/com.valvesoftware.Steam/$STEAM_P" ]]; then
+                manager=steam && dir "$HOME/.var/app/com.valvesoftware.Steam/$STEAM_P/*/"
+            elif [[ -d "$HOME/.steam/steam/steamapps/common" ]]; then
+                manager=steam && dir "$HOME/.steam/steam/steamapps/common/*/"
+            fi
+
             # Other (Needs complex command)
             has kpm-pkg && ((packages+=$(kpm  --get-selections | grep -cv deinstall$)))
 
-            has guix && {
-                manager=guix-system && tot guix package -p /run/current-system/profile -I
-                manager=guix-user   && tot guix package -I
-                manager=guix-home   && tot guix package -p ~/.guix-home/profile -I
-            }
-
-            has nix-store && {
-                nix-user-pkgs() {
-                    nix-store -qR ~/.nix-profile
-                    nix-store -qR /etc/profiles/per-user/"$USER"
+            # Separate system and user packages
+            if [[ $package_separate == on ]]; then
+                has guix && {
+                    manager=guix-system && tot guix package -p /run/current-system/profile -I
+                    manager=guix-user   && tot guix package -I
+                    manager=guix-home   && tot guix package -p ~/.guix-home/profile -I
                 }
-                manager=nix-system  && tot nix-store -qR /run/current-system/sw
-                manager=nix-user    && tot nix-user-pkgs
-                manager=nix-default && tot nix-store -qR /nix/var/nix/profiles/default
-            }
+
+                has nix-store && {
+                    nix-user-pkgs() {
+                        nix-store -qR ~/.nix-profile
+                        nix-store -qR /etc/profiles/per-user/"$USER"
+                    }
+                    manager=nix-system  && tot nix-store -qR /run/current-system/sw
+                    manager=nix-user    && tot nix-user-pkgs
+                    manager=nix-default && tot nix-store -qR /nix/var/nix/profiles/default
+                }
+
+                has flatpak && {
+                    manager=flatpak-system  && tot flatpak list --system
+                    manager=flatpak-user    && tot flatpak list --user
+                }
+            else
+                has guix && {
+                    guix-all() {
+                        guix package -p /run/current-system/profile -I
+                        guix package -I
+                        guix package -p ~/.guix-home/profile -I
+                    }
+                    manager=guix && tot guix-all
+                }
+
+                has nix-store && {
+                    nix-all() {
+                        nix-store -qR ~/.nix-profile
+                        nix-store -qR /etc/profiles/per-user/"$USER"
+                        nix-store -qR /run/current-system/sw
+                        nix-store -qR /nix/var/nix/profiles/default
+                    }
+                    manager=nix && tot nix-all
+                }
+
+                has flatpak && {
+                    manager=flatpak && tot flatpak list
+                }
+            fi
 
             # pkginfo is also the name of a python package manager which is painfully slow.
             # TODO: Fix this somehow.
@@ -2045,10 +2122,8 @@ get_packages() {
             esac
 
             # List these last as they accompany regular package managers.
-            has flatpak && tot flatpak list
             has spm     && tot spm list -i
             has puyo    && dir ~/.puyo/installed
-            has cargo   && dir "${CARGO_HOME:-$HOME/.cargo}/bin/"*
 
             # Snap hangs if the command is run without the daemon running.
             # Only run snap if the daemon is also running.
@@ -2058,6 +2133,9 @@ get_packages() {
             # This is the only standard location for appimages.
             # See: https://github.com/AppImage/AppImageKit/wiki
             manager=appimage && has appimaged && dir ~/.local/bin/*.[Aa]pp[Ii]mage
+
+            # Has devbox & is initialized
+            has devbox && [[ "$(devbox global list)" != *"not activated"* ]] && tot devbox global list
         ;;
 
         "Mac OS X"|"macOS"|MINIX)
@@ -2215,7 +2293,7 @@ get_editor() {
             editor="${editor/$editor_name }"
         ;;
         *)
-            editor+=$("$editor_full_path" --version 2>&1)
+            # editor+=$("$editor_full_path" --version 2>&1)
             editor="${editor/$'\n'*}"
         ;;
     esac
@@ -2360,7 +2438,7 @@ get_de() {
     # TODO:
     #  - New config option + flag: --de_display_server on/off ?
     #  - Add display of X11, Arcan and anything else relevant.
-    [[ $de ]] &&
+    [[ $de ]] && [[ $os != "Windows" ]] &&
         de+=" (${XDG_SESSION_TYPE})"
 
     de_run=1
@@ -3741,36 +3819,42 @@ get_song() {
 get_resolution() {
     case $os in
         "Mac OS X"|"macOS")
-            if type -p screenresolution >/dev/null; then
-                resolution="$(screenresolution get 2>&1 | awk '/Display/ {printf $6 "Hz, "}')"
-                resolution="${resolution//x??@/ @ }"
+            resolution=""
+            temp_plist="/tmp/neofetch_system_profiler_SPDisplaysDataType.xml" # PlistBuddy doesn't support reading from /dev/stdin
+            if system_profiler SPDisplaysDataType -xml > $temp_plist; then
+                for ((gpu=0; gpu<999; gpu++)); do
+                    if PlistBuddy -c "print 0:_items:${gpu}" $temp_plist &> /dev/null; then
+                        for ((display=0; display<999; display++)); do
+                            if spdisplays_resolution="$(PlistBuddy -c "print 0:_items:${gpu}:spdisplays_ndrvs:${display}:_spdisplays_resolution" $temp_plist)" 2>/dev/null; then
+                                spdisplays_resolution="${spdisplays_resolution//.[0-9][0-9]/}"
+                                if spdisplays_pixels="$(PlistBuddy -c "print 0:_items:${gpu}:spdisplays_ndrvs:${display}:_spdisplays_pixels" $temp_plist)" 2>/dev/null; then
+                                  scaled_x="$(echo "$spdisplays_resolution" | awk '{print $1}')"
+                                  output_x="$(echo "$spdisplays_pixels" | awk '{print $1}')"
+                                  (( scale_factor=output_x/scaled_x ))
+                                  [[ $scale_factor -gt 1 ]] && spdisplays_resolution="${spdisplays_resolution// @/ @${scale_factor}x @}"
+                                fi
+                                spdisplays_resolution="${spdisplays_resolution// x /x}"
+                                [[ $gpu -gt 0 || $display -gt 0 ]] && resolution+=", "
+                                resolution+="${spdisplays_resolution}"
+                            else
+                                break
+                            fi
+                        done
+                    else
+                        break
+                    fi
+                done
 
-            else
-                resolution="$(system_profiler SPDisplaysDataType |\
-                              awk '/Resolution:/ {printf $2"x"$4" @ "$6"Hz, "}')"
+                if [[ "$refresh_rate" == "off" ]]; then
+                    resolution="${resolution/ @ [0-9][0-9][0.9]Hz}"
+                    resolution="${resolution/ @ [0-9][0.9]Hz}"
+                    resolution="${resolution/ @ [0-9]Hz}"
+                else
+                    resolution="${resolution// @ 0Hz}"
+                fi
+
+                rm $temp_plist
             fi
-
-            if [[ -e "/Library/Preferences/com.apple.windowserver.plist" ]]; then
-                scale_factor="$(PlistBuddy -c "Print DisplayAnyUserSets:0:0:Resolution" \
-                                /Library/Preferences/com.apple.windowserver.plist)"
-            else
-                scale_factor=""
-            fi
-
-            # If no refresh rate is empty.
-            [[ "$resolution" == *"@ Hz"* ]] && \
-                resolution="${resolution//@ Hz}"
-
-            [[ "${scale_factor%.*}" == 2 ]] && \
-                resolution="${resolution// @/@2x @}"
-
-            if [[ "$refresh_rate" == "off" ]]; then
-                resolution="${resolution// @ [0-9][0-9]Hz}"
-                resolution="${resolution// @ [0-9][0-9][0-9]Hz}"
-            fi
-
-            [[ "$resolution" == *"0Hz"* ]] && \
-                resolution="${resolution// @ 0Hz}"
         ;;
 
         "Windows")
@@ -3865,8 +3949,13 @@ get_style() {
                     qt_theme="$(grep "^${kde}" "$kde_config_file")"
                     qt_theme="${qt_theme/*=}"
 
-                    kde_theme="$(grep "^${kde}" "$kde_config_file")"
-                    kde_theme="${kde_theme/*=}"
+                    if [[ "$kde" == "widgetStyle" ]] && grep -q "\[Theme\]" "$HOME/.config/plasmarc"; then
+                        kde_theme="$(awk '/name=/ {gsub(/name=/,"",$0);print $0;exit}' "$HOME/.config/plasmarc")"
+                    else
+                        kde_theme="$(grep "^${kde}" "$kde_config_file")"
+                        kde_theme="${kde_theme/*=}"
+                    fi
+
                     if [[ "$kde" == "font" ]]; then
                         kde_font_size="${kde_theme#*,}"
                         kde_font_size="${kde_font_size/,*}"
@@ -3883,7 +3972,7 @@ get_style() {
                         kde_theme="$(grep "${kde}" "$kde_config_file")"
                         kde_theme="${kde_theme/*=}"
                     fi
-                    kde_theme="$kde_theme [KDE], "
+                    #kde_theme="$kde_theme [KDE], "
                 else
                     err "Theme: KDE config files not found, skipping."
                 fi
@@ -4054,11 +4143,13 @@ get_style() {
         gtk2_theme="$(trim "$gtk2_theme")"
         gtk3_theme="$(trim "$gtk3_theme")"
         qt_theme="$(trim "$qt_theme")"
+        kde_theme="$(trim "$kde_theme")"
 
         # Remove quotes.
         gtk2_theme="$(trim_quotes "$gtk2_theme")"
         gtk3_theme="$(trim_quotes "$gtk3_theme")"
         qt_theme="$(trim_quotes "$qt_theme")"
+        kde_theme="$(trim_quotes "$kde_theme")"
 
         # Handle Qt theme engines that load external themes
         case "$qt_theme" in
@@ -4077,6 +4168,7 @@ get_style() {
         [[ "$gtk2" == "off" ]] && unset gtk2_theme
         [[ "$gtk3" == "off" ]] && unset gtk3_theme
         [[ "$qt"  ==  "off" ]] && unset qt_theme
+        # TODO: kde theme visibility
 
         # Format the string based on which themes exist.
         # append_theme theme toolkit
@@ -4092,6 +4184,7 @@ get_style() {
         }
         theme=''
         local cur_theme=''
+        append_theme "$kde_theme" 'KDE'
         append_theme "$fly_theme" 'Fly'
         append_theme "$qt_theme" 'Qt'
         append_theme "$gtk2_theme" 'GTK2'
@@ -5074,7 +5167,7 @@ print_ascii() {
             strip_escape_codes "${line}" line
             # Use patterns to replace color codes that the above line did not catch
             line=${line//\\033\[*([0-9;])[JKmsu]/}
-            line=${line//\[*([0-9;])[JKmsu]/}
+            line="$(printf %b "$line" | sed -E 's/'"$(printf %b '\x1B')"'\[*[0-9;]+[JKmsu]//g')"
             ((++lines,${#line}>ascii_len)) && ascii_len="${#line}"
         done <<< "${ascii_data//\$\{??\}}"
     fi
@@ -6033,6 +6126,7 @@ INFO:
 
     --title_fqdn on/off         Hide/Show Fully Qualified Domain Name in title.
     --package_managers on/off   Hide/Show Package Manager names. (on, tiny, off)
+    --package_separate on/off   Whether to separate system/user modes for supported package managers
     --os_arch on/off            Hide/Show OS architecture.
     --speed_type type           Change the type of cpu speed to display.
                                 Possible values: current, min, max, bios,
@@ -6181,7 +6275,7 @@ ASCII:
                                 Aperture, Apricity, Arch, ArchBox, Archcraft, archcraft_ascii,
                                 archcraft_minimal, ARCHlabs, ArchMerge, ArchStrike, ArcoLinux,
                                 ArseLinux, Artix, Arya, Asahi, Aster, AsteroidOS, astOS, Astra
-                                Linux, Bedrock, BigLinux, Bitrig, BlackArch, blackPanther, BLAG,
+                                Linux, Athena, Bedrock, BigLinux, Bitrig, BlackArch, blackPanther, BLAG,
                                 BlankOn, BlueLight, Bodhi, bonsai, BSD, BunsenLabs, CachyOS,
                                 Calculate, CalinixOS, Carbs, CBL-Mariner, CelOS, Center, CentOS,
                                 Chakra, ChaletOS, Chapeau, ChonkySealOS, Chrom, Cleanjaro, Clear
@@ -6199,7 +6293,7 @@ ASCII:
                                 LangitKetujuh, LaxerOS, LEDE, LibreELEC, Linspire, Linux, Linux
                                 Lite, Linux Mint, Linux Mint Old, Live Raizo, LMDE, Lubuntu, Lunar,
                                 mac, Mageia, MagpieOS, Mandriva, Manjaro, MassOS, MatuusOS, Maui,
-                                Mer, Minix, MIRACLE LINUX, MX, Namib, NekOS, Neptune, NetBSD,
+                                Meowix, Mer, Minix, MIRACLE LINUX, MX, Namib, NekOS, Neptune, NetBSD,
                                 Netrunner, Nitrux, NixOS, Nobara, NomadBSD, Nurunner, NuTyX, Obarun,
                                 OBRevenge, OmniOS, Open Source Media Center, OpenBSD, openEuler,
                                 OpenIndiana, openmamba, OpenMandriva, OpenStage, openSUSE, openSUSE
@@ -6293,6 +6387,7 @@ get_args() {
             # Info
             "--title_fqdn") title_fqdn="$2" ;;
             "--package_managers") package_managers="$2" ;;
+            "--package_separate") package_separate="$2" ;;
             "--os_arch") os_arch="$2" ;;
             "--cpu_cores") cpu_cores="$2" ;;
             "--cpu_speed") cpu_speed="$2" ;;
@@ -7506,6 +7601,32 @@ ${c2}        .oossssso-````/ossssss+`
 EOF
         ;;
 
+        "unicodearch"*)
+            set_colors 6 6 7 1
+            read -rd '' ascii_data <<'EOF'
+${c1}                   ▄
+                  ▟█▙
+                 ▟███▙
+                ▟█████▙
+               ▟███████▙
+              ▂▔▀▜██████▙
+             ▟██▅▂▝▜█████▙
+            ▟█████████████▙
+           ▟███████████████▙
+          ▟█████████████████▙
+         ▟███████████████████▙
+        ▟█████████▛▀▀▜████████▙
+       ▟████████▛      ▜███████▙
+      ▟█████████        ████████▙
+     ▟██████████        █████▆▅▄▃▂
+    ▟██████████▛        ▜█████████▙
+   ▟██████▀▀▀              ▀▀██████▙
+  ▟███▀▘                       ▝▀███▙
+ ▟▛▀                               ▀▜▙
+
+EOF
+        ;;
+
         "artix_small"*)
             set_colors 6 6 7 1
             read -rd '' ascii_data <<'EOF'
@@ -7638,6 +7759,36 @@ ${c1}        OMMc   ...
 ${c1}         xMMx
 ${c1}          ;XMN:
 ${c1}            ,.
+EOF
+        ;;
+        
+        "Athena"*)
+            set_colors 7 3
+            read -rd '' ascii_data <<'EOF'
+${c1}    .          ..
+${c1}   :####:     ####.
+${c1}  .################
+${c1} :##################
+${c1}.###################.
+${c1}########     #######
+${c1}#######  ${c2}####${c1} #####
+${c1}:#######.      ####
+${c1} #########  ${c2}#${c1}   ##   #
+${c1} #######   ${c2}##${c1}      ####
+${c1}########  ${c2}####${c1}    #######
+${c1}########  ${c2}#####${c1}   ########
+${c1}########  ${c2}#######${c1}  #######
+${c1} #######  ${c2}########${c1}  #######
+${c1} ########  ${c2}#########${c1}  ######
+${c1}  ########  ${c2}#########${c1}  #####
+${c1}    #######  ${c2}#########${c1}  ####
+${c1}     #######  ${c2}#########${c1}  ##
+${c1}       #######  ${c2}########${c1} ##
+${c1}          ###### ${c2}########${c1} #
+${c1}               ### ${c2}#######${c1}
+${c1}                     ${c2}######${c1}
+${c1}                        ${c2}####${c1}
+${c1}                          ${c2}##${c1}
 EOF
         ;;
 
@@ -8744,6 +8895,31 @@ ${c1}             ............
 EOF
         ;;
 
+
+        "openKylin"*)
+            set_colors 2 7
+            read -rd '' ascii_data <<'EOF'
+${c1}             
+             /KKK]                       
+            KKKKKKK`   ]KKKK\            
+           KKKKK/  /KKKKKKKKK\           
+          KKKK/ ,KKKKKKKKKKKK^          
+  ,]KKK  =KKK` /KKKKKKOOOOOO`            
+,KKKKKK  =KK  /`    [\OOOOOOO\           
+ \KKKKK  =K            ,OOOOOOO`         
+ ,KKKKK  =^              \OOOOOO         
+  ,KKKK   ^               OOOOOO^        
+   *KKK^                  =OOOOO^        
+    OOKK^                 OOOOOO^        
+    \OOOK\               /OOOOOO`        
+     OOOOOO]           ,OOOOOOO^         
+     ,OOOOOOOO\]   ,[OOOOOOOOO/          
+       \OOOOOOOOOOOOOOOOOOOOO`           
+         [OOOOOOOOOOOOOOOO/`             
+            ,[OOOOOOOOO]                 
+EOF
+        ;;
+
         "DesaOS")
             set_colors 2 7
             read -rd '' ascii_data <<'EOF'
@@ -9128,6 +9304,30 @@ wWW${c2}N${c1}WWWWw
     wWWWWWWWWWWWWWWWw
        WWWWWWWWWWWWWw
            wWWWWWWWw
+EOF
+        ;;
+
+        "EvolutionOS"*)
+            set_colors 4 7
+            read -rd '' ascii_data <<'EOF'
+${c1}\e[1;32m      dddddddddddddddddddddddd
+  .dddd''''''''''''''''''''''dddd.
+  dd:   dddddddddddddddddddd;   dd:
+  dd:   ldl:''''''''''''''''    dd:
+  dd:   ldl:                    dd:
+  dd:   ldl:                    dd:
+  dd:   ldl:                    dd:
+  dd:   ldl:                    dd:
+  dd:   ldl: ddddddd;  ddddd;   dd:
+  dd:   ldl: '''''''   '''''    dd:
+  dd:   ldl:                    dd:
+  dd:   ldl:                    dd:
+  dd:   ldl:                    dd:
+  dd:   ldl:                    dd:
+  dd:   ldl: ddddddddddddddd;   dd:
+  dddd:.'''  '''''''''''''''  dddd:
+     dddddddddddddddddddddddddd;;'
+      '''''''''''''''''''''''''\e[0m
 EOF
         ;;
 
@@ -10605,6 +10805,22 @@ ${c1}             `.-://////:--`
 EOF
         ;;
 
+        "Meowix"*)
+            set_colors 1 3 3 4
+            read -rd '' ascii_data <<'EOF'
+${c1}         #${c2}%            ${c3}&${c4}*
+${c1}        ##${c2}%%          ${c3}&&${c4}**
+${c1}       ##  ${c2}%%        ${c3}&&  ${c4}**
+${c1}      ##    ${c2}%%      ${c3}&&    ${c4}**
+${c1}     ##      ${c2}%%    ${c3}&&      ${c4}**
+${c1}    ##        ${c2}%%  ${c3}&&        ${c4}**
+${c1}   ##          ${c2}%%${c3}&&          ${c4}**
+${c1}  ##            ${c2}%%            ${c4}**
+${c1} ##                            ${c4}**
+${c1}##                              ${c4}**
+EOF
+        ;;
+
         "Mer"*)
             set_colors 4 7 1
             read -rd '' ascii_data <<'EOF'
@@ -11390,7 +11606,7 @@ ${c1}                 /(/
 EOF
         ;;
 
-        "OpenWrt"*)
+        *"Wrt"*)
             set_colors 4 7 1
             read -rd '' ascii_data <<'EOF'
 ${c1} _______
@@ -11856,6 +12072,31 @@ ${c1} /🐦🐦🐦$ /🐦/🐦                /🐦🐦🐦  /🐦🐦🐦
 |__/     |__|__/  \__/\_______/\______/ \______/       .
 EOF
         ;;
+        
+        "phyOS"*)
+            set_colors 33 33 7 1
+            read -rd '' ascii_data <<'EOF'
+${c1}            '
+.^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^.^^^^^.
+ :777777777777777777777777777777^~7777:
+  .~~~~~~~~~~~~~~~~~~~~~^~7777!:!777!.
+    ~7!!!!!!!!!!!!!!!!!^:!777~^!777~
+     ^77777!!!!!!!!!7!^^7777^^7777^
+      ^7777~.~~~~^.  .~7777^~7777:
+       :!777~^!777~. !777!:~777!:
+        .!777!:~777!:~77~:!777!.
+          ~777!^~7777:^~^!777~
+           ^7777^^7777^^7777^
+            :7777~^!7777777:
+             .!777!:!7777!.
+              .~777!:~77~.
+                ~7777^~~
+                 ^7777.
+                  :77:
+                   ..
+EOF
+        ;;
+
 
         "PNM Linux"* | "WHPNM Linux"*)
             set_colors 33 9 15 202
@@ -12283,26 +12524,28 @@ EOF
         ;;
 
         "Reborn OS"* | "Reborn"*)
-            set_colors 2 2 8
+            set_colors 0 4 6
             read -rd '' ascii_data <<'EOF'
-${c3}
-        mMMMMMMMMM  MMMMMMMMMm
-       NM                    MN
-      MM  ${c1}dddddddd  dddddddd  ${c3}MN
-     mM  ${c1}dd                dd  ${c3}MM
-        ${c1}dd  hhhhhh   hhhhh  dd
-   ${c3}mM      ${c1}hh            hh      ${c3}Mm
-  NM  ${c1}hd       ${c3}mMMMMMMd       ${c1}dh  ${c3}MN
- NM  ${c1}dd  hh   ${c3}mMMMMMMMMm   ${c1}hh  dd  ${c3}MN
-NM  ${c1}dd  hh   ${c3}mMMMMMMMMMMm   ${c1}hh  dd  ${c3}MN
- NM  ${c1}dd  hh   ${c3}mMMMMMMMMm   ${c1}hh  dd  ${c3}MN
-  NM  ${c1}hd       ${c3}mMMMMMMm       ${c1}dh  ${c3}MN
-   mM      ${c1}hh            hh      ${c3}Mm
-        ${c1}dd  hhhhhh  hhhhhh  dd
-     ${c3}MM  ${c1}dd                dd  ${c3}MM
-      MM  ${c1}dddddddd  dddddddd  ${c3}MN
-       NM                    MN
-        mMMMMMMMMM  MMMMMMMMMm
+${c1}          .======================.          
+         ${c1}.#${c2}#*********${c1}%%${c2}*********#${c1}%:         
+        ${c1}:%${c2}#**********${c1}%%${c2}**********#${c1}%-        
+       ${c1}-%${c2}************${c1}%%${c2}************${c1}%=       
+      ${c1}+%${c2}******${c1}%%#####${c1}%%#####%%${c2}******${c1}%+      
+     ${c1}*%%#${c2}****${c1}%#${c3}+=====${c1}%%${c3}=====+${c1}#%${c2}****${c1}#%%*     
+    ${c1}*%${c2}*#${c1}#%%#%#${c3}====+++${c1}%%${c3}+++====${c1}#%#%%#${c2}#*${c1}##.   
+  ${c1}.##${c2}*****${c1}#%%%#${c3}*++${c1}%######%${c3}*+*${c1}#%%%#${c2}*****${c1}#%.  
+ ${c1}:%#${c2}*****${c1}#%${c3}*=+*${c1}#%%${c3}*++++++*${c1}%%#${c3}*+=*${c1}%#${c2}*****${c1}#%: 
+${c1}-%#${c2}*****${c1}#%${c3}+====*${c1}%${c3}*++++++++*${c1}%#${c3}====+${c1}%#${c2}******${c1}%-
+${c1}-%#${c2}*****${c1}#%${c3}+====*${c1}%${c3}*++++++++*${c1}%#${c3}====+${c1}%#${c2}******${c1}%=
+ ${c1}:%#${c2}*****${c1}#%${c3}*=+*${c1}#%%${c3}*++++++*${c1}%%#${c3}*+=*${c1}%#${c2}*****${c1}#%- 
+  ${c1}.##${c2}*****${c1}#%%%#${c3}*+*${c1}%######%${c3}*+*${c1}#%%%#${c2}*****${c1}#%:  
+   ${c1}.##${c2}**${c1}#%%#%#${c3}====+++${c1}%%${c3}+++====${c1}#%#%%#${c2}#*${c1}##.   
+     ${c1}*%%#${c2}****${c1}%#${c3}+=====${c1}%%${c3}=====+${c1}#%${c2}****${c1}#%%*     
+      ${c1}+%${c2}******${c1}%%#####%%#####%%${c2}******${c1}%*      
+       ${c1}-%${c2}************${c1}%%${c2}************${c1}%=       
+        ${c1}:%${c2}#**********${c1}%%${c2}**********#${c1}%-        
+         ${c1}:%${c2}#*********${c1}%%${c2}*********#${c1}%:         
+          ${c1}.======================.    
 EOF
         ;;
 
@@ -12758,6 +13001,32 @@ xxxxxxxxxxxxxxxxxx0       xxxxxxxxxxxxxx
 EOF
         ;;
 
+        "Salix"*)
+            set_colors 2
+            read -rd '' ascii_data <<'EOF'
+${c1}              __s_aaaaaaaaauuoXSSSSSSSS:
+          ._xSSSSSSSSSSSSSSSSSSSSSSSSSS:
+        _aSSSSSSSSSSSSSSSSSSSSSSSSSSSSS:
+      _xSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS:
+     <XSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS:
+    -"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
+
+  .ssssssssssssssssssssssssssssssssssss
+  {SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSl
+  oSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS;
+ :XSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS;
+ {SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+ -"""""""""""""""""""""""""""""""""""'
+
+ <assssssssssssssssssssssssssssssss>
+ nSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS}
+ nSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS}`
+ XSSSSSSSSSSSSSSSSSSSSSSSSSSSS"`
+ SSSSSSSSSSSSSSSSSSSSSSSSS!"`
+-""""""""""""""""""""""`
+EOF
+        ;;
+
         "Scientific"*)
             set_colors 4 7 1
             read -rd '' ascii_data <<'EOF'
@@ -13206,17 +13475,17 @@ EOF
             read -rd '' ascii_data <<'EOF'
 ${c2}                                     ......
      .,cdxxxoc,.               .:kKMMMNWMMMNk:.
-    cKMMN0OOOKWMMXo. ;        ;0MWk:.      .:OMMk.
-  ;WMK;.       .lKMMNM,     :NMK,             .OMW;
- cMW;            'WMMMN   ,XMK,                 oMM'
-.MMc               ..;l. xMN:                    KM0
-'MM.                   'NMO                      oMM
+    cKMMN0OOOKWMMXo. A        ;0MWk:'      ':OMMk.
+  ;WMK;'       'lKMMNM,     :NMK'             'OMW;
+ cMW;             WMMMN   ,XMK'                 oMM.
+.MMc             ''^*~l. xMN:                    KM0
+'MM.                   .NMO                      oMM
 .MM,                 .kMMl                       xMN
- KM0               .kMM0. .dl:,..               .WMd
- .XM0.           ,OMMK,    OMMMK.              .XMK
-   oWMO:.    .;xNMMk,       NNNMKl.          .xWMx
-     :ONMMNXMMMKx;          .  ,xNMWKkxllox0NMWk,
-         .....                    .:dOOXXKOxl,
+ KM0               .kMM0' .dl>~,.               .WMd
+ 'XM0.           ,OMMK'    OMMM7'              .XMK
+   *WMO:.    .;xNMMk'       NNNMKl.          .xWMx
+     ^ONMMNXMMMKx;          V  'xNMWKkxllox0NMWk'
+         '''''                    ':dOOXXKOxl'
 EOF
         ;;
 
@@ -13256,39 +13525,30 @@ dKK${c1}KKKKKKKKKK;.;oOKx,..${c2}^${c1}..;kKKK0.${c2}  dKd
             '^:ldxkkkkxdl:^'
 EOF
         ;;
+
         "parch"* | "Parch"* | "PARCH"*)
             set_colors 4 6
             read -rd '' ascii_data <<'EOF'
-
-   ${c1} ,#/*%*
-  ${c1} #. ..,..,*,,
-        ${c1} ,/,,...  ,.                  (/   ...
-         ${c1} ,/,........   .,.      ./(/%/ .*      #*
-         ${c1} .**,.....             ...,%&.           .,
-          ${c1} ,%,....                .,                ,
-          ${c1} ,&,...                .,,                &. .
-          ${c1} (%,...               ..,&                *.
-         ${c1} *&*..... &,,,,,,,#&   ..,&/               *.  /
-        ${c1} *&*,..... &***%&&**,&  ...,&*              /   /
-       ${c1} *&,....    &,**,,,**,#    ..,&/                .
-      ${c1} (/,...      &***%%%(,       ..,%(               #
-     ${c1} %*...        #,,,%             ..*%        .    *
-    ${c1} %,..                              .,%     .     /
-   ${c1} %,.                                 ..,,.      .%
-  ${c1} /,.                             ${c1} ..#     .%
- ${c1} .,.           ${c2}    @@@@@#        ${c1} ./   ./.
- ${c1} ,..          ${c2}    #&%.%%@         ${c1} .#%&*
-${c1} .,..          ${c2}    @//(*(@,        ${c1} ..
- ${c1} ,..        ${c2}    #@      /@@,      ${c1}
- ${c1} ...       ${c2}    &@         @@@     ${c1}
- ${c1} ,,.      ${c2}    (#         .@@#,     ${c1} ,
-  ${c1} /,..   ${c2}    *****@%     #****/    ${c1} .
-   ${c1} ((*....${c2}    /***%    %***   ${c1} .,.*
-    ${c1} /&&&**,.., ${c2}*   **,*,,. ${c1} ...,(&%*
-      ${c1} %&&&#*(**,,,,,,,,,,,,,,,*//(&&&&#
-        ${c1} /, .,.......     .,,***/(/,,/
-          ${c1} ./*/#*,,***,,***///(#%%*.
-
+${c1}
+                  +s;;:o-
+              s/sssso+/-'+\\
+           +/ssssss/`
+         /ssssssss/
+       \\ 'sssssss:
+      `o+;ssssssso\\
+     /sssssssssssss\\+
+    ;ssssssssssssssss:
+   :sssssssssssssssssso;
+   /ssssssssssssssssssssss
+  `+ssssssssssssssssssssso\\
+   so+'+ssssssssssssssss+'`
+   '` +osssssoooooosssss++oo\\
+     /sssssssooooooosssssssso
+    `osssssssssoooossssssssso:
+      \\sssssssssssssssssssss;
+       `+osssssssssssssss:/'
+         `\\osssssssssso;+'
+             `\\+;so:+-`
 EOF
         ;;
 
@@ -14200,6 +14460,30 @@ llllllllllllll  lllllllllllllllllll
        `' \\*::  :ccllllllllllllllll
                        ````''*::cll
                                  ``
+EOF
+        ;;
+
+        "Windows95")
+            set_colors 6 4 3 2 1 0
+            read -rd '' ascii_data <<'EOF'
+${c6}                           ___
+                      .--=+++++=-:.
+   .              _ *%@@@@@@@@@@@@@@*
+    *:+:.__ :+* @@@ @"${c5}_*&%${c6}@@${c4}%&&&*${c6}"@@@
+     "+.-#+ +%* " _ ${c5}++&&&%${c6}@@${c4}%&&&&&#${c6}@@
+${c5}   "          , ${c6}%@@ ${c5}&&&&&%${c6}@@${c4}%&&&&&#${c6}@@
+${c5}      *  oo  *# ${c6}" _ ${c5}&&&&&%${c6}@@${c4}%&&&&&#${c6}@@
+${c5}   "          , ${c6}%@@ ${c5}&&&&"${c6}@@@@#*${c4}"&&&${c6}@@
+   .${c5}  *  oo  *# ${c6}" _ %@@@@@@@@@@@@@@@@
+    *:+:.__ :=* %@@ @"${c1}**&%${c6}@@${c3}%&&&*${c6}"@@@
+     "+.-#+ +%* " _ ${c1}&&&&&%${c6}@@${c3}%&&&&&#${c6}@@
+${c1}   "          , ${c6}%@@ ${c1}&&&&&%${c6}@@${c3}%&&&&&#${c6}@@
+${c1}      *  oo  *# ${c6}" _ ${c1}&&&&&%${c6}@@${c3}%&&&&&#${c6}@@
+${c1}   "          , ${c6}%@@ ${c1}&&*"${c6}%@@@@@@${c3}"*%&${c6}@@
+   .${c1}  *  oo  *# ${c6}" _ @@@@@@@@@@@@@@@@@
+    *:+:.__ :+# @@@ @%#=+""""""+==%#@
+     "+.-#+ +%* %+" "             ":@
+          " "
 EOF
         ;;
 
