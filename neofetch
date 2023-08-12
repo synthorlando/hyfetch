@@ -2032,7 +2032,7 @@ get_packages() {
             has tekel   && dir "/data/app/$USER/* /data/app/system/*"
             has crew    && dir "${CREW_PREFIX:-/usr/local}/etc/crew/meta/*.filelist"
             has pkgtool && dir "/var/log/packages/*"
-            has scratch && dir "/var/lib/scratchpkg/index/*/.pkginfo"
+            has scratch && dir "/var/lib/scratchpkg/db/*"
             has kagami  && dir "/var/lib/kagami/pkgs/*"
             has cave    && dir "/var/db/paludis/repositories/cross-installed/*/data/*/ \
                                /var/db/paludis/repositories/installed/data/*/"
