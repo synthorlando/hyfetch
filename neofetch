@@ -38,7 +38,7 @@ shopt -s eval_unsafe_arith &>/dev/null
 sys_locale=${LANG:-C}
 XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-${HOME}/.config}
 PATH=$PATH:/usr/xpg4/bin:/usr/sbin:/sbin:/usr/etc:/usr/libexec
-reset='\e[39;22m'
+reset='\e[0m'
 shopt -s nocasematch extglob
 
 # Speed up script by not using unicode.
@@ -2032,7 +2032,7 @@ get_packages() {
             has tekel   && dir "/data/app/$USER/* /data/app/system/*"
             has crew    && dir "${CREW_PREFIX:-/usr/local}/etc/crew/meta/*.filelist"
             has pkgtool && dir "/var/log/packages/*"
-            has scratch && dir "/var/lib/scratchpkg/index/*/.pkginfo"
+            has scratch && dir "/var/lib/scratchpkg/db/*"
             has kagami  && dir "/var/lib/kagami/pkgs/*"
             has cave    && dir "/var/db/paludis/repositories/cross-installed/*/data/*/ \
                                /var/db/paludis/repositories/installed/data/*/"
@@ -11813,6 +11813,34 @@ ${c1}      :+sMs.
 EOF
         ;;
 
+        "Panwah"*)
+                set_colors 7 1 0
+                read -rd '' ascii_data <<'EOF'
+${c1}
+          HHH
+         HAAAH                             HHH
+         HAAAAH                           HAAAH
+        HAAAAAAH                         HAAAAH
+        HAAAAAAH                       HAAAAAH
+       HAAAAAAAAH${c2}WWWWWWWWWWWWWWWW      ${c1}HAAAAAH$
+       HAAAAAAAAH${c2}WWWWWWWWWWWWWWWWWWWW${c1} HAAAAAH
+       HAA${c2}WWWWWWWWWWWWWWWWWWWWWWWWWWWWW${c1}AAAAAH${c2}
+      WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW${c1}WAH${c2}
+     WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+   WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+  WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+ WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+ WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+ WWWWWWW${c1}AAA${c2}WWWW   WWWWWWWWWWWWWWWWWWWWWWWWWWW
+   WWWW${c1}AAA${c2}WWWWW    WWWWWWW    WWWWWWWWWWWWWWW
+    WW${c1}AAA${c2}WWWWWWWWWWWWWWWWW   WWWWW${c1}AAA${c2}WWWWWWWW
+     ${c1}AAA${c2}WWWWW${c1}OOOOOOOOOOO${C2}WWWWWWWWWWW${c1}AAA${c2}WWWWWW
+           ${c1}OOOO${c3}GGGGGGG${c1}OOOO${c2}WWWWWWWWWW${c1}AAA${c2}WWWW
+            ${c1}OOO${c3}GGGGGGG${c1}OOO${c2}WWWWWWWWWWWW${c1}AAA${c2}W
+              ${c1}OOOOOOOOO
+EOF
+        ;;
+
         "parabola_small"*)
             set_colors 5 7
             read -rd '' ascii_data <<'EOF'
@@ -13178,6 +13206,34 @@ _Qh;.nm       .QWc. {QL      ]QQp;..vmQ/
                 -?T??"
 EOF
         ;;
+        "Slackel"*)
+            set_colors 3
+            read -rd '' ascii_data <<'EOF'
+${c1}              _aawmmmmmwwaaaaas,,,_.
+           .ammmmm###mmmmmmm###BQmm##mws
+         .am###mmBmBmBmBmBmBmmmmm#mmmm#2
+        <q###mmBmBmBmBmBmBmBmBmBmBmmBmZ`
+       um#mmmBmBm##U##mmBmBmBmWmmBmWm#(
+     .wm#mmBBmm#Y~   ~XmBmBmWmmmmmBm#e
+    .dm#mmWmm#Z'      ]#mBmBmmBZ!""""`
+   .dm#mmBmm#2`       ]mmmBmBm#2
+   jm#mmWmm#2`        dmmBmBmB#(
+  )m##mBmmWZ`        )##mBmBmmZ
+ :dmmmBmBm#'        .d#mBmBmWZ(
+ j#mmBmBmme         jmmmBmBm#2
+_m#mBmWmmm'        )mmmBmBmmZ`
+]##mBmmm#2        <m#mBmBmB#^
+dmmmBmWm#C       <m#mBmBmB#(
+ZmmBmBmmmh.    _jm#mmBmBm#(
+XBmBmBmBmm6s_aum##mmBmBm&^
+3$mBmBmBmmm#mmmmmmBmBm#2'
++ZmBmBmWmBmBmWmmBmBm##!
+ )ZmBmBmmmBmBmmBmB##!`
+  -4U#mBmWmBmBm##2"
+    -!!XU##US*?"-
+EOF
+        ;;
+
 
         "slackware_small"*)
             set_colors 4 7 1
@@ -14183,24 +14239,47 @@ ${c3}          :${c4}::::::::::::::    ${c5}.
 EOF
         ;;
 
+        "venom_small"*)
+            set_colors 8 4
+            read -rd '' ascii_data <<'EOF'
+${c1} ++**
+  *===**====+*
+   *====*   +===+
+ *==*+===*    *===*
+*===* *===+    *===*
+*===*  +===+   *===*
+*===*   +===*  *===*
+ *===*    *===+*==*
+   +===+   *===+=*
+      *+====**===*
+               **++
+EOF
+        ;;
+
+
         "Venom"*)
             set_colors 8 4
             read -rd '' ascii_data <<'EOF'
-${c1}   :::::::          :::::::
-   mMMMMMMm        dMMMMMMm
-   /MMMMMMMo      +MMMMMMM/
-    yMMMMMMN      mMMMMMMy
-     NMMMMMMs    oMMMMMMm
-     +MMMMMMN:   NMMMMMM+
-      hMMMMMMy  sMMMMMMy
-      :NMMMMMM::NMMMMMN:
-       oMMMMMMyyMMMMMM+
-        dMMMMMMMMMMMMh
-        /MMMMMMMMMMMN:
-         sMMMMMMMMMMo
-          mMMMMMMMMd
-          +MMMMMMMN:
-            ::::::
+${c1}
+   `-`                                
+    -yys+/-`                          
+     `oyyyyy: /osyyyyso+:.            
+       /yyyyy+`+yyyyyyyyyys/.         
+       .-yyyyys.:+//+oyyyyyyyo.       
+     `oy/`oyyyyy/      ./syyyyy:      
+     syyys`:yyyyyo`       :yyyyy:     
+    /yyyyo  .syyyyy-       .yyyyy.    
+    yyyyy.    +yyyyy/       /yyyy/    
+   `yyyyy      :yyyyys`     -yyyyo    
+    yyyyy.      `syyyyy-    /yyyy/    
+    /yyyyo        /yyyyy+  .yyyyy.    
+     syyyys.       -yyyyys.:yyyy:     
+     `oyyyyyo-`     `oyyyyy:.sy:      
+       :syyyyyyso+/++`/yyyyyo``       
+         -oyyyyyyyyyyy-.syyyys.       
+            -/+osyyyyso.`+yyyyy/      
+                          .-/+syo`    
+                                `.    
 EOF
         ;;
 
