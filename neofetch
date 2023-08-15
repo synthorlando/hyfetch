@@ -2292,17 +2292,18 @@ get_editor() {
     # in case editor version is not demanded don't bother parsing it
     [[ $editor_version != on ]] && return
 
+    # Obtain editor version
     case ${editor_name:=${editor_full_path##*/}} in
-        nano|vim)
-            editor+=$("$editor_full_path" --version 2>&1)
-            editor="${editor/$'\n'*}"
-            editor="${editor/$editor_name }"
-        ;;
-        *)
-            # editor+=$("$editor_full_path" --version 2>&1)
-            editor="${editor/$'\n'*}"
+        nano|vim|micro)
+            editor_v=$("$editor_full_path" --version 2>&1)
         ;;
     esac
+    editor_v="${editor_v/$'\n'*}"
+    editor_v="${editor_v/Version: }"
+    
+    # Only show editor name if the version string doesn't contain it
+    echo "$editor_v" | grep -i "$editor_name" &> /dev/null && editor_name=""
+    editor=${editor_name}${editor_v:+ }${editor_v}
 
     # remove some common unwanted info from version strings
     editor=${editor/, version}
