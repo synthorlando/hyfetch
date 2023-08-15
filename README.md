@@ -135,7 +135,7 @@ pip install git+https://github.com/hykilpikonna/hyfetch.git@master
 * 🖼 Packages - Add Devbox package manager (#137)
 * 🖼 Packages - Fix phantom package when pm command fails (#145)
 * 🖼 Packages - Update scratch package manager (#165)
-* 🖼 Editor - Fix editor version detection stuck on macOS
+* 🖼 Editor - Better version detection
 * 🖼 Resolution - Improve macOS resolution detection (dylanaraps/neofetch#2356)
 * 🖼 Resolution - Add resolution lookup for iOS (#164)
 * 🖼 Desktop - Display global KDE Plasma theme (#163)
