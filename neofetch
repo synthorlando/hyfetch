@@ -2294,8 +2294,14 @@ get_editor() {
 
     # Obtain editor version
     case ${editor_name:=${editor_full_path##*/}} in
-        nano|vim|micro)
+        nano|vim|micro|emacs)
             editor_v=$("$editor_full_path" --version 2>&1)
+        ;;
+        kak)
+            editor_v=$("$editor_full_path" -version 2>&1)
+        ;;
+        ne)
+            editor_v=$("$editor_full_path" -h 2>&1)
         ;;
     esac
     editor_v="${editor_v/$'\n'*}"
