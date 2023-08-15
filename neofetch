@@ -2278,6 +2278,12 @@ get_editor() {
     # in case neither is set just return
     [[ -z "$editor_full_path" ]] && return
 
+    # Actually obtain the full path
+    editor_full_path="$(which "${editor_full_path}" 2>/dev/null)"
+
+    # Resolve symlink and get the original name
+    [[ -L "$editor_full_path" ]] && editor_full_path="$(readlink -f "$editor_full_path")"
+
     case $editor_path in
         on)  editor="${editor_full_path} " ;;
         off) editor="${editor_full_path##*/} " ;;
