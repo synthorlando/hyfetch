@@ -5083,7 +5083,7 @@ get_cols() {
         printf -v block_spaces "%${block_height}s"
 
         # Convert the spaces into rows of blocks.
-        if [[ $BASH_VERSION == 3* ]]; then
+        if [ "${BASH_VERSION%%.*}" -lt 5 ]; then
             [[ "$blocks"  ]] && cols+="${block_spaces// /${blocks}[39;49mnl}"
             [[ "$blocks2" ]] && cols+="${block_spaces// /${blocks2}[39;49mnl}"
         else
