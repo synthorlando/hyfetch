@@ -164,6 +164,10 @@ def detect(name: str) -> AsciiArt | None:
         from .arch import arch
         return arch
     
+    if name.startswith('unicodearch'):
+        from .unicodearch import unicodearch
+        return unicodearch
+    
     if name.startswith('artix_small'):
         from .artix_small import artix_small
         return artix_small
@@ -187,6 +191,10 @@ def detect(name: str) -> AsciiArt | None:
     if name.startswith('aster'):
         from .aster import aster
         return aster
+    
+    if name.startswith('athena'):
+        from .athena import athena
+        return athena
     
     if name.startswith('bedrock'):
         from .bedrock import bedrock
@@ -376,6 +384,10 @@ def detect(name: str) -> AsciiArt | None:
         from .deepin import deepin
         return deepin
     
+    if name.startswith('openkylin'):
+        from .openkylin import openkylin
+        return openkylin
+    
     if name == 'desaos':
         from .desaos import desaos
         return desaos
@@ -447,6 +459,10 @@ def detect(name: str) -> AsciiArt | None:
     if name.startswith('eurolinux'):
         from .eurolinux import eurolinux
         return eurolinux
+    
+    if name.startswith('evolutionos'):
+        from .evolutionos import evolutionos
+        return evolutionos
     
     if name.startswith('exherbo'):
         from .exherbo import exherbo
@@ -724,6 +740,10 @@ def detect(name: str) -> AsciiArt | None:
         from .maui import maui
         return maui
     
+    if name.startswith('meowix'):
+        from .meowix import meowix
+        return meowix
+    
     if name.startswith('mer'):
         from .mer import mer
         return mer
@@ -860,9 +880,9 @@ def detect(name: str) -> AsciiArt | None:
         from .openstage import openstage
         return openstage
     
-    if name.startswith('openwrt'):
-        from .openwrt import openwrt
-        return openwrt
+    if (name.startswith('wrt') or name.endswith('wrt')):
+        from .wrt import wrt
+        return wrt
     
     if name.startswith('open source media center') or name == 'osmc':
         from .open_source_media_center import open_source_media_center
@@ -891,6 +911,10 @@ def detect(name: str) -> AsciiArt | None:
     if name.startswith('pacbsd'):
         from .pacbsd import pacbsd
         return pacbsd
+    
+    if name.startswith('panwah'):
+        from .panwah import panwah
+        return panwah
     
     if name.startswith('parabola_small'):
         from .parabola_small import parabola_small
@@ -939,6 +963,10 @@ def detect(name: str) -> AsciiArt | None:
     if name.startswith('pikaos'):
         from .pikaos import pikaos
         return pikaos
+    
+    if name.startswith('phyos'):
+        from .phyos import phyos
+        return phyos
     
     if name.startswith('pnm linux') or name.startswith('whpnm linux'):
         from .pnm_linux import pnm_linux
@@ -1096,6 +1124,10 @@ def detect(name: str) -> AsciiArt | None:
         from .salient_os import salient_os
         return salient_os
     
+    if name.startswith('salix'):
+        from .salix import salix
+        return salix
+    
     if name.startswith('scientific'):
         from .scientific import scientific
         return scientific
@@ -1115,6 +1147,10 @@ def detect(name: str) -> AsciiArt | None:
     if name.startswith('siduction'):
         from .siduction import siduction
         return siduction
+    
+    if name.startswith('slackel'):
+        from .slackel import slackel
+        return slackel
     
     if name.startswith('slackware_small'):
         from .slackware_small import slackware_small
@@ -1288,6 +1324,10 @@ def detect(name: str) -> AsciiArt | None:
         from .urukos import urukos
         return urukos
     
+    if name.startswith('venom_small'):
+        from .venom_small import venom_small
+        return venom_small
+    
     if name.startswith('venom'):
         from .venom import venom
         return venom
@@ -1335,6 +1375,10 @@ def detect(name: str) -> AsciiArt | None:
     if (name.startswith('[windows 10]') or name.endswith('[windows 10]')) or (name.startswith('on windows 10') or name.endswith('on windows 10')) or name.startswith('windows 8') or name.startswith('windows 10') or name == 'windows10' or name == 'windows8':
         from .windows_10 import windows_10
         return windows_10
+    
+    if name == 'windows95':
+        from .windows95 import windows95
+        return windows95
     
     if name.startswith('windows'):
         from .windows import windows
