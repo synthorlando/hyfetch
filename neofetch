@@ -48,6 +48,10 @@ LANG=C
 # Fix issues with gsettings.
 [[ -z $GIO_EXTRA_MODULES ]] && export GIO_EXTRA_MODULES=/usr/lib/x86_64-linux-gnu/gio/modules/
 
+# Use sed -r instead of sed -E if using GNU sed.
+sed_ext='-E'
+[[ $(sed --version 2>/dev/null) =~ GNU ]] && sed_ext='-r'
+
 # Neofetch default config.
 read -rd '' config <<'EOF'
 # See this wiki page for more info:
@@ -3592,7 +3596,7 @@ get_network() {
             if [[ $ActiveNetworkName == "Wi-Fi" ]]; then
                 LinkSpeed="$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | awk '/maxRate/{print}' | awk '{print $2}' )Mbps"
             else
-                LinkSpeed="$(ifconfig "$ActiveNetwork" | awk '/media/{print}' | sed -E "s/.*\((.*)\).*/\1/")"
+                LinkSpeed="$(ifconfig "$ActiveNetwork" | awk '/media/{print}' | sed "$sed_ext" "s/.*\((.*)\).*/\1/")"
             fi
             network="$ActiveNetwork: $ActiveNetworkName@$LinkSpeed"
         ;;
@@ -5208,7 +5212,7 @@ print_ascii() {
             strip_escape_codes "${line}" line
             # Use patterns to replace color codes that the above line did not catch
             line=${line//\\033\[*([0-9;])[JKmsu]/}
-            line="$(printf %b "$line" | sed -E 's/'"$(printf %b '\x1B')"'\[*[0-9;]+[JKmsu]//g')"
+            line="$(printf %b "$line" | sed "$sed_ext" 's/'"$(printf %b '\x1B')"'\[*[0-9;]+[JKmsu]//g')"
             ((++lines,${#line}>ascii_len)) && ascii_len="${#line}"
         done <<< "${ascii_data//\$\{??\}}"
     fi
