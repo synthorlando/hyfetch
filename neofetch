@@ -2456,7 +2456,7 @@ get_de() {
     # TODO:
     #  - New config option + flag: --de_display_server on/off ?
     #  - Add display of X11, Arcan and anything else relevant.
-    [[ $de ]] && [[ $os != "Windows" ]] &&
+    [[ $de ]] && [[ -n $XDG_SESSION_TYPE ]] &&
         de+=" (${XDG_SESSION_TYPE})"
 
     de_run=1
@@ -5087,7 +5087,7 @@ get_cols() {
         printf -v block_spaces "%${block_height}s"
 
         # Convert the spaces into rows of blocks.
-        if [[ $BASH_VERSION == 3* ]]; then
+        if [ "${BASH_VERSION%%.*}" -lt 5 ]; then
             [[ "$blocks"  ]] && cols+="${block_spaces// /${blocks}[39;49mnl}"
             [[ "$blocks2" ]] && cols+="${block_spaces// /${blocks2}[39;49mnl}"
         else
