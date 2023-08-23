@@ -1,7 +1,7 @@
 PREFIX = /usr
 MANDIR = $(PREFIX)/share/man
 
-all: build install
+all: build
 
 build:
 	python setup.py build
