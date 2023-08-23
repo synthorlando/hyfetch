@@ -12,7 +12,7 @@ install:
 install-doc:
 	@mkdir -p $(DESTDIR)$(MANDIR)/man1
 	@cp -p docs/hyfetch.1 $(DESTDIR)$(MANDIR)/man1
-	@cp -p docs/neowofetch.1 $(DESTDIR)$(MANDIR)/man1
+	@cp -p docs/neofetch.1 $(DESTDIR)$(MANDIR)/man1/neowofetch.1
 
 uninstall:
 	@rm -rf $(DESTDIR)$(PREFIX)/bin/hyfetch
