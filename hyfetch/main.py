@@ -27,7 +27,7 @@ def check_config(path) -> Config:
     """
     if path.is_file():
         try:
-            return Config.from_dict(json.loads(CONFIG_PATH.read_text('utf-8')))
+            return Config.from_dict(json.loads(path.read_text('utf-8')))
         except KeyError:
             return create_config()
 
