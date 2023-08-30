@@ -401,6 +401,8 @@ def run():
         config.mode = args.mode
     if args.backend:
         config.backend = args.backend
+    if args.args:
+        config.args = args.args
 
     # Override global color mode
     GLOBAL_CFG.color_mode = config.mode
@@ -421,7 +423,7 @@ def run():
     try:
         asc = get_distro_ascii() if not args.ascii_file else Path(args.ascii_file).read_text("utf-8")
         asc = config.color_align.recolor_ascii(asc, preset)
-        neofetch_util.run(asc, config.backend, args.args or '')
+        neofetch_util.run(asc, config.backend, config.args or '')
     except Exception as e:
         print(f'Error: {e}')
         traceback.print_exc()

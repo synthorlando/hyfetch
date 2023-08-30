@@ -16,6 +16,7 @@ class Config:
     lightness: float | None = None
     color_align: ColorAlignment = field(default_factory=lambda: ColorAlignment('horizontal'))
     backend: BackendLiteral = "neofetch"
+    args: str | None = None
     distro: str | None = None
     pride_month_shown: list[int] = field(default_factory=list)  # This is deprecated, see issue #136
     pride_month_disable: bool = False
