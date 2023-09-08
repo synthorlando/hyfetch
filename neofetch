@@ -846,7 +846,7 @@ image_source="auto"
 # Flag:    --ascii_distro
 #
 # NOTE: AIX, AlmaLinux, Alpine, Alter, Amazon, AmogOS, Anarchy, Android, Antergos, antiX, AOSC OS,
-# AOSC OS/Retro, Aperio GNU/Linux, Aperture, Apricity, Arch, ArchBox, Archcraft, archcraft_ascii,
+# Afterglow, Aperio GNU/Linux, Aperture, Apricity, Arch, ArchBox, Archcraft, archcraft_ascii,
 # archcraft_minimal, ARCHlabs, ArchMerge, ArchStrike, ArcoLinux, ArseLinux, Artix, Arya, Asahi,
 # Aster, AsteroidOS, astOS, Astra Linux, Athena, Bedrock, BigLinux, Bitrig, BlackArch, blackPanther,
 # BLAG, BlankOn, BlueLight, Bodhi, bonsai, BSD, BunsenLabs, CachyOS, Calculate, CalinixOS, Carbs,
@@ -6312,7 +6312,7 @@ ASCII:
     --ascii_distro distro       Which Distro's ascii art to print
 
                                 NOTE: AIX, AlmaLinux, Alpine, Alter, Amazon, AmogOS, Anarchy,
-                                Android, Antergos, antiX, AOSC OS, AOSC OS/Retro, Aperio GNU/Linux,
+                                Android, Antergos, antiX, AOSC OS, Afterglow, Aperio GNU/Linux,
                                 Aperture, Apricity, Arch, ArchBox, Archcraft, archcraft_ascii,
                                 archcraft_minimal, ARCHlabs, ArchMerge, ArchStrike, ArcoLinux,
                                 ArseLinux, Artix, Arya, Asahi, Aster, AsteroidOS, astOS, Astra
@@ -7190,68 +7190,24 @@ ${c1}
 EOF
         ;;
 
-        "AOSC OS/Retro"*)
-            set_colors 4 7 1 3
+        "Afterglow"*)
+            set_colors 5 1 3 4
             read -rd '' ascii_data <<'EOF'
-${c2}          .........
-     ...................
-   .....................${c1}################${c2}
- ..............     ....${c1}################${c2}
-..............       ...${c1}################${c2}
-.............         ..${c1}****************${c2}
-............     .     .${c1}****************${c2}
-...........     ...     ${c1}................${c2}
-..........     .....     ${c1}...............${c2}
-.........     .......     ...
- .${c3}......                   ${c2}.
-  ${c3}.....      .....${c2}....    ${c4}...........
-  ${c3}....      ......${c2}.       ${c4}...........
-  ${c3}...      .......        ${c4}...........
-  ${c3}................        ${c4}***********
-  ${c3}................        ${c4}###########
-  ${c3}****************
-  ${c3}################
-EOF
-        ;;
-
-        "aoscosretro_small")
-            set_colors 4 7 1 3
-            read -rd '' ascii_data <<'EOF'
-${c2}    _____   ${c1}_____${c2}
-  -'     '-${c1}|     |${c2}
- /     ___ ${c1}|     |${c2}
-|     / _ \\${c1}|_____|${c2}
-'    / /_\\ \\
- \\  / _____ \\${c4}___
-  ${c3}|${c2}/_/  ${c3}|   ${c4}|   |
-  ${c3}|     |   ${c4}|___|
-  ${c3}|_____|
-EOF
-        ;;
-
-        "AOSC OS"*)
-            set_colors 4 7 1
-            read -rd '' ascii_data <<'EOF'
-${c2}             .:+syhhhhys+:.
-         .ohNMMMMMMMMMMMMMMNho.
-      `+mMMMMMMMMMMmdmNMMMMMMMMm+`
-     +NMMMMMMMMMMMM/   `./smMMMMMN+
-   .mMMMMMMMMMMMMMMo        -yMMMMMm.
-  :NMMMMMMMMMMMMMMMs          .hMMMMN:
- .NMMMMhmMMMMMMMMMMm+/-         oMMMMN.
- dMMMMs  ./ymMMMMMMMMMMNy.       sMMMMd
--MMMMN`      oMMMMMMMMMMMN:      `NMMMM-
-/MMMMh       NMMMMMMMMMMMMm       hMMMM/
-/MMMMh       NMMMMMMMMMMMMm       hMMMM/
--MMMMN`      :MMMMMMMMMMMMy.     `NMMMM-
- dMMMMs       .yNMMMMMMMMMMMNy/. sMMMMd
- .NMMMMo         -/+sMMMMMMMMMMMmMMMMN.
-  :NMMMMh.          .MMMMMMMMMMMMMMMN:
-   .mMMMMMy-         NMMMMMMMMMMMMMm.
-     +NMMMMMms/.`    mMMMMMMMMMMMN+
-      `+mMMMMMMMMNmddMMMMMMMMMMm+`
-         .ohNMMMMMMMMMMMMMMNho.
-             .:+syhhhhys+:.
+${c2}                          .
+                 ${c1}.      ${c2}.{!
+               ${c1}.L!     ${c2}J@||*
+             ${c1}gJJJJL` ${c2}g@FFS"
+          ${c1},@FFFJF`${c2}_g@@LLP`
+        ${c1}_@FFFFF`${c2}_@@@@@P`        ${c4}.
+      ${c1}J@@@LLF ${c2}_@@@@@P`        ${c4}.J!
+    ${c1}g@@@@@" ${c2}_@@@@@P`${c3}.       ${c4}.L|||*
+  ${c1}g@@@@M"     ${c2}"VP`${c3}.L!     ${c4}<@JJJJ`
+   ${c1}"@N"         ${c3}:||||!  ${c4}JFFFFS"
+             ${c3}.{JJ||F`${c4}_gFFFF@'
+           ${c3}.@FJJJF`${c4},@LFFFF`
+         ${c3}_@FFFFF   ${c4}VLLLP`
+       ${c3}J@@LL@"      ${c4}`"
+        ${c3}V@@"
 EOF
         ;;
 
