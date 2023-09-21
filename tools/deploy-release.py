@@ -92,7 +92,8 @@ def finalize_neofetch():
 
     # 2. Regenerate man page
     print('Regenerating neofetch man page...')
-    Path('neofetch.1').write_text(subprocess.check_output(['help2man', './neofetch']).decode())
+    Path('docs/neofetch.1').write_text(subprocess.check_output(['help2man', './neofetch']).decode())
+    Path('docs/hyfetch.1').write_text(subprocess.check_output(['help2man', 'python3 -m hyfetch']).decode())
 
     # 3. Reformat readme links
     print('Reformatting readme links...')
