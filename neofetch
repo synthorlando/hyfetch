@@ -868,7 +868,7 @@ image_source="auto"
 # Floflis, FreeBSD, FreeMiNT, Frugalware, Funtoo, GalliumOS, Garuda, Gentoo, GhostBSD, glaucus,
 # gNewSense, GNOME, GNU, GoboLinux, GrapheneOS, Grombyang, Guix, Haiku, HamoniKR, HarDClanZ, Hash,
 # Huayra, Hybrid, HydroOS, Hyperbola, iglunix, instantOS, IRIX, Itc, januslinux, Kaisen, Kali, KaOS,
-# KDE, Kibojoe, Kogaion, Korora, KrassOS, KSLinux, Kubuntu, LangitKetujuh, LaxerOS, LEDE, LibreELEC,
+# KDE, Kibojoe, Kogaion, Korora, KrassOS, KSLinux, Kubuntu, LainOS, LangitKetujuh, LaxerOS, LEDE, LibreELEC,
 # Linspire, Linux, Linux Lite, Linux Mint, Linux Mint Old, Live Raizo, LMDE, Lubuntu, Lunar, mac,
 # Mageia, MagpieOS, Mandriva, Manjaro, MassOS, MatuusOS, Maui, Meowix, Mer, Minix, MIRACLE LINUX,
 # MX, Namib, NekOS, Neptune, NetBSD, Netrunner, Nitrux, NixOS, Nobara, NomadBSD, Nurunner, NuTyX,
@@ -6341,7 +6341,7 @@ ASCII:
                                 Guix, Haiku, HamoniKR, HarDClanZ, Hash, Huayra, Hybrid, HydroOS,
                                 Hyperbola, iglunix, instantOS, IRIX, Itc, januslinux, Kaisen, Kali,
                                 KaOS, KDE, Kibojoe, Kogaion, Korora, KrassOS, KSLinux, Kubuntu,
-                                LangitKetujuh, LaxerOS, LEDE, LibreELEC, Linspire, Linux, Linux
+                                LainOS, LangitKetujuh, LaxerOS, LEDE, LibreELEC, Linspire, Linux, Linux
                                 Lite, Linux Mint, Linux Mint Old, Live Raizo, LMDE, Lubuntu, Lunar,
                                 mac, Mageia, MagpieOS, Mandriva, Manjaro, MassOS, MatuusOS, Maui,
                                 Meowix, Mer, Minix, MIRACLE LINUX, MX, Namib, NekOS, Neptune,
@@ -10396,6 +10396,32 @@ oyyyyysos${c2}dy${c1}yyyyyyyyyyyyyyyyyy${c2}dMMMMy${c1}syyyo
            `.:/oosyyyysso/:.`
 EOF
         ;;
+
+    "LainOS"*)
+		set_colors 4 14 7 2 3 5
+		read -rd '' ascii_data <<'EOF'
+${c2}                    /==\\
+                    \\==/
+${c1}               · · · · · · ·
+            · · · · · · · · · ·
+	   · · · ${c2}.-======-.${c1}· · · ·
+${c2}        .::.${c1} ·${c2}.-============-.${c1}· ${c2}.::.
+     .:==:${c1}· ${c2}.:===:'${c1}. ·· .${c2}':===:.${c1} ·${c2}:==:.
+  .:===:${c1} · ${c2}:===.${c1} ·  ${c3}.--.${c1}  · ${c2}.===:${c1} · ${c2}:===:.
+ :===:${c1}· · ${c2}:===.${c1} · ${c3}.:====:.${c1} · ${c2}.===:${c1} · ·${c2}:===:
+(===:${c1}· · ${c2}:===-${c1} ·  ${c3}:======:${c1}  · ${c2}-===:${c1} · ·${c2}:===)
+ :===:${c1}· · ${c2}:===.${c1} · ${c3}':====:'${c1} · ${c2}.===:${c1} · ·${c2}:===:
+  ':===:${c1} · ${c2}:===.${c1} ·  ${c3}'--'${c1}  · ${c2}.===:${c1} · ${c2}:===:'
+     ':==:${c1}· ${c2}':===:.${c1}' ·· '${c2}.:===:'${c1} ·${c2}:==:'
+        '::'${c1} · ${c2}'===-.  .-==='${c1} · ${c2}'::'
+  ${c2}/==\\${c1}     · · · ${c2}:===  ===:${c1} · · ·     ${c2}/==\\
+  \\==/${c1}      · · ·${c2}:===${c1} ·${c2}===:${c1}· · ·      ${c2}\\==/${c2}
+         .-.   ${c1}· ${c2}:===${c1}· ${c2}===:${c1} ·${c2}   ${c2}.-.
+         .===.   .===  ===.   .===.
+           .========    ========.
+             '''''        '''''
+EOF
+		;;
 
         "LEDE"*)
             set_colors 4 7 1
