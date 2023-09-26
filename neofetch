@@ -48,6 +48,16 @@ LANG=C
 # Fix issues with gsettings.
 [[ -z $GIO_EXTRA_MODULES ]] && export GIO_EXTRA_MODULES=/usr/lib/x86_64-linux-gnu/gio/modules/
 
+# Use sed -r instead of sed -E if using GNU sed.
+[[ $(sed --version 2>/dev/null) =~ GNU ]] && gnu_sed=1
+sed() {
+    if [[ $gnu_sed ]]; then
+        command sed "${@//-E/-r}"
+    else
+        command sed "$@"
+    fi
+}
+
 # Neofetch default config.
 read -rd '' config <<'EOF'
 # See this wiki page for more info:
