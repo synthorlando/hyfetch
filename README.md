@@ -35,6 +35,12 @@ Currently, these distributions have existing packages for HyFetch:
 * Guix: `guix install hyfetch` (Thanks to [@WammKD](https://github.com/WammKD))
 * Slackware `sbopkg -b hyfetch` Slackware [Slackbuild](https://slackbuilds.org/repository/15.0/desktop/hyfetch/?search=hyfetch) (Thanks to [@bittin](https://github.com/bittin) and Urchlay)
 * Nix Profile `nix profile install nixpkgs#hyfetch`
+* Gentoo: add GURU repository and install hyfetch (Thanks to [@BKasin](https://github.com/BKasin))
+* ```
+  eselect repository enable guru
+  emaint sync -r guru
+  emerge -a hyfetch
+  ```
 
 
 ### Method 3: Install the latest developmental version using git
