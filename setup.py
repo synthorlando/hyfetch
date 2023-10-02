@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-import pathlib
-
+from pathlib import Path
 from setuptools import setup, find_namespace_packages
 
-from hyfetch.__version__ import VERSION
-
 # The directory containing this file
-HERE = pathlib.Path(__file__).parent
+HERE = Path(__file__).parent
+
+# Load version without importing it (see issue #192 if you are confused)
+for l in (HERE / 'hyfetch' / '__version__.py').read_text().strip().splitlines():
+    exec(l)
 
 # The text of the README file
 README = (HERE / "README.md").read_text('utf-8')
