@@ -9260,6 +9260,19 @@ ${c3}#${c2}#////*              ${c3}***${c2}.*/////.
 EOF
         ;;
 
+        "endeavouros_small"*)
+            set_colors 1 5 4
+            read -rd '' ascii_data <<'EOF'
+${c1}           /${c2}o${c3}.
+${c1}         :${c2}sssso${c3}-
+${c1}       :${c2}ossssssso${c3}:
+${c1}     /${c2}ssssssssssso${c3}+
+${c1}  -+${c2}ssssssssssssssso${c3}+
+${c1} //${c2}osssssssssssssso${c3}+-
+  `+++++++++++++++-`
+EOF
+        ;;
+
         "EndeavourOS"*)
             set_colors 1 5 4
             read -rd '' ascii_data <<'EOF'
