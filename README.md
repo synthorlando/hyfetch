@@ -30,11 +30,12 @@ pipx install -U hyfetch
 
 Currently, these distributions have existing packages for HyFetch:
 
+* Universal [Lure.sh](https://lure.sh/): `lure in hyfetch` (Thanks to [@Elara6331](https://github.com/Elara6331))
 * Arch Linux: `sudo pacman -S hyfetch` (Thanks to [@Aleksana](https://github.com/Aleksanaa) and [@Antiz96](https://github.com/Antiz96))
 * Nix: `nix-env -i hyfetch` (Thanks to [@YisuiDenghua](https://github.com/YisuiDenghua))
+* Nix Profile: `nix profile install nixpkgs#hyfetch`
 * Guix: `guix install hyfetch` (Thanks to [@WammKD](https://github.com/WammKD))
-* Slackware `sbopkg -b hyfetch` Slackware [Slackbuild](https://slackbuilds.org/repository/15.0/desktop/hyfetch/?search=hyfetch) (Thanks to [@bittin](https://github.com/bittin) and Urchlay)
-* Nix Profile `nix profile install nixpkgs#hyfetch`
+* Slackware: `sbopkg -b hyfetch` [Slackbuild](https://slackbuilds.org/repository/15.0/desktop/hyfetch/?search=hyfetch) (Thanks to [@bittin](https://github.com/bittin) and Urchlay)
 * Gentoo: add GURU repository and install hyfetch (Thanks to [@BKasin](https://github.com/BKasin))
 * ```
   eselect repository enable guru
