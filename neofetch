@@ -3863,10 +3863,16 @@ get_resolution() {
                             if spdisplays_resolution="$(PlistBuddy -c "print 0:_items:${gpu}:spdisplays_ndrvs:${display}:_spdisplays_resolution" $temp_plist)" 2>/dev/null; then
                                 spdisplays_resolution="${spdisplays_resolution//.[0-9][0-9]/}"
                                 if spdisplays_pixels="$(PlistBuddy -c "print 0:_items:${gpu}:spdisplays_ndrvs:${display}:_spdisplays_pixels" $temp_plist)" 2>/dev/null; then
-                                  scaled_x="$(echo "$spdisplays_resolution" | awk '{print $1}')"
-                                  output_x="$(echo "$spdisplays_pixels" | awk '{print $1}')"
-                                  (( scale_factor=output_x/scaled_x ))
-                                  [[ $scale_factor -gt 1 ]] && spdisplays_resolution="${spdisplays_resolution// @/ @${scale_factor}x @}"
+                                    scaled_x="$(echo "$spdisplays_resolution" | awk '{print $1}')"
+                                    output_x="$(echo "$spdisplays_pixels" | awk '{print $1}')"
+                                    (( scale_factor=output_x/scaled_x ))
+                                    if [[ $scale_factor -gt 1 ]]; then
+                                        if [[ "$spdisplays_resolution" == *"@"* ]]; then
+                                            spdisplays_resolution="${spdisplays_resolution// @/ @${scale_factor}x @}"
+                                        else
+                                            spdisplays_resolution="${spdisplays_resolution} @ ${scale_factor}x"
+                                        fi
+                                    fi
                                 fi
                                 spdisplays_resolution="${spdisplays_resolution// x /x}"
                                 [[ $gpu -gt 0 || $display -gt 0 ]] && resolution+=", "
