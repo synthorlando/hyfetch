@@ -4426,14 +4426,24 @@ get_term_font() {
 
     case $term in
         "alacritty"*)
+            # Alacritty switched to TOML for it's config the first version
+            # with that will take a long time to be in repos and gain adoption.
+
             shopt -s nullglob
-            confs=({$XDG_CONFIG_HOME,$HOME}/{alacritty,}/{.,}alacritty.ym?)
+            confs_yaml=({$XDG_CONFIG_HOME,$HOME}/{alacritty,}/{.,}alacritty.ym?)
+            confs_toml=({$XDG_CONFIG_HOME,$HOME}/{alacritty,}/{.,}alacritty.tom?)
             shopt -u nullglob
 
-            [[ -f "${confs[0]}" ]] || return
-
-            term_font="$(awk '/normal:/ {while (!/family:/ || /#/)
-                         {if (!getline) {exit}} print; exit}' "${confs[0]}")"
+            if [[ -f "${confs_toml[0]}" ]]; then
+                term_font="$(awk '/normal:/ {while (!/family:/ || /#/)
+                         {if (!getline) {exit}} print; exit}' "${confs_toml[0]}")"
+            elif [[ -f "${confs_yaml[0]}" ]]; then
+                term_font="$(awk -F' *= *' '/^\[.*\]$/{section=substr($0, 2, length-2)}
+                         section == "font.normal" && $1 == "family"{sub(/^"/,"", $2);
+                         sub(/"$/, "", $2); print $2}' "${confs_yaml[0]}")"
+            else
+                return
+            fi
             term_font="${term_font/*family:}"
             term_font="${term_font/$'\n'*}"
             term_font="${term_font/\#*}"
