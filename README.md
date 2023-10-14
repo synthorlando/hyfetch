@@ -23,7 +23,7 @@ Install Python >= 3.7 first. Then, just do:
 ```sh
 pip install -U hyfetch
 # or
-pipx install -U hyfetch
+pipx install hyfetch
 ```
 
 ### Method 2: Install using system package manager
