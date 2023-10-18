@@ -43,6 +43,7 @@ Currently, these distributions have existing packages for HyFetch:
   emerge -a hyfetch
   ```
 
+[![Packaging status](https://repology.org/badge/vertical-allrepos/hyfetch.svg)](https://repology.org/project/hyfetch/versions)
 
 ### Method 3: Install the latest developmental version using git
 
