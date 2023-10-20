@@ -38,12 +38,7 @@ Currently, these distributions have existing packages for HyFetch:
 * Slackware: `sbopkg -b hyfetch` [Slackbuild](https://slackbuilds.org/repository/15.0/desktop/hyfetch/?search=hyfetch) (Thanks to [@bittin](https://github.com/bittin) and Urchlay)
 * Homebrew: brew install hyfetch (Thanks to [@BKasin](https://github.com/BKasin) and [@osalbahr](https://github.com/osalbahr))
 * openSUSE Tumbleweed: zypper in python311-hyfetch (Thanks to [@BKasin](https://github.com/BKasin))
-* Gentoo: add GURU repository and install hyfetch (Thanks to [@BKasin](https://github.com/BKasin))
-* ```
-  eselect repository enable guru
-  emaint sync -r guru
-  emerge -a hyfetch
-  ```
+* Gentoo: `emerge --ask app-misc/hyfetch` (Thanks to [@BKasin](https://github.com/BKasin))
 
 [![Packaging status](https://repology.org/badge/vertical-allrepos/hyfetch.svg)](https://repology.org/project/hyfetch/versions)
 
