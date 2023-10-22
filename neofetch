@@ -4435,12 +4435,12 @@ get_term_font() {
             shopt -u nullglob
 
             if [[ -f "${confs_toml[0]}" ]]; then
-                term_font="$(awk '/normal:/ {while (!/family:/ || /#/)
-                         {if (!getline) {exit}} print; exit}' "${confs_toml[0]}")"
-            elif [[ -f "${confs_yaml[0]}" ]]; then
                 term_font="$(awk -F' *= *' '/^\[.*\]$/{section=substr($0, 2, length-2)}
                          section == "font.normal" && $1 == "family"{sub(/^"/,"", $2);
-                         sub(/"$/, "", $2); print $2}' "${confs_yaml[0]}")"
+                         sub(/"$/, "", $2); print $2}' "${confs_toml[0]}")"
+            elif [[ -f "${confs_yaml[0]}" ]]; then
+                term_font="$(awk '/normal:/ {while (!/family:/ || /#/)
+                         {if (!getline) {exit}} print; exit}' "${confs_yaml[0]}")"
             else
                 return
             fi
