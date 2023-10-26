@@ -6,7 +6,7 @@ neofetch with pride flags <3
 
 ### Running Updated Original Neofetch
 
-This repo also serves as an updated version of the original `neofetch` since the upstream [dylanaraps/neofetch](https://github.com/dylanaraps/neofetch) doesn't seem to be maintained anymore (as of Jul 30, 2022, the original repo hasn't merged a pull request for 6 months). If you only want to use the updated neofetch without pride flags, you can use the `neofetch` script from this repo. To prevent command name conflict, I call it `neowofetch` :)
+This repo also serves as an updated version of the original `neofetch` since the upstream [dylanaraps/neofetch](https://github.com/dylanaraps/neofetch) doesn't seem to be maintained anymore (as of Oct 27, 2023, the original repo hasn't merged a pull request for almost 2 years). If you only want to use the updated neofetch without pride flags, you can use the `neofetch` script from this repo. To prevent command name conflict, I call it `neowofetch` :)
 
 * Method 1: `pip install -U hyfetch` then run `neowofetch`
 * Method 2: `npx neowofetch`
@@ -73,6 +73,16 @@ A: You can try setting the colors' "lightness" in the configuration menu. The va
 Feel free to experiment with it!
 
 ![image](https://user-images.githubusercontent.com/22280294/162614553-eb758e4e-1936-472c-8ca7-b601c696c6eb.png)
+
+#### Q: Why do you use pride flag's coloring? I don't think it looks nice at all.
+
+A: The core idea behind HyFetch coloring isn't just to make logos look nicer, it's about representation and identity. While it's okay to assess the visual appeal, you also need to understand that the LGBTQ+ flag colors serves a much deeper purpose than just aesthetics.
+
+For many in the LGBTQ+ community, these flags symbolize their identity, struggles, and pride. Integrating these symbols into a showcase of the tech specs they share can provide a sense of empowerment. It's combining their enthusiasm for their favorite distro / hardware with their LGBTQ+ identity.
+
+Also, by including flag coloring along with the updated neofetch, we're also broadcasting a wider message about the importance of inclusivity and representation. It's not just a design choice, it's a statement that promotes awareness and understanding toward the LGBTQ+ community.
+
+
 
 
 ## Contributing
