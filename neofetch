@@ -4816,10 +4816,22 @@ END
         ;;
 
         "xfce4-terminal")
-            term_font="$(awk -F '=' '/^FontName/{a=$2}/^FontUseSystem=TRUE/{a=$0} END {print a}' \
-                         "${XDG_CONFIG_HOME}/xfce4/terminal/terminalrc")"
+            # xfce4-terminal is in the process of convertinf config methods
+            # First check the new config, then the old one
+            if [[ -f "${XDG_CONFIG_HOME}/xfce4/xfconf/xfce-perchannel-xml/xfce4-terminal.xml" ]]; then
+                conf="${XDG_CONFIG_HOME}/xfce4/xfconf/xfce-perchannel-xml/xfce4-terminal.xml"
+                if ! grep -q 'font-use-system" type="bool" value="true' "$conf"; then
+                    term_font="$(awk -F '=' '/font-name/{a=$4} END {print substr(a, 1, length(a)-2)}' "$conf")"
+                else
+                    term_font="true"
+                fi
+            else
+                term_font="$(awk -F '=' '/^FontName/{a=$2}/^FontUseSystem=TRUE/{a=$0} END {print a}' \
+                             "${XDG_CONFIG_HOME}/xfce4/terminal/terminalrc")"
+            fi
 
-            [[ "$term_font" == "FontUseSystem=TRUE" ]] && \
+            # This section works for either config version
+            [[ "{$term_font,,}" == *"true"* ]] && \
                 term_font="$(gsettings get org.gnome.desktop.interface monospace-font-name)"
 
             term_font="$(trim_quotes "$term_font")"
