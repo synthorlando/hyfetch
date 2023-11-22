@@ -1263,6 +1263,9 @@ get_distro() {
                 source /etc/VERSION
                 distro="Synology DSM ${productversion}-${buildnumber} Update ${smallfixnumber}"
 
+            elif compgen -G "/usr/bin/*peropesis*" > /dev/null; then
+                distro="Peropesis"
+
             else
                 for release_file in /etc/*-release; do
                     distro+=$(< "$release_file")
@@ -12654,6 +12657,17 @@ dNd                                  dNd
 dNd                                  dNd
 dNm//////////////////////////////////mNd
 dmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmd
+EOF
+        ;;
+
+        "Peropesis"*)
+            set_colors 4 7 1
+            read -rd '' ascii_data <<'EOF'
+${c1}####  #### ####   ###   ####  ####  #### #  ####
+#   # #    #   # #   #  #   # #     #    #  #
+####  ###  #### #     # ####  ###     #  #    #
+#     #    #  #  #   #  #     #        # #     #
+#     #### #   #  ###   #     #### ####  # ####
 EOF
         ;;
 
