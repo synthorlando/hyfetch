@@ -1029,6 +1029,7 @@ get_os() {
         IRIX*)    os=IRIX ;;
         FreeMiNT) os=FreeMiNT ;;
         Interix)  os=Interix ;;
+	OSF1)     os=digitalUNIX ;;
 
         Linux|GNU*)
             os=Linux
@@ -1474,6 +1475,10 @@ get_distro() {
         Interix)
             distro="Interix ${kernel_version}"
         ;;
+
+	digitalUNIX)
+	    distro="digital UNIX ${$kernel_version}"
+	;;
     esac
 
     distro=${distro//Enterprise Server}
@@ -1482,7 +1487,7 @@ get_distro() {
 
     # Get OS architecture.
     case $os in
-        Solaris|illumos|AIX|Haiku|IRIX|FreeMiNT|BSD)
+        Solaris|illumos|AIX|Haiku|IRIX|FreeMiNT|BSD|digitalUNIX)
             machine_arch=$(uname -p)
         ;;
 
