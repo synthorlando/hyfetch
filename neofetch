@@ -6446,7 +6446,7 @@ ASCII:
     --ascii_colors x x x x x x  Colors to print the ascii art
     --ascii_distro distro       Which Distro's ascii art to print
 
-                                NOTE: AIX, AlmaLinux, Alpine, Alter, Amazon, AmogOS, Anarchy,
+                                NOTE: Adélie, AIX, AlmaLinux, Alpine, Alter, Amazon, AmogOS, Anarchy,
                                 Android, Antergos, antiX, AOSC OS, Afterglow, Aperio GNU/Linux,
                                 Aperture, Apricity, Arch, ArchBox, Archcraft, archcraft_ascii,
                                 archcraft_minimal, ARCHlabs, ArchMerge, ArchStrike, ArcoLinux,
