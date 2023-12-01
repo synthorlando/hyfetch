@@ -1477,7 +1477,7 @@ get_distro() {
         ;;
 
 	digitalUNIX)
-	    distro="digital UNIX ${$kernel_version}"
+	    distro="digital UNIX ${kernel_version}"
 	;;
     esac
 
