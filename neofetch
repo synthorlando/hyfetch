@@ -1029,6 +1029,7 @@ get_os() {
         IRIX*)    os=IRIX ;;
         FreeMiNT) os=FreeMiNT ;;
         Interix)  os=Interix ;;
+	OSF1)     os=digitalUNIX ;;
 
         Linux|GNU*)
             os=Linux
@@ -1474,6 +1475,10 @@ get_distro() {
         Interix)
             distro="Interix ${kernel_version}"
         ;;
+
+	digitalUNIX)
+	    distro="digital UNIX ${$kernel_version}"
+	;;
     esac
 
     distro=${distro//Enterprise Server}
@@ -1482,7 +1487,7 @@ get_distro() {
 
     # Get OS architecture.
     case $os in
-        Solaris|illumos|AIX|Haiku|IRIX|FreeMiNT|BSD)
+        Solaris|illumos|AIX|Haiku|IRIX|FreeMiNT|BSD|digitalUNIX)
             machine_arch=$(uname -p)
         ;;
 
@@ -6441,7 +6446,7 @@ ASCII:
     --ascii_colors x x x x x x  Colors to print the ascii art
     --ascii_distro distro       Which Distro's ascii art to print
 
-                                NOTE: AIX, AlmaLinux, Alpine, Alter, Amazon, AmogOS, Anarchy,
+                                NOTE: Adélie, AIX, AlmaLinux, Alpine, Alter, Amazon, AmogOS, Anarchy,
                                 Android, Antergos, antiX, AOSC OS, Afterglow, Aperio GNU/Linux,
                                 Aperture, Apricity, Arch, ArchBox, Archcraft, archcraft_ascii,
                                 archcraft_minimal, ARCHlabs, ArchMerge, ArchStrike, ArcoLinux,
@@ -6851,7 +6856,29 @@ get_distro_ascii() {
     #
     # $ascii_distro is the same as $distro.
     case $(trim "$ascii_distro") in
-        "AIX"*)
+        "Adélie"* | "Adelie"*)
+	    set_colors 4 7 6
+	    read -rd '' ascii_data <<'EOF'
+${c1}                 ${c3} ,-^-___
+${c3}                /\\\\\\///
+${c2}refined.${c1}       /\\\\\\\\//
+${c2}reliable.${c1}     /\\\\\\///
+${c2}ready.${c1}       /\\\\/////\\
+        __///\\\\\\\\/////\\
+${c3}     _//////\\\\\\\\\\\\\\////
+${c1}   ///////${c3}\\\\\\\\\\\\\\\\\\\\//
+          //////${c1}\\\\\\\\\\/
+          /////\\\\\\\\\\/
+          /////${c3}\\\\\\\\/
+         /\\\\///\\\\\\/
+         /\\\\\\/${c1}\\\/
+         /\\\\\\\\//
+        //////
+      /// ${c3}\\\\\\\\\\
+EOF
+	;;
+
+	"AIX"*)
             set_colors 2 7
             read -rd '' ascii_data <<'EOF'
 ${c1}           `:+ssssossossss+-`
@@ -9027,6 +9054,21 @@ ${c2}  `Y$$
               `"""
 EOF
         ;;
+
+	"digital UNIX"*)
+	    set_colors 1 6 7
+	    read -rd '' ascii_data <<'EOF'
+${c1}     +-+-+-+-+-+-+-+
+     |${c3}d${c1}|${c3}i${c1}|${c3}g${c1}|${c3}i${c1}|${c3}t${c1}|${c3}a${c1}|${c3}l${c1}|
+     +-+-+-+-+-+-+-+
+${c2} _    _ _   _ _______   __
+| |  | | \ | |_   _\ \ / /
+| |  | |  \| | | |  \ V /
+| |  | | . ` | | |   > <
+| |__| | |\  |_| |_ / . \
+ \____/|_| \_|_____/_/ \_\\ 
+EOF
+	;;
 
         "Droidian"*)
             set_colors 2 10
