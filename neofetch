@@ -1039,7 +1039,7 @@ get_os() {
             os=BSD
         ;;
 
-        CYGWIN*|MSYS*|MINGW*)
+        CYGWIN*|MSYS*|MINGW*|Windows_NT)
             os=Windows
         ;;
 
