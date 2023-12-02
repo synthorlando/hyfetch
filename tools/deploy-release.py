@@ -64,7 +64,7 @@ def edit_versions(version: str):
     # 4. neofetch script
     print('Editing neofetch...')
     path = Path('neofetch')
-    lines = path.read_text().replace("\t", "    ").split('\n')
+    lines = path.read_text().replace("\t", "        ").split('\n')
     version_i = next(i for i, l in enumerate(lines) if l.startswith('version='))
     nf = pv.parse(lines[version_i].replace('version=', ''))
     new = pv.parse(version)
@@ -115,8 +115,7 @@ def create_release(v: str):
     print('Committing changes...')
 
     # 1. Add files
-    subprocess.check_call(['git', 'add', 'hyfetch/__version__.py', 'neofetch', 'neofetch.1', 'package.json', 'README.md',
-                           'hyfetch/distros/*'])
+    subprocess.check_call(['git', 'add', '.'])
 
     # 2. Commit
     subprocess.check_call(['git', 'commit', '-m', f'[U] Release {v}'])
