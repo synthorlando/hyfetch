@@ -117,6 +117,37 @@ pip install git+https://github.com/hykilpikonna/hyfetch.git@master
 ```
 
 <!-- CHANGELOG STARTS HERE --->
+* 🌈 Add ability to set backend args in hyfetch config file (#181)
+* 🌈 Update makefile to be able to install hyfetch (#174)
+* 🌈 Fix config file argument (#177)
+* 🌈 Support pipx installation (#188, #192)
+* 🌈 Create package for Debian, OpenSUSE, Homebrew, Gentoo, and lure.sh  
+  (#184, #194, #207, #206) Huge thanks to @BKasin!
+* 🖼 DE - Fix DE empty bracket in macOS (#172)
+* 🖼 Distro - Use /etc/debian_version to get .x on Debian (#191)
+* 🖼 Distro - Add LainOS (#190)
+* 🖼 Distro - Add aerOS (dylanaraps/neofetch#2360)
+* 🖼 Distro - Add Xenia (#197)
+* 🖼 Distro - Add EndeavourOS Small Option (dylanaraps/neofetch#2391)
+* 🖼 Distro - Add AZOS (dylanaraps/neofetch#2339)
+* 🖼 Distro - Add MainsailOS (dylanaraps/neofetch#2407)
+* 🖼 Distro - Add Interix (dylanaraps/neofetch#2409)
+* 🖼 Distro - Add Peropesis Linux (dylanaraps/neofetch#2414)
+* 🖼 Distro - Add Adélie Linux (#218)
+* 🖼 Distro - Add Xray_OS (dylanaraps/neofetch#2413)
+* 🖼 Ascii - Update AOSC logo (#185)
+* 🖼 Ascii - Update phyOS logo (#211)
+* 🖼 Ascii - Update Parch logo (dylanaraps/neofetch#2045)
+* 🖼 Ascii - Add linux_small (dylanaraps/neofetch#2417)
+* 🖼 Bug Fix - Fix color blocks for bash !=3 & <5 (#170)
+* 🖼 Bug Fix - Use sed -r instead of -E when using GNU sed (#171)
+* 🖼 Bug Fix - Fixed Kubuntu recognized as Ubuntu (dylanaraps/neofetch#2411)
+* 🖼 OS - Improved MacOS resolution detection (dylanaraps/neofetch#2356)
+* 🖼 OS - Disable Hackintosh check on arm64 processors (dylanaraps/neofetch#2396)
+* 🖼 OS - Add Windows NT (#217)
+* 🖼 Terminal - Add support for alacritty's new config format (#202)
+* 🖼 Terminal - Check for newer xfce4-term config (#214)
+* 🖼 Package - Add support for npm global packages (#215)
 
 ### 1.4.10
 
