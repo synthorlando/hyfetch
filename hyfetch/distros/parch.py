@@ -2,26 +2,31 @@
 
 from . import AsciiArt
 
-parch = AsciiArt(match=r'''"parch"* | "Parch"* | "PARCH"*''', color='4 6', ascii=r"""
-${c1}
-                  +s;;:o-
-              s/sssso+/-'+\
-           +/ssssss/`
-         /ssssssss/
-       \ 'sssssss:
-      `o+;ssssssso\
-     /sssssssssssss\+
-    ;ssssssssssssssss:
-   :sssssssssssssssssso;
-   /ssssssssssssssssssssss
-  `+ssssssssssssssssssssso\
-   so+'+ssssssssssssssss+'`
-   '` +osssssoooooosssss++oo\
-     /sssssssooooooosssssssso
-    `osssssssssoooossssssssso:
-      \sssssssssssssssssssss;
-       `+osssssssssssssss:/'
-         `\osssssssssso;+'
-             `\+;so:+-`
+parch = AsciiArt(match=r'''"parch"* | "Parch"* | "PARCH"*''', color='4 7 1', ascii=r"""
+${c1}                       ,:lodddd.
+                   .:clooood.
+                 ;clllooooc
+               ;cclllllloo
+              .cccccllllll
+            .   ,cccclllll
+           ':::;; ccccclll;
+          .:::cccccccccccll;
+          ;::::ccccllllllcll:
+         .;::::cccclllloool::;
+         ;;;::::cccclllolc::::;.
+         ;;;::::cccclllccc:::::;.
+         ;;;::::cccclccccc::::::;.
+         ;;;;::::::llcccccc:::::'
+         ;;;;:; ,clllccccccc::
+         .;;  .cllllllcccccc::;::::'
+             .'''''''''',:lddoooolll
+            '.....'''',cdddooooollll
+           ........':oddddoooolllllc
+            ....';ldddddooooolllllc:
+              ,cdddddddooooollllccc
+               :ddddddoooolllllccc
+                 ;ddooooolllllcc.
+                    :ooollllc.
+                        c'
 """)
     

@@ -8,6 +8,10 @@ def detect(name: str) -> AsciiArt | None:
     if not name:
         return None
     name = name.lower()
+    if name.startswith('adélie') or name.startswith('adelie'):
+        from .adélie import adélie
+        return adélie
+    
     if name.startswith('aix'):
         from .aix import aix
         return aix
@@ -88,13 +92,9 @@ def detect(name: str) -> AsciiArt | None:
         from .antix import antix
         return antix
     
-    if name.startswith('aosc os/retro'):
-        from .aosc_os_retro import aosc_os_retro
-        return aosc_os_retro
-    
-    if name == 'aoscosretro_small':
-        from .aoscosretro_small import aoscosretro_small
-        return aoscosretro_small
+    if name.startswith('afterglow'):
+        from .afterglow import afterglow
+        return afterglow
     
     if name.startswith('aosc os'):
         from .aosc_os import aosc_os
@@ -160,6 +160,10 @@ def detect(name: str) -> AsciiArt | None:
         from .archmerge import archmerge
         return archmerge
     
+    if name.startswith('aeros'):
+        from .aeros import aeros
+        return aeros
+    
     if name.startswith('arch'):
         from .arch import arch
         return arch
@@ -188,13 +192,13 @@ def detect(name: str) -> AsciiArt | None:
         from .asteroidos import asteroidos
         return asteroidos
     
-    if name.startswith('aster'):
-        from .aster import aster
-        return aster
-    
     if name.startswith('athena'):
         from .athena import athena
         return athena
+    
+    if name.startswith('azos'):
+        from .azos import azos
+        return azos
     
     if name.startswith('bedrock'):
         from .bedrock import bedrock
@@ -376,6 +380,10 @@ def detect(name: str) -> AsciiArt | None:
         from .debian import debian
         return debian
     
+    if name.startswith('digital unix'):
+        from .digital_unix import digital_unix
+        return digital_unix
+    
     if name.startswith('droidian'):
         from .droidian import droidian
         return droidian
@@ -439,6 +447,10 @@ def detect(name: str) -> AsciiArt | None:
     if name.startswith('elive'):
         from .elive import elive
         return elive
+    
+    if name.startswith('endeavouros_small'):
+        from .endeavouros_small import endeavouros_small
+        return endeavouros_small
     
     if name.startswith('endeavouros'):
         from .endeavouros import endeavouros
@@ -608,6 +620,10 @@ def detect(name: str) -> AsciiArt | None:
         from .iglunix import iglunix
         return iglunix
     
+    if name.startswith('interix'):
+        from .interix import interix
+        return interix
+    
     if name.startswith('januslinux') or name.startswith('janus') or name.startswith('ataraxia linux') or name.startswith('ataraxia'):
         from .januslinux import januslinux
         return januslinux
@@ -652,6 +668,10 @@ def detect(name: str) -> AsciiArt | None:
         from .kubuntu import kubuntu
         return kubuntu
     
+    if name.startswith('lainos'):
+        from .lainos import lainos
+        return lainos
+    
     if name.startswith('lede'):
         from .lede import lede
         return lede
@@ -675,6 +695,10 @@ def detect(name: str) -> AsciiArt | None:
     if name == 'linux':
         from .linux import linux
         return linux
+    
+    if name == 'linux_small':
+        from .linux_small import linux_small
+        return linux_small
     
     if name.startswith('linuxlite_small'):
         from .linuxlite_small import linuxlite_small
@@ -715,6 +739,14 @@ def detect(name: str) -> AsciiArt | None:
     if name.startswith('magpieos'):
         from .magpieos import magpieos
         return magpieos
+    
+    if name.startswith('mainsailos_small'):
+        from .mainsailos_small import mainsailos_small
+        return mainsailos_small
+    
+    if name.startswith('mainsailos'):
+        from .mainsailos import mainsailos
+        return mainsailos
     
     if name.startswith('mandriva') or name.startswith('mandrake'):
         from .mandriva import mandriva
@@ -1011,6 +1043,10 @@ def detect(name: str) -> AsciiArt | None:
     if name.startswith('pureos'):
         from .pureos import pureos
         return pureos
+    
+    if name.startswith('peropesis'):
+        from .peropesis import peropesis
+        return peropesis
     
     if name.startswith('q4os'):
         from .q4os import q4os
@@ -1384,6 +1420,10 @@ def detect(name: str) -> AsciiArt | None:
         from .windows import windows
         return windows
     
+    if name.startswith('xray_os'):
+        from .xray_os import xray_os
+        return xray_os
+    
     if name.startswith('xubuntu'):
         from .xubuntu import xubuntu
         return xubuntu
@@ -1399,6 +1439,14 @@ def detect(name: str) -> AsciiArt | None:
     if name.startswith('irix'):
         from .irix import irix
         return irix
+    
+    if name.startswith('xenia2'):
+        from .xenia2 import xenia2
+        return xenia2
+    
+    if name.startswith('xenia'):
+        from .xenia import xenia
+        return xenia
     
     if name.startswith('zorin'):
         from .zorin import zorin
