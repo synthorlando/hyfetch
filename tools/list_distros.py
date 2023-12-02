@@ -34,7 +34,7 @@ def parse_ascii_distros() -> list[AsciiArt]:
     """
     Parse ascii distros from neofetch script
     """
-    nf = (Path(__file__).parent.parent / 'neofetch').read_text()
+    nf = (Path(__file__).parent.parent / 'neofetch').read_text().replace('\t', ' ' * 4)
 
     # Get the content of "get_distro_ascii" function
     nf = nf[nf.index('get_distro_ascii() {\n'):]
