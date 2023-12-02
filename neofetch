@@ -4463,7 +4463,6 @@ get_term() {
     [[ "$WT_SESSION" ]]     && term="Windows Terminal"
 
     # Check $PPID for terminal emulator.
-    term="gcon"
     while [[ -z "$term" ]]; do
         parent="$(get_ppid "$parent")"
         [[ -z "$parent" ]] && break
