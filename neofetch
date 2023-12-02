@@ -868,25 +868,25 @@ image_source="auto"
 # Fedora, FemboyOS, Feren, Finnix, Floflis, FreeBSD, FreeMiNT, Frugalware, Funtoo, GalliumOS,
 # Garuda, Gentoo, GhostBSD, glaucus, gNewSense, GNOME, GNU, GoboLinux, GrapheneOS, Grombyang, Guix,
 # Haiku, HamoniKR, HarDClanZ, Hash, Huayra, Hybrid, HydroOS, Hyperbola, iglunix, instantOS, Interix,
-# IRIX, Itc, januslinux, Kaisen, Kali, KaOS, KDE, Kibojoe, Kogaion, Korora, KrassOS, KSLinux,
-# Kubuntu, LainOS, LangitKetujuh, LaxerOS, LEDE, LibreELEC, Linspire, Linux, Linux Lite, Linux Mint,
-# Linux Mint Old, Live Raizo, LMDE, Lubuntu, Lunar, mac, Mageia, MagpieOS, MainsailOS, Mandriva,
-# Manjaro, MassOS, MatuusOS, Maui, Meowix, Mer, Minix, MIRACLE LINUX, MX, Namib, NekOS, Neptune,
-# NetBSD, Netrunner, Nitrux, NixOS, Nobara, NomadBSD, Nurunner, NuTyX, Obarun, OBRevenge, OmniOS,
-# Open Source Media Center, OpenBSD, openEuler, OpenIndiana, openKylin, openmamba, OpenMandriva,
-# OpenStage, openSUSE, openSUSE Leap, openSUSE Tumbleweed, OPNsense, Oracle, orchid, OS Elbrus,
-# PacBSD, Panwah, Parabola, parch, Pardus, Parrot, Parsix, PCBSD, PCLinuxOS, pearOS, Pengwin,
-# Pentoo, Peppermint, Peropesis, phyOS, PikaOS, Pisi, PNM Linux, Pop!_OS, Porteus, PostMarketOS,
-# Profelis SambaBOX, Proxmox, PuffOS, Puppy, PureOS, Q4OS, Qubes, Qubyt, Quibian, Radix, Raspbian,
-# ravynOS, Reborn OS, Red Star, Redcore, Redhat, Refracted Devuan, Regata, Regolith, RhaymOS, rocky,
-# Rosa, Sabayon, sabotage, Sailfish, SalentOS, Salient OS, Salix, Sasanqua, Scientific, semc,
-# Septor, Serene, SharkLinux, ShastraOS, Siduction, SkiffOS, Slackel, Slackware, SliTaz, SmartOS,
-# Soda, Solus, Source Mage, Sparky, Star, SteamOS, Stock Linux, Sulin, SunOS, SwagArch, t2, Tails,
-# TeArch, TorizonCore, Trisquel, Twister, Ubuntu, Ubuntu Budgie, Ubuntu Cinnamon, Ubuntu Kylin,
-# Ubuntu MATE, Ubuntu Studio, Ubuntu Sway, Ubuntu Touch, Ubuntu-GNOME, ubuntu_old02, Ultramarine
-# Linux, unicodearch, Univalent, Univention, Uos, UrukOS, uwuntu, Vanilla, Venom, VNux, Void,
-# VzLinux, wii-linux-ngx, Windows, Windows 10, Windows 11, Windows95, Wrt, Xenia, Xenia2, XFerience,
-# Xray_OS, Xubuntu, yiffOS, Zorin have ascii logos.
+# IRIX, Ironclad, Itc, januslinux, Kaisen, Kali, KaOS, KDE, Kibojoe, Kogaion, Korora, KrassOS,
+# KSLinux, Kubuntu, LainOS, LangitKetujuh, LaxerOS, LEDE, LibreELEC, Linspire, Linux, Linux Lite,
+# Linux Mint, Linux Mint Old, Live Raizo, LMDE, Lubuntu, Lunar, mac, Mageia, MagpieOS, MainsailOS,
+# Mandriva, Manjaro, MassOS, MatuusOS, Maui, Meowix, Mer, Minix, MIRACLE LINUX, MX, Namib, NekOS,
+# Neptune, NetBSD, Netrunner, Nitrux, NixOS, Nobara, NomadBSD, Nurunner, NuTyX, Obarun, OBRevenge,
+# OmniOS, Open Source Media Center, OpenBSD, openEuler, OpenIndiana, openKylin, openmamba,
+# OpenMandriva, OpenStage, openSUSE, openSUSE Leap, openSUSE Tumbleweed, OPNsense, Oracle, orchid,
+# OS Elbrus, PacBSD, Panwah, Parabola, parch, Pardus, Parrot, Parsix, PCBSD, PCLinuxOS, pearOS,
+# Pengwin, Pentoo, Peppermint, Peropesis, phyOS, PikaOS, Pisi, PNM Linux, Pop!_OS, Porteus,
+# PostMarketOS, Profelis SambaBOX, Proxmox, PuffOS, Puppy, PureOS, Q4OS, Qubes, Qubyt, Quibian,
+# Radix, Raspbian, ravynOS, Reborn OS, Red Star, Redcore, Redhat, Refracted Devuan, Regata,
+# Regolith, RhaymOS, rocky, Rosa, Sabayon, sabotage, Sailfish, SalentOS, Salient OS, Salix, Sasanqua,
+# Scientific, semc, Septor, Serene, SharkLinux, ShastraOS, Siduction, SkiffOS, Slackel, Slackware,
+# SliTaz, SmartOS, Soda, Solus, Source Mage, Sparky, Star, SteamOS, Stock Linux, Sulin, SunOS,
+# SwagArch, t2, Tails, TeArch, TorizonCore, Trisquel, Twister, Ubuntu, Ubuntu Budgie, Ubuntu
+# Cinnamon, Ubuntu Kylin, Ubuntu MATE, Ubuntu Studio, Ubuntu Sway, Ubuntu Touch, Ubuntu-GNOME,
+# ubuntu_old02, Ultramarine Linux, unicodearch, Univalent, Univention, Uos, UrukOS, uwuntu, Vanilla,
+# Venom, VNux, Void, VzLinux, wii-linux-ngx, Windows, Windows 10, Windows 11, Windows95, Wrt, Xenia,
+# Xenia2, XFerience, Xray_OS, Xubuntu, yiffOS, Zorin have ascii logos.
 
 # NOTE: arch, dragonfly, Fedora, LangitKetujuh, nixos, redhat, Ubuntu have 'old' logo variants, use
 # {distro}_old to use them.
@@ -1030,6 +1030,7 @@ get_os() {
         IRIX*)    os=IRIX ;;
         FreeMiNT) os=FreeMiNT ;;
         Interix)  os=Interix ;;
+        Ironclad) os=Ironclad;;
         OSF1)     os=digitalUNIX ;;
 
         Linux|GNU*)
@@ -1057,6 +1058,7 @@ get_distro() {
     [[ $distro ]] && return
 
     case $os in
+     Ironclad) distro=Ironclad ;;
         Linux|BSD|MINIX)
             if [[ -f /bedrock/etc/bedrock-release && -z $BEDROCK_RESTRICT ]]; then
                 case $distro_shorthand in
@@ -1891,6 +1893,9 @@ get_kernel() {
 get_uptime() {
     # Get uptime in seconds.
     case $os in
+        Ironclad)
+            s=$(uptime -s)
+        ;;
         Linux|Windows|MINIX)
             if [[ -r /proc/uptime ]]; then
                 s=$(< /proc/uptime)
@@ -2840,6 +2845,9 @@ get_wm_theme() {
 
 get_cpu() {
     case $os in
+        "Ironclad")
+            cpu="$(cpuinfo -n) ($(cpuinfo -c)) @ $(cpuinfo -f)"
+            ;;
         "Linux" | "MINIX" | "Windows")
             # Get CPU name.
             cpu_file="/proc/cpuinfo"
@@ -3614,6 +3622,10 @@ get_memory() {
             mem_used="$((mem_total - mem_free))"
         ;;
 
+        "Ironclad")
+            mem_free="$(( $(showmem -f) * 1000 ))"
+            mem_used="$(( $(showmem -u) * 1000 ))"
+            mem_total="$(( $(showmem -t) * 1000 ))"
     esac
 
     [[ "$memory_percent" == "on" ]] && ((mem_perc=mem_used * 100 / mem_total))
@@ -4451,6 +4463,7 @@ get_term() {
     [[ "$WT_SESSION" ]]     && term="Windows Terminal"
 
     # Check $PPID for terminal emulator.
+    term="gcon"
     while [[ -z "$term" ]]; do
         parent="$(get_ppid "$parent")"
         [[ -z "$parent" ]] && break
@@ -6466,11 +6479,11 @@ ASCII:
                                 Funtoo, GalliumOS, Garuda, Gentoo, GhostBSD, glaucus, gNewSense,
                                 GNOME, GNU, GoboLinux, GrapheneOS, Grombyang, Guix, Haiku, HamoniKR,
                                 HarDClanZ, Hash, Huayra, Hybrid, HydroOS, Hyperbola, iglunix,
-                                instantOS, Interix, IRIX, Itc, januslinux, Kaisen, Kali, KaOS, KDE,
-                                Kibojoe, Kogaion, Korora, KrassOS, KSLinux, Kubuntu, LainOS,
-                                LangitKetujuh, LaxerOS, LEDE, LibreELEC, Linspire, Linux, Linux
-                                Lite, Linux Mint, Linux Mint Old, Live Raizo, LMDE, Lubuntu, Lunar,
-                                mac, Mageia, MagpieOS, MainsailOS, Mandriva, Manjaro, MassOS,
+                                instantOS, Interix, IRIX, Ironclad, Itc, januslinux, Kaisen, Kali,
+                                KaOS, KDE, Kibojoe, Kogaion, Korora, KrassOS, KSLinux, Kubuntu,
+                                LainOS, LangitKetujuh, LaxerOS, LEDE, LibreELEC, Linspire, Linux,
+                                Linux Lite, Linux Mint, Linux Mint Old, Live Raizo, LMDE, Lubuntu,
+                                Lunar, mac, Mageia, MagpieOS, MainsailOS, Mandriva, Manjaro, MassOS,
                                 MatuusOS, Maui, Meowix, Mer, Minix, MIRACLE LINUX, MX, Namib, NekOS,
                                 Neptune, NetBSD, Netrunner, Nitrux, NixOS, Nobara, NomadBSD,
                                 Nurunner, NuTyX, Obarun, OBRevenge, OmniOS, Open Source Media
@@ -10337,6 +10350,24 @@ ${c2}~!!7JY5PGGBBBBBBBBGGGGGGGBGGGGGP5YJ?7~~~
 EOF
         ;;
 
+         "Ironclad"*)
+             set_colors 5 7 0
+             read -rd '' ascii_data <<'EOF'
+${c3}
+                   &#BGPPPPPG#&
+                B5?77!!?YJJ7!7YBB&
+             &G5YJ77!7JYYYYYBPJ&PY#
+           #PYYYYYY?!?YYYYY7?7JP5JJ
+          B?YYYYYY7!!7JYYYYJ!!?JJJ5
+   &&    B7?J?77?7!!!!!77777!7Y5YYBBPGGG&
+  G77?YBB!!!!!!!!!!!!!JYJ??7JYJJY# PYPPG&
+  J777JB?!7JJ???!!!7?JYYYYYPJ!7JB
+  GYYG #JJJJJ??7!!!JYYY5PGB&GB&
+     #Y!?GB5YYJY5PG###&
+     GJJP
+EOF
+
+  ;;
         "januslinux"*|"janus"*|"Ataraxia Linux"*|"Ataraxia"*)
             set_colors 4 5 6 2
             read -rd '' ascii_data <<'EOF'
