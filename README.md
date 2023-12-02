@@ -119,6 +119,7 @@ pip install git+https://github.com/hykilpikonna/hyfetch.git@master
 <!-- CHANGELOG STARTS HERE --->
 
 ### 1.4.11
+
 * 🌈 Add ability to set backend args in hyfetch config file ([#181](https://github.com/hykilpikonna/hyfetch/pull/181))
 * 🌈 Update makefile to be able to install hyfetch ([#174](https://github.com/hykilpikonna/hyfetch/pull/174))
 * 🌈 Fix config file argument ([#177](https://github.com/hykilpikonna/hyfetch/pull/177))
@@ -126,6 +127,9 @@ pip install git+https://github.com/hykilpikonna/hyfetch.git@master
 * 🌈 Create package for Debian, OpenSUSE, Homebrew, Gentoo, and lure.sh  
   ([#184](https://github.com/hykilpikonna/hyfetch/pull/184), [#194](https://github.com/hykilpikonna/hyfetch/pull/194), [#207](https://github.com/hykilpikonna/hyfetch/pull/207), [#206](https://github.com/hykilpikonna/hyfetch/pull/206)) Huge thanks to @BKasin!
 * 🖼 DE - Fix DE empty bracket in macOS ([#172](https://github.com/hykilpikonna/hyfetch/pull/172))
+* 🖼 OS - Disable Hackintosh check on arm64 processors ([dylanaraps#2396](https://github.com/dylanaraps/neofetch/pull/2396))
+* 🖼 OS - Add Windows NT ([#217](https://github.com/hykilpikonna/hyfetch/pull/217))
+* 🖼 Distro - Fixed Kubuntu recognized as Ubuntu ([dylanaraps#2411](https://github.com/dylanaraps/neofetch/pull/2411))
 * 🖼 Distro - Use /etc/debian_version to get .x on Debian ([#191](https://github.com/hykilpikonna/hyfetch/pull/191))
 * 🖼 Distro - Add LainOS ([#190](https://github.com/hykilpikonna/hyfetch/pull/190))
 * 🖼 Distro - Add aerOS ([dylanaraps#2360](https://github.com/dylanaraps/neofetch/pull/2360))
@@ -143,10 +147,7 @@ pip install git+https://github.com/hykilpikonna/hyfetch.git@master
 * 🖼 Ascii - Add linux_small ([dylanaraps#2417](https://github.com/dylanaraps/neofetch/pull/2417))
 * 🖼 Bug Fix - Fix color blocks for bash !=3 & <5 ([#170](https://github.com/hykilpikonna/hyfetch/pull/170))
 * 🖼 Bug Fix - Use sed -r instead of -E when using GNU sed ([#171](https://github.com/hykilpikonna/hyfetch/pull/171))
-* 🖼 Bug Fix - Fixed Kubuntu recognized as Ubuntu ([dylanaraps#2411](https://github.com/dylanaraps/neofetch/pull/2411))
-* 🖼 OS - Improved MacOS resolution detection ([dylanaraps#2356](https://github.com/dylanaraps/neofetch/pull/2356))
-* 🖼 OS - Disable Hackintosh check on arm64 processors ([dylanaraps#2396](https://github.com/dylanaraps/neofetch/pull/2396))
-* 🖼 OS - Add Windows NT ([#217](https://github.com/hykilpikonna/hyfetch/pull/217))
+* 🖼 Resolution - Improved MacOS resolution detection ([dylanaraps#2356](https://github.com/dylanaraps/neofetch/pull/2356))
 * 🖼 Terminal - Add support for alacritty's new config format ([#202](https://github.com/hykilpikonna/hyfetch/pull/202))
 * 🖼 Terminal - Check for newer xfce4-term config ([#214](https://github.com/hykilpikonna/hyfetch/pull/214))
 * 🖼 Package - Add support for npm global packages ([#215](https://github.com/hykilpikonna/hyfetch/pull/215))
