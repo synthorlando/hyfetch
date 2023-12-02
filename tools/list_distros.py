@@ -15,7 +15,7 @@ from hypy_utils import write
 from hyfetch.distros import AsciiArt
 
 RE_SPLIT = regex.compile('EOF[ \n]*?;;')
-RE_COLORS = regex.compile("""(?<=set_colors )[\"#a-z\\d ]+(?=\n)""")
+RE_COLORS = regex.compile("""(?<=set_colors )[\"#a-zA-Z\\d ']+(?=\n)""")
 
 
 def substr(s: str, start: str, end: str | None = None):
@@ -63,7 +63,7 @@ def parse_ascii_distros() -> list[AsciiArt]:
             match = match[:-1]
 
             # Get colors
-            color = RE_COLORS.findall(block)[0]
+            color = RE_COLORS.findall(block)[0].strip("'")
             if len(color) == 0:
                 raise Exception(block)
 
