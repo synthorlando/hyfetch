@@ -39,6 +39,7 @@ Currently, these distributions have existing packages for HyFetch:
 * Homebrew: `brew install hyfetch` (Thanks to [@BKasin](https://github.com/BKasin) and [@osalbahr](https://github.com/osalbahr))
 * openSUSE Tumbleweed: `zypper in python311-hyfetch` (Thanks to [@BKasin](https://github.com/BKasin))
 * Gentoo: `emerge --ask app-misc/hyfetch` (Thanks to [@BKasin](https://github.com/BKasin))
+* Debian `apt install hyfetch` (for Debian flavor >= [Trixie](https://packages.debian.org/trixie/hyfetch))
 
 [![Packaging status](https://repology.org/badge/vertical-allrepos/hyfetch.svg)](https://repology.org/project/hyfetch/versions)
 
