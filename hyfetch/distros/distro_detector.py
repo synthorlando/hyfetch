@@ -624,6 +624,10 @@ def detect(name: str) -> AsciiArt | None:
         from .interix import interix
         return interix
     
+    if name.startswith('ironclad'):
+        from .ironclad import ironclad
+        return ironclad
+    
     if name.startswith('januslinux') or name.startswith('janus') or name.startswith('ataraxia linux') or name.startswith('ataraxia'):
         from .januslinux import januslinux
         return januslinux
