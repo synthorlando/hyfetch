@@ -83,7 +83,9 @@ For many in the LGBTQ+ community, these flags symbolize their identity, struggle
 
 Also, by including flag coloring along with the updated neofetch, we're also broadcasting a wider message about the importance of inclusivity and representation. It's not just a design choice, it's a statement that promotes awareness and understanding toward the LGBTQ+ community.
 
+#### Q: When I use `hyfetch` or `neowofetch` in my MotD, no art displays. How do I get the art back?
 
+A: Most likely, the `stdout` detection is set to auto and is removing the ascii art and colors. To change this, you can: set `args` in your hyfetch.json to `"--stdout=off"`, add `--stdout=off` to the `neowofetch` command in your motd script, or set the option in $HOME/.config/(neofetch|neowofetch)/config.conf to off.
 
 
 ## Contributing
