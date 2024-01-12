@@ -87,6 +87,10 @@ Also, by including flag coloring along with the updated neofetch, we're also bro
 
 A: Most likely, the `stdout` detection is set to auto and is removing the ascii art and colors. To change this, you can: set `args` in your hyfetch.json to `"--stdout=off"`, add `--stdout=off` to the `neowofetch` command in your motd script, or set the option in $HOME/.config/(neofetch|neowofetch)/config.conf to off.
 
+#### Q: How can I run HyFetch on Windows?
+
+A: Install Python > 3.7 and Git > 2.42.0 first. Then, either open Git Bash terminal or install a terminal emulator that can display RGB colors (the default Windows cmd.exe cannot, but the new [Windows Terminal](https://apps.microsoft.com/detail/9N0DX20HK701?hl=en-US&gl=US) can). Then, run `pip install hyfetch` and run `hyfetch`.
+
 
 ## Contributing
 
