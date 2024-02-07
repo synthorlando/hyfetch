@@ -7,7 +7,7 @@ import shlex
 import shutil
 import subprocess
 import sys
-import zipfile
+import tarfile
 from dataclasses import dataclass
 from pathlib import Path
 from subprocess import check_output
@@ -17,7 +17,7 @@ from typing import Iterable
 import pkg_resources
 
 from .color_util import color, printc
-from .constants import GLOBAL_CFG, MINGIT_URL, IS_WINDOWS
+from .constants import GLOBAL_CFG, GIT_URL, IS_WINDOWS
 from .distros import distro_detector
 from .presets import ColorProfile
 from .serializer import from_dict
@@ -246,21 +246,23 @@ def ensure_git_bash() -> Path:
 
         # Previously downloaded portable installation
         path = Path(__file__).parent / 'min_git'
-        pkg_path = path / 'package.zip'
-        if path.is_dir():
-            return path / r'bin\bash.exe'
+        portable_bash_exe = path / r'bin\bash.exe'
+        if path.is_dir() and portable_bash_exe.is_file():
+            return portable_bash_exe
 
         # No installation found, download a portable installation
-        print('Git installation not found. Git is required to use HyFetch/neofetch on Windows')
-        if literal_input('Would you like to install a minimal package for Git? (if no is selected colors almost certainly won\'t work)', ['yes', 'no'], 'yes', False) == 'yes':
-            print('Downloading a minimal portable package for Git...')
+        Path.mkdir(path, parents=True, exist_ok=True)
+        pkg_path = path / 'package.tbz'
+        print('Git installation not found. Git Bash is required to use HyFetch/neofetch on Windows')
+        if literal_input('Would you like to download and install Git into HyFetch package directory? (if no is selected colors almost certainly won\'t work)', ['yes', 'no'], 'yes', False) == 'yes':
+            print('Downloading a portable version of Git...')
             from urllib.request import urlretrieve
-            urlretrieve(MINGIT_URL, pkg_path)
+            urlretrieve(GIT_URL, pkg_path)
             print('Download finished! Extracting...')
-            with zipfile.ZipFile(pkg_path, 'r') as zip_ref:
-                zip_ref.extractall(path)
+            with tarfile.open(pkg_path, 'r:bz2') as tbz_ref:
+                tbz_ref.extractall(path)
             print('Done!')
-            return path / r'bin\bash.exe'
+            return portable_bash_exe
         else:
             sys.exit()
 
