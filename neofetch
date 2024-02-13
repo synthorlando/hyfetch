@@ -2069,6 +2069,7 @@ get_packages() {
     has pipx  && tot pipx list --short
     has cargo && _cargopkgs="$(cargo install --list | grep -v '^ ')" && tot echo "$_cargopkgs"
     has npm   && pkgs_h=1 tot npm list -g --depth=0
+    has am    && pac $(am -f | grep 'PROGRAMS MANAGED BY' | cut -d' ' -f4)
 
     # OS-specific package managers.
     case $os in
