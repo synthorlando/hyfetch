@@ -4654,8 +4654,8 @@ END
             # Get Process ID of current konsole window / tab
             child="$(get_ppid "$$")"
 
-            # Loop while the process name is not "konsole"
-            while [[ "$(ps -p "$(get_ppid "$child")" -o comm=)" != "konsole" ]]; do
+            # Loop while the process name is not "konsole"/"yakuake"
+            while [[ "$(ps -p "$(get_ppid "$child")" -o comm=)" != "$term" ]]; do
                 # Get the parent process ID
                 child="$(get_ppid "$child")"
 
