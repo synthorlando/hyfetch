@@ -2099,7 +2099,7 @@ get_packages() {
             has pm         && tot-safe pm list packages
             has evox       && tot cat /var/evox/packages/DB
             has squirrel   && tot ls /var/packages
-            has tea        && tot find "$HOME/.tea" -maxdepth 2 -mindepth 2 -type d
+            has pkgx       && tot find "$HOME/.pkgx" -maxdepth 2 -mindepth 2 -type d
             has anise      && tot anise s --installed
 
             # Using the dnf package cache is much faster than rpm.
