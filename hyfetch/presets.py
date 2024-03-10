@@ -526,7 +526,7 @@ PRESETS: dict[str, ColorProfile] = {
         "#F39FCE",
         "#EA7BB3",
     ]),
-    
+
     'unlabeled1': ColorProfile([
         '#EAF8E4',
         '#FDFDFB',
@@ -639,6 +639,15 @@ PRESETS: dict[str, ColorProfile] = {
         "#177B49",
         "#FFFFFF",
         "#593C90"
+    ]),
+
+    # used https://pluralpedia.org/w/Plurality#/media/File:Plural-Flag-1.jpg as source and colorpicked
+    'plural' : ColorProfile([
+        "#2D0625",
+	"#543475",
+	"#7675C3",
+	"#89C7B0",
+	"#F3EDBD",
     ]),
 
     # Meme flags
