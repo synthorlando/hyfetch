@@ -573,6 +573,7 @@ disk_percent="on"
 # audacious
 # banshee
 # bluemindo
+# cider
 # clementine
 # cmus
 # deadbeef
@@ -3778,6 +3779,7 @@ get_song() {
         "audacious"
         "banshee"
         "bluemindo"
+        "cider"
         "clementine"
         "cmus"
         "deadbeef"
@@ -3871,6 +3873,7 @@ get_song() {
         "tidal-hifi"*)    get_song_dbus "tidal-hifi" ;;
         "olivia"*)        get_song_dbus "olivia" ;;
         "exaile"*)        get_song_dbus "exaile" ;;
+        "cider"*)         get_song_dbus "cider2" ;;
         "netease-cloud-music"*)        get_song_dbus "netease-cloud-music" ;;
         "plasma-browser-integration"*) get_song_dbus "plasma-browser-integration" ;;
         "io.elementary.music"*)        get_song_dbus "Music" ;;
