@@ -2069,9 +2069,27 @@ get_packages() {
     # OS-independent package managers.
     has pipx  && tot pipx list --short
     has cargo && _cargopkgs="$(cargo install --list | grep -v '^ ')" && tot echo "$_cargopkgs"
-    npm-list() { npm list -g --depth=0 | grep -v -E '.*(\(none\)|npm@).*'; }
-    has npm   && pkgs_h=1 tot npm-list
     has am    && pac "$(am -f --less)"
+
+    # Special case for npm: If has npm, we should list folders under node_modules instead of using npm list.
+    # This is because npm list is very slow (2s)
+    if has npm; then
+        # Try to apply heuristics to find the global directory.
+        if [[ -d /usr/lib/node_modules ]]; then
+            dir /usr/lib/node_modules/*/
+        elif [[ -d /usr/local/lib/node_modules ]]; then
+            dir /usr/local/lib/node_modules/*/
+        else
+            # If neither exist, use npm root -g to get the global directory.
+            # (still ~10x faster than npm list)
+            npm_global=$(npm root -g)
+            [[ -d $npm_global ]] && dir "$npm_global"/*/
+
+            # This may not work in WSL2 (if npm is installed on Windows, not WSL).
+            # However, if npm is not installed on this WSL subsystem, it doesn't really count
+            # as a package manager for this subsystem, so let's ignore this case.
+        fi
+    fi
 
     # OS-specific package managers.
     case $os in
