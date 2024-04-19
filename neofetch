@@ -865,7 +865,7 @@ image_source="auto"
 # Chrom, Cleanjaro, Clear Linux OS, ClearOS, Clover, Cobalt, Condres, Container Linux by CoreOS,
 # CRUX, Crystal Linux, Cucumber, CutefishOS, CuteOS, CyberOS, dahlia, DarkOs, Darwin, Debian,
 # Deepin, DesaOS, Devuan, DietPi, digital UNIX, DracOS, DragonFly, Drauger, Droidian, Elementary,
-# Elive, EncryptOS, EndeavourOS, Endless, Enso, EuroLinux, EvolutionOS, Exherbo, Exodia Predator OS,
+# Elive, EncryptOS, EndeavourOS, Endless, Enso, EuroLinux, EvolutionOS, eweOS, Exherbo, Exodia Predator OS,
 # Fedora, FemboyOS, Feren, Finnix, Floflis, FreeBSD, FreeMiNT, Frugalware, Funtoo, GalliumOS,
 # Garuda, Gentoo, GhostBSD, glaucus, gNewSense, GNOME, GNU, GoboLinux, GrapheneOS, Grombyang, Guix,
 # Haiku, HamoniKR, HarDClanZ, Hash, Huayra, Hybrid, HydroOS, Hyperbola, iglunix, instantOS, Interix,
@@ -6521,7 +6521,7 @@ ASCII:
                                 CutefishOS, CuteOS, CyberOS, dahlia, DarkOs, Darwin, Debian, Deepin,
                                 DesaOS, Devuan, DietPi, digital UNIX, DracOS, DragonFly, Drauger,
                                 Droidian, Elementary, Elive, EncryptOS, EndeavourOS, Endless, Enso,
-                                EuroLinux, EvolutionOS, Exherbo, Exodia Predator OS, Fedora,
+                                EuroLinux, EvolutionOS, eweOS, Exherbo, Exodia Predator OS, Fedora,
                                 FemboyOS, Feren, Finnix, Floflis, FreeBSD, FreeMiNT, Frugalware,
                                 Funtoo, GalliumOS, Garuda, Gentoo, GhostBSD, glaucus, gNewSense,
                                 GNOME, GNU, GoboLinux, GrapheneOS, Grombyang, Guix, Haiku, HamoniKR,
@@ -9629,6 +9629,27 @@ ${c1}\e[1;32m      dddddddddddddddddddddddd
   dddd:.'''  '''''''''''''''  dddd:
      dddddddddddddddddddddddddd;;'
       '''''''''''''''''''''''''\e[0m
+EOF
+        ;;
+
+        "eweOS"*)
+            set_colors 7 11 9 8 1
+            read -rd '' ascii_data <<'EOF'
+${c2}           #####%%%                     
+${c2}        ##%%${c3}////${c2}%%%%%${c3}///                
+${c2}       #%%%%${c3}////((((////${c2}%               
+${c1}    *@@@@@@@${c3}/${c5},,,${c3}/////${c5},,,${c2}%${c1}@@@@@@@        
+${c1}  .@@@@@@@@@@@${c3}////////${c2}%%%${c1}@@@@@@@@@@@@   
+${c1} @@@${c4}...${c1}@@@@@@${c3}////${c2}%%${c3}////${c1}@@@@@@@@@@@@@@@@ 
+${c1} @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+${c1} @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+${c1}   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+${c1}         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+${c1}          @@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
+${c1}           @@@@@@@@@@@@@@@@@@@@@@@@@@@  
+${c1}             @@@@@@@@@@@@@@@@@@@@@@@    
+${c1}              @@@@@@         @@@@@@     
+${c1}                @@@           @@@       
 EOF
         ;;
 
