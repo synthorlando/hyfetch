@@ -7,17 +7,14 @@ import shlex
 import shutil
 import subprocess
 import sys
-import tarfile
 from dataclasses import dataclass
 from pathlib import Path
 from subprocess import check_output
 from tempfile import TemporaryDirectory
 from typing import Iterable
 
-import pkg_resources
-
 from .color_util import color, printc
-from .constants import GLOBAL_CFG, GIT_URL, IS_WINDOWS
+from .constants import GLOBAL_CFG, IS_WINDOWS
 from .distros import distro_detector
 from .presets import ColorProfile
 from .serializer import from_dict
@@ -198,24 +195,13 @@ def get_command_path() -> str:
 
     :return: Command path
     """
-    cmd_path = pkg_resources.resource_filename(__name__, 'scripts/neowofetch')
+    cmd_path = (if_file(SRC.parent / 'neofetch') or if_file(SRC / 'scripts/neowofetch'))
 
-    # Windows doesn't support symbolic links, but also I can't detect symbolic links... hard-code it here for now.
-    if IS_WINDOWS:
-        pkg = Path(__file__).parent
-        pth = (shutil.which("neowofetch") or
-               if_file(cmd_path) or
-               if_file(pkg / 'scripts/neowofetch') or
-               if_file(pkg.parent / 'neofetch') or
-               if_file(Path(cmd_path).parent.parent.parent / 'neofetch'))
+    if not cmd_path:
+        printc("&cError: Neofetch script cannot be found")
+        exit(127)
 
-        if not pth:
-            printc("&cError: Neofetch script cannot be found")
-            exit(127)
-
-        return str(pth)
-
-    return cmd_path
+    return str(cmd_path)
 
 
 def ensure_git_bash() -> Path:
@@ -224,48 +210,19 @@ def ensure_git_bash() -> Path:
 
     :returns git bash path
     """
-    if IS_WINDOWS:
-        # Find installation in default path
-        def_path = Path(r'C:\Program Files\Git\bin\bash.exe')
-        if def_path.is_file():
-            return def_path
+    if not IS_WINDOWS:
+        return Path('/usr/bin/bash')
 
-        # Detect third-party git.exe in path
-        git_exe = shutil.which("bash") or shutil.which("git.exe") or shutil.which("git")
-        if git_exe is not None:
-            pth = Path(git_exe).parent
-            if (pth / r'bash.exe').is_file():
-                return pth / r'bash.exe'
-            elif (pth / r'bin\bash.exe').is_file():
-                return pth / r'bin\bash.exe'
+    # Bundled git bash
+    git_path = (if_file(SRC / 'git/bin/bash.exe')
+                or if_file("C:/Program Files/Git/bin/bash.exe")
+                or if_file("C:/Program Files (x86)/Git/bin/bash.exe"))
 
-        # Find installation in PATH (C:\Program Files\Git\cmd should be in path)
-        pth = (os.environ.get('PATH') or '').lower().split(';')
-        pth = [p for p in pth if p.endswith(r'\git\cmd')]
-        if pth:
-            return Path(pth[0]).parent / r'bin\bash.exe'
+    if not git_path.is_file():
+        printc("&cError: Git Bash installation not found")
+        sys.exit(127)
 
-        # Previously downloaded portable installation
-        path = Path(__file__).parent / 'min_git'
-        portable_bash_exe = path / r'bin\bash.exe'
-        if path.is_dir() and portable_bash_exe.is_file():
-            return portable_bash_exe
-
-        # No installation found, download a portable installation
-        Path.mkdir(path, parents=True, exist_ok=True)
-        pkg_path = path / 'package.tbz'
-        print('Git installation not found. Git Bash is required to use HyFetch/neofetch on Windows')
-        if literal_input('Would you like to download and install Git into HyFetch package directory? (if no is selected colors almost certainly won\'t work)', ['yes', 'no'], 'yes', False) == 'yes':
-            print('Downloading a portable version of Git...')
-            from urllib.request import urlretrieve
-            urlretrieve(GIT_URL, pkg_path)
-            print('Download finished! Extracting...')
-            with tarfile.open(pkg_path, 'r:bz2') as tbz_ref:
-                tbz_ref.extractall(path)
-            print('Done!')
-            return portable_bash_exe
-        else:
-            sys.exit()
+    return git_path
 
 
 def check_windows_cmd():
@@ -273,14 +230,14 @@ def check_windows_cmd():
     Check if this script is running under cmd.exe. If so, launch an external window with git bash
     since cmd doesn't support RGB colors.
     """
-    if IS_WINDOWS:
-        import psutil
-        # TODO: This line does not correctly identify cmd prompts...
-        if psutil.Process(os.getppid()).name().lower().strip() == 'cmd.exe':
-            print("cmd.exe doesn't support RGB colors, restarting in MinTTY...")
-            cmd = f'"{ensure_git_bash().parent.parent / "usr/bin/mintty.exe"}" -s 110,40 -e python -m hyfetch --ask-exit'
-            os.system(cmd)
-            sys.exit(0)
+    # if IS_WINDOWS:
+    #     import psutil
+    #     # TODO: This line does not correctly identify cmd prompts...
+    #     if psutil.Process(os.getppid()).name().lower().strip() == 'cmd.exe':
+    #         print("cmd.exe doesn't support RGB colors, restarting in MinTTY...")
+    #         cmd = f'"{ensure_git_bash().parent.parent / "usr/bin/mintty.exe"}" -s 110,40 -e python -m hyfetch --ask-exit'
+    #         os.system(cmd)
+    #         sys.exit(0)
 
 
 def run_neofetch_cmd(args: str, pipe: bool = False) -> str | None:
@@ -294,8 +251,7 @@ def run_neofetch_cmd(args: str, pipe: bool = False) -> str | None:
         cmd = get_command_path().replace("\\", "/").replace("C:/", "/c/")
         args = args.replace('\\', '/').replace('C:/', '/c/')
 
-        full_cmd = [ensure_git_bash(), '-c', f"'{cmd}' {args}"]
-    # print(full_cmd)
+        full_cmd = [ensure_git_bash(), cmd, *shlex.split(args)]
 
     if pipe:
         return check_output(full_cmd).decode().strip()
@@ -354,10 +310,10 @@ def run(asc: str, backend: BackendLiteral, args: str = ''):
 
 def run_qwqfetch(asc: str, args: str = ''):
     """
-    Run neofetch with colors
+    Run qwqfetch with colors
 
-    :param preset: Color palette
-    :param alignment: Color alignment settings
+    :param asc: Ascii art
+    :param args: Additional arguments to pass to qwqfetch
     """
     asc = asc.replace('\\', '\\\\')
 
@@ -370,7 +326,8 @@ def run_qwqfetch(asc: str, args: str = ''):
     except ImportError as e:  # module not found etc
         print("qwqfetch is not installed. Install it by executing:")  # use print to output hint directly
         print("pip install git+https://github.com/nexplorer-3e/qwqfetch")  # TODO: public repo
-        raise e
+        exit(127)
+
 
 def run_neofetch(asc: str, args: str = ''):
     """
