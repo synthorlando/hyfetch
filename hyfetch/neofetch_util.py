@@ -24,6 +24,7 @@ from .serializer import from_dict
 from .types import BackendLiteral, ColorAlignMode
 
 RE_NEOFETCH_COLOR = re.compile('\\${c[0-9]}')
+SRC = Path(__file__).parent
 
 
 def literal_input(prompt: str, options: Iterable[str], default: str, show_ops: bool = True) -> str:
@@ -401,6 +402,16 @@ def run_fastfetch(asc: str, args: str = '', legacy: bool = False):
     :param args: Additional arguments to pass to fastfetch
     :param legacy: Set true when using fastfetch < 1.8.0
     """
+    # Find fastfetch binary
+    ff_path = (shutil.which('fastfetch') 
+               or if_file(SRC / 'fastfetch/usr/bin/fastfetch') 
+               or if_file(SRC / 'fastfetch/fastfetch')
+               or if_file(SRC / 'fastfetch/fastfetch.exe'))
+    
+    if not ff_path:
+        printc("&cError: fastfetch binary is not found. Please install fastfetch first.")
+        exit(127)
+    
     # Write temp file
     with TemporaryDirectory() as tmp_dir:
         tmp_dir = Path(tmp_dir)
@@ -408,7 +419,7 @@ def run_fastfetch(asc: str, args: str = '', legacy: bool = False):
         path.write_text(asc)
 
         # Call fastfetch with the temp file
-        proc = subprocess.run(['fastfetch', '--raw' if legacy else '--file-raw', path.absolute(), *shlex.split(args)])
+        proc = subprocess.run([ff_path, '--raw' if legacy else '--file-raw', path.absolute(), *shlex.split(args)])
         if proc.returncode == 144:
             printc("&6Error code 144 detected: Please upgrade fastfetch to >=1.8.0 or use the 'fastfetch-old' backend")
 
