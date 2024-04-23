@@ -104,3 +104,6 @@ build_for_platform "musl-amd64" "musllinux_1_1_x86_64"
 build_for_platform "musl-aarch64" "musllinux_1_1_aarch64"
 build_for_platform "macos-universal" "macosx_11_0_x86_64"
 build_for_platform "macos-universal" "macosx_11_0_arm64"
+
+# Finally, remove temporary files
+rm -rf wheel git
