@@ -96,13 +96,15 @@ function build_for_platform() {
 }
 
 # See https://packaging.python.org/en/latest/specifications/platform-compatibility-tags/
-build_for_platform "linux-amd64" "manylinux1_x86_64"
-build_for_platform "linux-aarch64" "manylinux2014_aarch64"
+# The official fastfetch build uses Ubuntu 22.04 with glibc 2.34
+build_for_platform "linux-amd64" "manylinux_2_34_x86_64"
+build_for_platform "linux-aarch64" "manylinux_2_34_aarch64"
 # There doesn't seem to be tags for freebsd?
 # build_for_platform "freebsd-amd64" "freebsd_x86_64"
 # build_for_platform "freebsd-aarch64" "freebsd_aarch64"
 build_for_platform "musl-amd64" "musllinux_1_1_x86_64"
 build_for_platform "musl-aarch64" "musllinux_1_1_aarch64"
+# The official fastfetch build uses macOS 12.0
 build_for_platform "macos-universal" "macosx_11_0_x86_64"
 build_for_platform "macos-universal" "macosx_11_0_arm64"
 
