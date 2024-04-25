@@ -56,6 +56,7 @@ new_name=${file/-any/-win32}
 
 # Zip the wheel to win_amd64.whl
 cd wheel && zip -qq -y -r "../$new_name" * && cd ..
+cp "$new_name" "${new_name/.whl/-win_amd64.whl}"
 
 # Check again
 twine check "$new_name"
