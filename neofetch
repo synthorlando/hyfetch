@@ -2168,6 +2168,15 @@ get_packages() {
             # Other (Needs complex command)
             has kpm-pkg && ((packages+=$(kpm  --get-selections | grep -cv deinstall$)))
 
+            nix-user-pkgs() {
+                if [ -d ~/.nix-profile ]; then
+                    nix-store -qR ~/.nix-profile
+                elif [ -d "$XDG_STATE_HOME/nix/profile" ]; then
+                    nix-store -qR "$XDG_STATE_HOME/nix/profile"
+                fi
+                nix-store -qR /etc/profiles/per-user/"$USER"
+            }
+
             # Separate system and user packages
             if [[ $package_separate == on ]]; then
                 has guix && {
@@ -2177,10 +2186,6 @@ get_packages() {
                 }
 
                 has nix-store && {
-                    nix-user-pkgs() {
-                        nix-store -qR ~/.nix-profile
-                        nix-store -qR /etc/profiles/per-user/"$USER"
-                    }
                     manager=nix-system  && tot nix-store -qR /run/current-system/sw
                     manager=nix-user    && tot nix-user-pkgs
                     manager=nix-default && tot nix-store -qR /nix/var/nix/profiles/default
@@ -2202,8 +2207,7 @@ get_packages() {
 
                 has nix-store && {
                     nix-all() {
-                        nix-store -qR ~/.nix-profile
-                        nix-store -qR /etc/profiles/per-user/"$USER"
+                        nix-user-pkgs
                         nix-store -qR /run/current-system/sw
                         nix-store -qR /nix/var/nix/profiles/default
                     }
