@@ -1589,8 +1589,8 @@ get_model() {
 
                 case $model in
                     Mac14,15):              "MacBook Air (15-inch, M2, 2023)" ;;
-                    Mac14,14):              "Mac Studio (M2 Max, 2023)" ;;
-                    Mac14,13):              "Mac Studio (M2 Ultra, 2023)" ;;
+                    Mac14,14):              "Mac Studio (M2 Ultra, 2023)" ;;
+                    Mac14,13):              "Mac Studio (M2 Max, 2023)" ;;
                     Mac14,8):               "Mac Pro (2023)" ;;
                     Mac14,6 | Mac14,10):    "MacBook Pro (16-inch, 2023)" ;;
                     Mac14,5 | Mac14,9):     "MacBook Pro (14-inch, 2023)" ;;
