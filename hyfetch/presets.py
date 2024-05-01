@@ -519,6 +519,27 @@ PRESETS: dict[str, ColorProfile] = {
         '#5276D4',
     ]).with_weights([1, 1, 1, 1, 1, 5, 5, 5])),
 
+    # sourced from https://commons.wikimedia.org/wiki/File:Girlflux_Pride_Flag.jpg
+    "girlflux": ColorProfile([
+        "f9e6d7",
+        "f2526c",
+        "bf0311",
+        "e9c587",
+        "bf0311",
+        "f2526c",
+        "f9e6d7",
+    ]),
+
+    # sourced from https://www.deviantart.com/pride-flags/art/Genderflux-1-543925589
+    "genderflux": ColorProfile([
+        "f47694",
+        "f2a2b9",
+        "cecece",
+        "7ce0f7",
+        "3ecdf9",
+        "fff48d",
+    ]),
+
     "finsexual": ColorProfile([
         "#B18EDF",
         "#D7B1E2",
