@@ -2101,6 +2101,13 @@ get_packages() {
         fi
     fi
 
+    if has pkgx && [[ -d "$HOME/.local/bin" ]]; then
+        # https://github.com/pkgxdev/pkgx/issues/985#issuecomment-2080999008
+        _pkgxpkgs="$(grep -rIhoP 'exec pkgx \+\K[^ ]+' "$HOME/.local/bin" | sort -u)"
+        tot echo "$_pkgxpkgs"
+        unset _pkgxpkgs
+    fi
+
     # OS-specific package managers.
     case $os in
         Linux|BSD|"iPhone OS"|Solaris|illumos|Interix)
@@ -2129,7 +2136,6 @@ get_packages() {
             has pm         && tot-safe pm list packages
             has evox       && tot cat /var/evox/packages/DB
             has squirrel   && tot ls /var/packages
-            has pkgx       && tot find "$HOME/.pkgx" -maxdepth 2 -mindepth 2 -type d
             has anise      && tot anise s --installed
             has am         && pac "$(am -f --less)"
 
@@ -2275,7 +2281,6 @@ get_packages() {
             has brew  && dir "$(brew --cellar)/* $(brew --caskroom)/*"
             has pkgin && tot pkgin list
             has dpkg  && tot dpkg-query -f '.\n' -W
-            has tea   && tot find "$HOME/.tea" -maxdepth 2 -mindepth 2 -type d
 
             has nix-store && {
                 nix-user-pkgs() {
