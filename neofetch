@@ -2411,7 +2411,7 @@ get_editor() {
     [[ -z "$editor_full_path" ]] && return
 
     # Actually obtain the full path
-    editor_full_path="$(which "${editor_full_path}" 2>/dev/null)"
+    editor_full_path="$(command -v "${editor_full_path}" 2>/dev/null)"
 
     # Resolve symlink and get the original name
     [[ -L "$editor_full_path" ]] && editor_full_path="$(readlink -f "$editor_full_path")"
@@ -2426,7 +2426,7 @@ get_editor() {
 
     # Obtain editor version
     case ${editor_name:=${editor_full_path##*/}} in
-        nano|vim|micro|emacs)
+        nano|vim|nvim|micro|emacs)
             editor_v=$("$editor_full_path" --version 2>&1)
         ;;
         kak)
