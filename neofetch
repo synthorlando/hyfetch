@@ -2546,9 +2546,20 @@ get_de() {
     esac
 
     ((${KDE_SESSION_VERSION:-0} >= 4)) && de=${de/KDE/Plasma}
+    ((${KDE_SESSION_VERSION:-0} >= 6)) && de=${de/Plasma/Plasma6}
 
     if [[ $de_version == on && $de ]]; then
         case $de in
+            Plasma6*)
+                       de_ver=$(plasmashell --version)
+                       kf_ver=$(kinfo)
+                       qt_ver=${kf_ver/Kernel*}
+                       qt_ver=${qt_ver/*:}
+                       qt_ver=$(trim "$qt_ver")
+                       kf_ver=${kf_ver/Qt*}
+                       kf_ver=${kf_ver/*:}
+                       kf_ver=$(trim "$kf_ver")
+            ;;
             Plasma*)
                        de_ver=$(plasmashell --version)
                        kf_ver=$(kf5-config --version)
@@ -2582,7 +2593,7 @@ get_de() {
 
         de+=" $de_ver"
 
-        [[ $de == "Plasma"* ]] && de+=" [KF5 $kf_ver] [Qt $qt_ver]"
+        [[ $de == "Plasma"* ]] && de="Plasma $de_ver [KF $kf_ver] [Qt $qt_ver]"
     fi
 
     # TODO:
