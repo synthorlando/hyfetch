@@ -670,6 +670,14 @@ PRESETS: dict[str, ColorProfile] = {
 	"#89C7B0",
 	"#F3EDBD",
     ]),
+	
+    # sampled from https://es.m.wikipedia.org/wiki/Archivo:Fraysexual_flag.jpg
+    'fraysexual': ColorProfile([
+        '#226CB5',
+        '#94E7DD',
+        '#FFFFFF',
+        '#636363',
+    ]),
 
     # Meme flags
     'beiyang': ColorProfile([
