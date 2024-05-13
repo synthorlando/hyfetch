@@ -10,7 +10,7 @@ This repo also serves as an updated version of the original `neofetch` since the
 
 * Method 1: `pip install -U hyfetch` then run `neowofetch`
 * Method 2: `npx neowofetch`
-* Method 3: `P="$HOME/.local/bin/neowofetch" curl -L nf.hydev.org -o $P && chmod +x $P`
+* Method 3: `P="$HOME/.local/bin/neowofetch" && curl -L nf.hydev.org -o "$P" && chmod +x "$P"`
 * Method 4: Run without install `bash <(curl -sL nf.hydev.org)`
 
 
@@ -32,6 +32,7 @@ Currently, these distributions have existing packages for HyFetch:
 
 * Universal [Lure.sh](https://lure.sh/): `lure in hyfetch` (Thanks to [@Elara6331](https://github.com/Elara6331))
 * Arch Linux: `sudo pacman -S hyfetch` (Thanks to [@Aleksana](https://github.com/Aleksanaa) and [@Antiz96](https://github.com/Antiz96))
+* Fedora Linux: `sudo dnf install hyfetch` (packaged by [@topazus](http://github.com/topazus))
 * Nix: `nix-env -i hyfetch` (Thanks to [@YisuiDenghua](https://github.com/YisuiDenghua))
 * Nix Profile: `nix profile install nixpkgs#hyfetch`
 * Guix: `guix install hyfetch` (Thanks to [@WammKD](https://github.com/WammKD))
@@ -39,7 +40,7 @@ Currently, these distributions have existing packages for HyFetch:
 * Homebrew: `brew install hyfetch` (Thanks to [@BKasin](https://github.com/BKasin) and [@osalbahr](https://github.com/osalbahr))
 * openSUSE Tumbleweed: `zypper in python311-hyfetch` (Thanks to [@BKasin](https://github.com/BKasin))
 * Gentoo: `emerge --ask app-misc/hyfetch` (Thanks to [@BKasin](https://github.com/BKasin))
-* Debian `apt install hyfetch` (for Debian flavor >= [Trixie](https://packages.debian.org/trixie/hyfetch))
+* Debian and Ubuntu `apt install hyfetch` (for Debian flavor >= [Trixie](https://packages.debian.org/trixie/hyfetch), Ubuntu flavor >= [Noble](https://packages.ubuntu.com/noble/hyfetch)) (Thanks to [@BKasin](https://github.com/BKasin))
 
 [![Packaging status](https://repology.org/badge/vertical-allrepos/hyfetch.svg?columns=4&exclude_unsupported=1)](https://repology.org/project/hyfetch/versions)
 

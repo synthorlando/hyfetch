@@ -235,6 +235,15 @@ package_managers="on"
 # off: '17 packages (flatpak)'
 package_separate="on"
 
+# Reduce output of packages list by not showing programming language package managers or Steam games
+#
+# Flag:    --package_minimal
+#
+# Example:
+# default:  'Packages: 1 (npm), 991 (emerge), 3 (steam), 23 (flatpak-system)'
+# minimal: 'Packages: 991 (emerge), 23 (flatpak-system)'
+package_minimal=""
+
 
 # Shell
 
@@ -865,7 +874,7 @@ image_source="auto"
 # Chrom, Cleanjaro, Clear Linux OS, ClearOS, Clover, Cobalt, Condres, Container Linux by CoreOS,
 # CRUX, Crystal Linux, Cucumber, CutefishOS, CuteOS, CyberOS, dahlia, DarkOs, Darwin, Debian,
 # Deepin, DesaOS, Devuan, DietPi, digital UNIX, DracOS, DragonFly, Drauger, Droidian, Elementary,
-# Elive, EncryptOS, EndeavourOS, Endless, Enso, EuroLinux, EvolutionOS, Exherbo, Exodia Predator OS,
+# Elive, EncryptOS, EndeavourOS, Endless, Enso, EuroLinux, EvolutionOS, eweOS, Exherbo, Exodia Predator OS,
 # Fedora, FemboyOS, Feren, Finnix, Floflis, FreeBSD, FreeMiNT, Frugalware, Funtoo, GalliumOS,
 # Garuda, Gentoo, GhostBSD, glaucus, gNewSense, GNOME, GNU, GoboLinux, GrapheneOS, Grombyang, Guix,
 # Haiku, HamoniKR, HarDClanZ, Hash, Huayra, Hybrid, HydroOS, Hyperbola, iglunix, instantOS, Interix,
@@ -1188,7 +1197,7 @@ get_distro() {
             elif type -p lsb_release >/dev/null; then
                 # Debian does not include .x versions in /etc/os-version, but does in debian_version
                 # So if that file exists, and we are not *buntu, build name from there
-                if [[ -f /etc/debian_version ]] && [[ $(lsb_release -si) != *"buntu"* ]]; then
+                if [[ -f /etc/debian_version ]] && [[ $(lsb_release -si) != *"buntu"* ]] && [[ $(lsb_release -si) != *"neon"* ]]; then
                     . /etc/os-release
                     case $distro_shorthand in
                         on)   distro="${NAME}" ;;
@@ -1589,8 +1598,8 @@ get_model() {
 
                 case $model in
                     Mac14,15):              "MacBook Air (15-inch, M2, 2023)" ;;
-                    Mac14,14):              "Mac Studio (M2 Max, 2023)" ;;
-                    Mac14,13):              "Mac Studio (M2 Ultra, 2023)" ;;
+                    Mac14,14):              "Mac Studio (M2 Ultra, 2023)" ;;
+                    Mac14,13):              "Mac Studio (M2 Max, 2023)" ;;
                     Mac14,8):               "Mac Pro (2023)" ;;
                     Mac14,6 | Mac14,10):    "MacBook Pro (16-inch, 2023)" ;;
                     Mac14,5 | Mac14,9):     "MacBook Pro (14-inch, 2023)" ;;
@@ -2066,11 +2075,38 @@ get_packages() {
         }
     }
 
-    # OS-independent package managers.
-    has pipx  && tot pipx list --short
-    has cargo && _cargopkgs="$(cargo install --list | grep -v '^ ')" && tot echo "$_cargopkgs"
-    has npm   && pkgs_h=1 tot npm list -g --depth=0
-    has am    && pac "$(am -f | grep 'PROGRAMS MANAGED BY' | cut -d' ' -f4)"a
+    # Programming language package managers.
+    if [[ -z "$package_minimal" ]]; then
+        has pipx  && tot pipx list --short
+        has cargo && _cargopkgs="$(cargo install --list | grep -v '^ ')" && tot echo "$_cargopkgs"
+
+        # Special case for npm: If has npm, we should list folders under node_modules instead of using npm list.
+        # This is because npm list is very slow (2s)
+        if has npm; then
+            # Try to apply heuristics to find the global directory.
+            if [[ -d /usr/lib/node_modules ]]; then
+                dir /usr/lib/node_modules/*/
+            elif [[ -d /usr/local/lib/node_modules ]]; then
+                dir /usr/local/lib/node_modules/*/
+            else
+                # If neither exist, use npm root -g to get the global directory.
+                # (still ~10x faster than npm list)
+                npm_global=$(npm root -g)
+                [[ -d $npm_global ]] && dir "$npm_global"/*/
+
+                # This may not work in WSL2 (if npm is installed on Windows, not WSL).
+                # However, if npm is not installed on this WSL subsystem, it doesn't really count
+                # as a package manager for this subsystem, so let's ignore this case.
+            fi
+        fi
+    fi
+
+    if has pkgx && [[ -d "$HOME/.local/bin" ]]; then
+        # https://github.com/pkgxdev/pkgx/issues/985#issuecomment-2080999008
+        _pkgxpkgs="$(grep -rIhoP 'exec pkgx \+\K[^ ]+' "$HOME/.local/bin" | sort -u)"
+        tot echo "$_pkgxpkgs"
+        unset _pkgxpkgs
+    fi
 
     # OS-specific package managers.
     case $os in
@@ -2100,8 +2136,8 @@ get_packages() {
             has pm         && tot-safe pm list packages
             has evox       && tot cat /var/evox/packages/DB
             has squirrel   && tot ls /var/packages
-            has pkgx       && tot find "$HOME/.pkgx" -maxdepth 2 -mindepth 2 -type d
             has anise      && tot anise s --installed
+            has am         && pac "$(am -f --less)"
 
             # Using the dnf package cache is much faster than rpm.
             if has dnf && type -p sqlite3 >/dev/null && [[ -f /var/cache/dnf/packages.db ]]; then
@@ -2136,18 +2172,29 @@ get_packages() {
             shopt -u nullglob
             }
 
-            # Steam games
-            STEAM_P=".local/share/Steam/steamapps/common"
-            if [[ -d "$HOME/$STEAM_P" ]]; then
-                manager=steam && dir "$HOME/$STEAM_P/*/"
-            elif [[ -d "$HOME/.var/app/com.valvesoftware.Steam/$STEAM_P" ]]; then
-                manager=steam && dir "$HOME/.var/app/com.valvesoftware.Steam/$STEAM_P/*/"
-            elif [[ -d "$HOME/.steam/steam/steamapps/common" ]]; then
-                manager=steam && dir "$HOME/.steam/steam/steamapps/common/*/"
+            if [[ -z "$package_minimal" ]]; then
+                # Steam games
+                STEAM_P=".local/share/Steam/steamapps/common"
+                if [[ -d "$HOME/$STEAM_P" ]]; then
+                    manager=steam && dir "$HOME/$STEAM_P/*/"
+                elif [[ -d "$HOME/.var/app/com.valvesoftware.Steam/$STEAM_P" ]]; then
+                    manager=steam && dir "$HOME/.var/app/com.valvesoftware.Steam/$STEAM_P/*/"
+                elif [[ -d "$HOME/.steam/steam/steamapps/common" ]]; then
+                    manager=steam && dir "$HOME/.steam/steam/steamapps/common/*/"
+                fi
             fi
 
             # Other (Needs complex command)
             has kpm-pkg && ((packages+=$(kpm  --get-selections | grep -cv deinstall$)))
+
+            nix-user-pkgs() {
+                if [ -d ~/.nix-profile ]; then
+                    nix-store -qR ~/.nix-profile
+                elif [ -d "$XDG_STATE_HOME/nix/profile" ]; then
+                    nix-store -qR "$XDG_STATE_HOME/nix/profile"
+                fi
+                nix-store -qR /etc/profiles/per-user/"$USER"
+            }
 
             # Separate system and user packages
             if [[ $package_separate == on ]]; then
@@ -2158,10 +2205,6 @@ get_packages() {
                 }
 
                 has nix-store && {
-                    nix-user-pkgs() {
-                        nix-store -qR ~/.nix-profile
-                        nix-store -qR /etc/profiles/per-user/"$USER"
-                    }
                     manager=nix-system  && tot nix-store -qR /run/current-system/sw
                     manager=nix-user    && tot nix-user-pkgs
                     manager=nix-default && tot nix-store -qR /nix/var/nix/profiles/default
@@ -2183,8 +2226,7 @@ get_packages() {
 
                 has nix-store && {
                     nix-all() {
-                        nix-store -qR ~/.nix-profile
-                        nix-store -qR /etc/profiles/per-user/"$USER"
+                        nix-user-pkgs
                         nix-store -qR /run/current-system/sw
                         nix-store -qR /nix/var/nix/profiles/default
                     }
@@ -2239,7 +2281,6 @@ get_packages() {
             has brew  && dir "$(brew --cellar)/* $(brew --caskroom)/*"
             has pkgin && tot pkgin list
             has dpkg  && tot dpkg-query -f '.\n' -W
-            has tea   && tot find "$HOME/.tea" -maxdepth 2 -mindepth 2 -type d
 
             has nix-store && {
                 nix-user-pkgs() {
@@ -2375,7 +2416,7 @@ get_editor() {
     [[ -z "$editor_full_path" ]] && return
 
     # Actually obtain the full path
-    editor_full_path="$(which "${editor_full_path}" 2>/dev/null)"
+    editor_full_path="$(command -v "${editor_full_path}" 2>/dev/null)"
 
     # Resolve symlink and get the original name
     [[ -L "$editor_full_path" ]] && editor_full_path="$(readlink -f "$editor_full_path")"
@@ -2390,7 +2431,7 @@ get_editor() {
 
     # Obtain editor version
     case ${editor_name:=${editor_full_path##*/}} in
-        nano|vim|micro|emacs)
+        nano|vim|nvim|micro|emacs)
             editor_v=$("$editor_full_path" --version 2>&1)
         ;;
         kak)
@@ -2505,9 +2546,20 @@ get_de() {
     esac
 
     ((${KDE_SESSION_VERSION:-0} >= 4)) && de=${de/KDE/Plasma}
+    ((${KDE_SESSION_VERSION:-0} >= 6)) && de=${de/Plasma/Plasma6}
 
     if [[ $de_version == on && $de ]]; then
         case $de in
+            Plasma6*)
+                       de_ver=$(plasmashell --version)
+                       kf_ver=$(kinfo)
+                       qt_ver=${kf_ver/Kernel*}
+                       qt_ver=${qt_ver/*:}
+                       qt_ver=$(trim "$qt_ver")
+                       kf_ver=${kf_ver/Qt*}
+                       kf_ver=${kf_ver/*:}
+                       kf_ver=$(trim "$kf_ver")
+            ;;
             Plasma*)
                        de_ver=$(plasmashell --version)
                        kf_ver=$(kf5-config --version)
@@ -2541,7 +2593,7 @@ get_de() {
 
         de+=" $de_ver"
 
-        [[ $de == "Plasma"* ]] && de+=" [KF5 $kf_ver] [Qt $qt_ver]"
+        [[ $de == "Plasma"* ]] && de="Plasma $de_ver [KF $kf_ver] [Qt $qt_ver]"
     fi
 
     # TODO:
@@ -6345,6 +6397,7 @@ INFO:
     --title_fqdn on/off         Hide/Show Fully Qualified Domain Name in title.
     --package_managers on/off   Hide/Show Package Manager names. (on, tiny, off)
     --package_separate on/off   Whether to separate system/user modes for supported package managers
+    --package_minimal           Reduce output of packages list by not showing programming language package managers or Steam games
     --os_arch on/off            Hide/Show OS architecture.
     --speed_type type           Change the type of cpu speed to display.
                                 Possible values: current, min, max, bios,
@@ -6502,7 +6555,7 @@ ASCII:
                                 CutefishOS, CuteOS, CyberOS, dahlia, DarkOs, Darwin, Debian, Deepin,
                                 DesaOS, Devuan, DietPi, digital UNIX, DracOS, DragonFly, Drauger,
                                 Droidian, Elementary, Elive, EncryptOS, EndeavourOS, Endless, Enso,
-                                EuroLinux, EvolutionOS, Exherbo, Exodia Predator OS, Fedora,
+                                EuroLinux, EvolutionOS, eweOS, Exherbo, Exodia Predator OS, Fedora,
                                 FemboyOS, Feren, Finnix, Floflis, FreeBSD, FreeMiNT, Frugalware,
                                 Funtoo, GalliumOS, Garuda, Gentoo, GhostBSD, glaucus, gNewSense,
                                 GNOME, GNU, GoboLinux, GrapheneOS, Grombyang, Guix, Haiku, HamoniKR,
@@ -6614,6 +6667,7 @@ get_args() {
             "--title_fqdn") title_fqdn="$2" ;;
             "--package_managers") package_managers="$2" ;;
             "--package_separate") package_separate="$2" ;;
+            "--package_minimal") package_minimal="1" ;;
             "--os_arch") os_arch="$2" ;;
             "--cpu_cores") cpu_cores="$2" ;;
             "--cpu_speed") cpu_speed="$2" ;;
@@ -9610,6 +9664,27 @@ ${c1}\e[1;32m      dddddddddddddddddddddddd
   dddd:.'''  '''''''''''''''  dddd:
      dddddddddddddddddddddddddd;;'
       '''''''''''''''''''''''''\e[0m
+EOF
+        ;;
+
+        "eweOS"*)
+            set_colors 7 11 9 8 1
+            read -rd '' ascii_data <<'EOF'
+${c2}           #####%%%                     
+${c2}        ##%%${c3}////${c2}%%%%%${c3}///                
+${c2}       #%%%%${c3}////((((////${c2}%               
+${c1}    *@@@@@@@${c3}/${c5},,,${c3}/////${c5},,,${c2}%${c1}@@@@@@@        
+${c1}  .@@@@@@@@@@@${c3}////////${c2}%%%${c1}@@@@@@@@@@@@   
+${c1} @@@${c4}...${c1}@@@@@@${c3}////${c2}%%${c3}////${c1}@@@@@@@@@@@@@@@@ 
+${c1} @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+${c1} @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+${c1}   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+${c1}         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+${c1}          @@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
+${c1}           @@@@@@@@@@@@@@@@@@@@@@@@@@@  
+${c1}             @@@@@@@@@@@@@@@@@@@@@@@    
+${c1}              @@@@@@         @@@@@@     
+${c1}                @@@           @@@       
 EOF
         ;;
 
