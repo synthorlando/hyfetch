@@ -2091,12 +2091,27 @@ get_packages() {
             else
                 # If neither exist, use npm root -g to get the global directory.
                 # (still ~10x faster than npm list)
-                npm_global=$(npm root -g)
-                [[ -d $npm_global ]] && dir "$npm_global"/*/
+                npm_global="$(npm root -g)"
+                [[ -d "$npm_global" ]] && dir "$npm_global"/*/
 
                 # This may not work in WSL2 (if npm is installed on Windows, not WSL).
                 # However, if npm is not installed on this WSL subsystem, it doesn't really count
                 # as a package manager for this subsystem, so let's ignore this case.
+            fi
+        fi
+
+        # Relatively the same for pnpm
+        if has pnpm; then
+            # Try to apply heuristics to find the global directory.
+            PNPM_P="local/share/pnpm/global/5/node_modules"
+            if [[ -d "$HOME/.$PNPM_P" ]]; then
+                dir "$HOME/.$PNPM_P"/*/
+            elif [[ -d "/usr/$PNPM_P" ]]; then
+                dir "/usr/$PNPM"/*/
+            else
+                # If neither exist, use pnpm root -g to get the global directory.
+                pnpm_global="$(pnpm root -g)"
+                [[ -d "$pnpm_global" ]] && dir "$pnpm_global"/*/
             fi
         fi
     fi
