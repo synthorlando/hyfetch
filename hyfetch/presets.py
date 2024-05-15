@@ -695,4 +695,17 @@ PRESETS: dict[str, ColorProfile] = {
         '#7D3829',
         '#F3A26A',
     ]),
+
+    # colors from Gilbert Baker's original 1978 flag design
+    # used https://gilbertbaker.com/rainbow-flag-color-meanings/ as source and colorpicked
+    'baker': ColorProfile([
+        '#F23D9E',
+        '#F80A24',
+        '#F78022',
+        '#F9E81F',
+        '#1E972E',
+        '#1B86BC',
+        '#243897',
+        '#6F0A82',
+    ])
 }
