@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-FASTFETCH_VERSION="2.10.2"
+FASTFETCH_VERSION="2.12.0"
 FASTFETCH_DL="https://github.com/fastfetch-cli/fastfetch/releases/download/$FASTFETCH_VERSION/"
 
 # Get script directory
@@ -38,8 +38,6 @@ file=$(echo *-none-any.whl)
 echo "> Unzipping $file"
 rm -rf wheel
 unzip -qq "$file" -d wheel
-# TODO: Find a way to exclude the tools folder
-rm -rf wheel/tools
 
 # Copy the git distribution to the wheel
 cp -r git/ wheel/hyfetch/
@@ -51,14 +49,17 @@ mkdir -p wheel/hyfetch/fastfetch
 bsdtar -zxf fastfetch-windows.zip -C wheel/hyfetch/fastfetch
 rm -rf fastfetch-windows.zip
 
-# Change the file name (replace -none-any with -win_amd64)
+# Zip to -win32.whl
 new_name=${file/-any/-win32}
-
-# Zip the wheel to win_amd64.whl
 cd wheel && zip -qq -y -r "../$new_name" * && cd ..
-cp "$new_name" "${new_name/-win32.whl/-win_amd64.whl}"
+twine check "$new_name"
 
-# Check again
+# Zip to -win_amd64.whl
+# Since pypi doesn't allow two identical files with different names to be uploaded
+# We need to change the zip content a little bit for win_amd64
+new_name=${file/-any/-win_amd64}
+echo "This is a Windows 32 release that's compatible with 64-bit systems" > wheel/*.dist-info/WINDOWS_COMPATIBILITY
+cd wheel && zip -qq -y -r "../$new_name" * && cd ..
 twine check "$new_name"
 
 # =================
