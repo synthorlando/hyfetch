@@ -352,6 +352,13 @@ def run_neofetch(asc: str, args: str = ''):
         run_neofetch_cmd(f'--ascii --source {path.absolute()} --ascii-colors' + args)
 
 
+def fastfetch_path() -> Path | None:
+    return (shutil.which('fastfetch')
+            or if_file(SRC / 'fastfetch/usr/bin/fastfetch')
+            or if_file(SRC / 'fastfetch/fastfetch')
+            or if_file(SRC / 'fastfetch/fastfetch.exe'))
+
+
 def run_fastfetch(asc: str, args: str = '', legacy: bool = False):
     """
     Run neofetch with colors
@@ -361,10 +368,7 @@ def run_fastfetch(asc: str, args: str = '', legacy: bool = False):
     :param legacy: Set true when using fastfetch < 1.8.0
     """
     # Find fastfetch binary
-    ff_path = (shutil.which('fastfetch') 
-               or if_file(SRC / 'fastfetch/usr/bin/fastfetch') 
-               or if_file(SRC / 'fastfetch/fastfetch')
-               or if_file(SRC / 'fastfetch/fastfetch.exe'))
+    ff_path = fastfetch_path()
     
     if not ff_path:
         printc("&cError: fastfetch binary is not found. Please install fastfetch first.")

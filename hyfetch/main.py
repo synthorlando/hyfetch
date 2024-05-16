@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import datetime
+import importlib.util
 import json
 import random
 import traceback
@@ -286,9 +287,33 @@ def create_config() -> Config:
 
     update_title('Color alignment', color_alignment)
 
+    ##############################
+    # 6. Select *fetch backend
+    def select_backend():
+        clear_screen(title)
+        print_title_prompt('Select a *fetch backend')
+
+        # Check if fastfetch is installed
+        ff_path = fastfetch_path()
+
+        # Check if qwqfetch is installed (if the qwqfetch module can be imported)
+        has_qwqfetch = importlib.util.find_spec('qwqfetch') is not None
+
+        printc('- &bneofetch&r: Written in bash, &nbest compatibility&r on Unix systems')
+        printc('- &bfastfetch&r: Written in C, &nbest performance&r ' +
+               ('&c(Not installed)' if ff_path is None else f'&a(Installed at {ff_path})'))
+        printc('- &bqwqfetch&r: Pure python, &nminimal dependencies&r ' +
+               ('&c(Not installed)' if not has_qwqfetch else ''))
+        print()
+
+        return literal_input('Your choice?', ['neofetch', 'fastfetch', 'qwqfetch'], 'neofetch')
+
+    backend = select_backend()
+    update_title('Selected backend', backend)
+
     # Create config
     clear_screen(title)
-    c = Config(preset, color_system, light_dark, lightness, color_alignment)
+    c = Config(preset, color_system, light_dark, lightness, color_alignment, backend)
 
     # Save config
     print()
