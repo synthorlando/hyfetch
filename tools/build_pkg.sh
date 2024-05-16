@@ -49,6 +49,10 @@ mkdir -p wheel/hyfetch/fastfetch
 bsdtar -zxf fastfetch-windows.zip -C wheel/hyfetch/fastfetch
 rm -rf fastfetch-windows.zip
 
+# Edit .dist-info/WHEEL "Tag: {platform}" and rehash
+sed -i 's/Tag: py3-none-.*/Tag: py3-none-win32/' wheel/*.dist-info/WHEEL
+python "$DIR/build_rehash.py" wheel
+
 # Zip to -win32.whl
 new_name=${file/-any/-win32}
 cd wheel && zip -qq -y -r "../$new_name" * && cd ..
@@ -58,7 +62,8 @@ twine check "$new_name"
 # Since pypi doesn't allow two identical files with different names to be uploaded
 # We need to change the zip content a little bit for win_amd64
 new_name=${file/-any/-win_amd64}
-echo "This is a Windows 32 release that's compatible with 64-bit systems" > wheel/*.dist-info/WINDOWS_COMPATIBILITY
+sed -i 's/Tag: py3-none-.*/Tag: py3-none-win_amd64/' wheel/*.dist-info/WHEEL
+python "$DIR/build_rehash.py" wheel
 cd wheel && zip -qq -y -r "../$new_name" * && cd ..
 twine check "$new_name"
 
@@ -88,6 +93,10 @@ function build_for_platform() {
 
     # Change the file name
     new_name=${file/-any/-"$wheel_platform"}
+
+    # Edit WHEEL and rehash
+    sed -i "s/Tag: py3-none-.*/Tag: py3-none-$wheel_platform/" wheel/*.dist-info/WHEEL
+    python "$DIR/build_rehash.py" wheel
 
     # Zip the wheel to platform.whl
     cd wheel && zip -qq -y -r "../$new_name" * && cd ..
