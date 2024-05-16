@@ -60,9 +60,10 @@ if __name__ == '__main__':
     new_record = []
     for file in order:
         file = base_path / file.split(',')[0]
-        digest, length = rehash(file)
-        new_record.append(f"{str(file.relative_to(base_path)).replace("\\", "/")},{digest},{length}")
-        processed.add(file)
+        if file.exists():
+            digest, length = rehash(file)
+            new_record.append(f"{str(file.relative_to(base_path)).replace("\\", "/")},{digest},{length}")
+            processed.add(file)
 
     for file in base_path.rglob('*'):
         if file.is_file() and file not in processed:
