@@ -2,7 +2,7 @@
 
 from . import AsciiArt
 
-femboyos = AsciiArt(match=r'''"FemboyOS"*''', color='4', ascii=r"""
+femboyos = AsciiArt(match=r'''"Furreto Linux"*''', color='4', ascii=r"""
 ${c1}MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMWKkxkKWMMMMMMMMMMMMMMMMMMMMWKkxkKWMM
 MMMMXo. .;xKWMMMMMMMMMMMMMMMMMMXo. .oXMM
