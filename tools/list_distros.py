@@ -10,6 +10,7 @@ import textwrap
 from pathlib import Path
 
 import regex
+import unicodedata
 from hypy_utils import write
 
 from hyfetch.distros import AsciiArt
@@ -34,7 +35,7 @@ def parse_ascii_distros() -> list[AsciiArt]:
     """
     Parse ascii distros from neofetch script
     """
-    nf = (Path(__file__).parent.parent / 'neofetch').read_text().replace('\t', ' ' * 4)
+    nf = (Path(__file__).parent.parent / 'neofetch').read_text('utf-8').replace('\t', ' ' * 4)
 
     # Get the content of "get_distro_ascii" function
     nf = nf[nf.index('get_distro_ascii() {\n'):]
@@ -138,6 +139,9 @@ def export_distro(d: AsciiArt) -> str:
     varname = d.name.lower()
     for s in string.punctuation + ' ':
         varname = varname.replace(s, '_')
+
+    # Remove accents
+    varname = unicodedata.normalize('NFKD', varname).encode('ascii', 'ignore').decode('utf-8')
 
     # Escape/unescape ascii
     ascii = d.ascii.replace("\\\\", "\\")
