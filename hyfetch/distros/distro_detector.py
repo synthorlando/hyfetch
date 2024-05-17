@@ -123,6 +123,10 @@ def detect(name: str) -> AsciiArt | None:
     if name.startswith('arcolinux'):
         from .arcolinux import arcolinux
         return arcolinux
+
+    if name.startswith('furreto'):
+        from .furreto import furreto
+        return furreto
     
     if name == 'arch_small':
         from .arch_small import arch_small
