@@ -9,8 +9,8 @@ def detect(name: str) -> AsciiArt | None:
         return None
     name = name.lower()
     if name.startswith('adélie') or name.startswith('adelie'):
-        from .adélie import adélie
-        return adélie
+        from .adelie import adelie
+        return adelie
     
     if name.startswith('aix'):
         from .aix import aix
@@ -123,10 +123,6 @@ def detect(name: str) -> AsciiArt | None:
     if name.startswith('arcolinux'):
         from .arcolinux import arcolinux
         return arcolinux
-
-    if name.startswith('furreto'):
-        from .furreto import furreto
-        return furreto
     
     if name == 'arch_small':
         from .arch_small import arch_small
@@ -308,6 +304,10 @@ def detect(name: str) -> AsciiArt | None:
         from .chapeau import chapeau
         return chapeau
     
+    if name.startswith('chimera'):
+        from .chimera import chimera
+        return chimera
+    
     if name.startswith('chonkysealos'):
         from .chonkysealos import chonkysealos
         return chonkysealos
@@ -479,6 +479,10 @@ def detect(name: str) -> AsciiArt | None:
     if name.startswith('evolutionos'):
         from .evolutionos import evolutionos
         return evolutionos
+    
+    if name.startswith('eweos'):
+        from .eweos import eweos
+        return eweos
     
     if name.startswith('exherbo'):
         from .exherbo import exherbo
@@ -1475,6 +1479,10 @@ def detect(name: str) -> AsciiArt | None:
     if name.startswith('xenia'):
         from .xenia import xenia
         return xenia
+    
+    if name.startswith('tatra'):
+        from .tatra import tatra
+        return tatra
     
     if name.startswith('zorin'):
         from .zorin import zorin
