@@ -344,7 +344,7 @@ def run_neofetch(asc: str, args: str = ''):
     with TemporaryDirectory() as tmp_dir:
         tmp_dir = Path(tmp_dir)
         path = tmp_dir / 'ascii.txt'
-        path.write_text(asc)
+        path.write_text(asc, 'utf-8')
 
         # Call neofetch with the temp file
         if args:
@@ -378,7 +378,7 @@ def run_fastfetch(asc: str, args: str = '', legacy: bool = False):
     with TemporaryDirectory() as tmp_dir:
         tmp_dir = Path(tmp_dir)
         path = tmp_dir / 'ascii.txt'
-        path.write_text(asc)
+        path.write_text(asc, 'utf-8')
 
         # Call fastfetch with the temp file
         proc = subprocess.run([ff_path, '--raw' if legacy else '--file-raw', path.absolute(), *shlex.split(args)])
