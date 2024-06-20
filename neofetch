@@ -5332,7 +5332,7 @@ get_cols() {
             [[ "$blocks2" ]] && cols+="${block_spaces// /${blocks2}[39;49mnl}"
         else
             [[ "$blocks"  ]] && cols+="${block_spaces// /${blocks}\[39;49mnl}"
-            [[ "$blocks2" ]] && cols+="${block_spaces// /${blocks2}\[39;49mnl}"
+            [[ "$blocks2" ]] && cols+="${block_spaces// /${blocks2}\[0mnl}"
         fi
 
         # Determine the horizontal offset of the blocks.
