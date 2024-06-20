@@ -5329,7 +5329,7 @@ get_cols() {
         # Convert the spaces into rows of blocks.
         if [ "${BASH_VERSION%%.*}" -lt 5 ]; then
             [[ "$blocks"  ]] && cols+="${block_spaces// /${blocks}[39;49mnl}"
-            [[ "$blocks2" ]] && cols+="${block_spaces// /${blocks2}[39;49mnl}"
+            [[ "$blocks2" ]] && cols+="${block_spaces// /${blocks2}[0mnl}"
         else
             [[ "$blocks"  ]] && cols+="${block_spaces// /${blocks}\[39;49mnl}"
             [[ "$blocks2" ]] && cols+="${block_spaces// /${blocks2}\[0mnl}"
