@@ -1584,7 +1584,7 @@ get_model() {
         ;;
 
         "Mac OS X"|"macOS"|"ravynOS")
-            if [ "$(arch)" != "arm64" ] && [[ $(kextstat | grep -F -e "FakeSMC" -e "VirtualSMC" -e "Lilu") != "" ]]; then
+            if [ "$(arch)" != "arm64" ] && [[ $(kextstat | grep -F -e "FakeSMC" -e "VirtualSMC") != "" ]]; then
                 model="Hackintosh (SMBIOS: $(sysctl -n hw.model))"
             else
                 if [[ $osx_version == 10.[4-5]* ]]; then
