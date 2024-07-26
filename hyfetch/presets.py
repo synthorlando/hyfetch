@@ -710,7 +710,7 @@ PRESETS: dict[str, ColorProfile] = {
         '#FFE7A8',
         '#F1B870',
         '#A56058',
-        '#42681E',
+        '#46281E',
     ]),
 	
     'lunian': ColorProfile([
