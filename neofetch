@@ -880,7 +880,7 @@ image_source="auto"
 # Haiku, HamoniKR, HarDClanZ, Hash, Huayra, Hybrid, HydroOS, Hyperbola, iglunix, instantOS, Interix,
 # IRIX, Ironclad, Itc, januslinux, Kaisen, Kali, KaOS, KDE, Kibojoe, Kogaion, Korora, KrassOS,
 # KSLinux, Kubuntu, LainOS, LangitKetujuh, LaxerOS, LEDE, LibreELEC, Linspire, Linux, Linux Lite,
-# Linux Mint, Linux Mint Old, Live Raizo, LMDE, Lubuntu, Lunar, mac, Mageia, MagpieOS, MainsailOS,
+# Linux Mint, Linux Mint Old, Live Raizo, LMDE, Lubuntu, Lunar, mac, Mageia, Magix, MagpieOS, MainsailOS,
 # Mandriva, Manjaro, MassOS, MatuusOS, Maui, Meowix, Mer, Minix, MIRACLE LINUX, MX, Namib, NekOS,
 # Neptune, NetBSD, Netrunner, Nitrux, NixOS, Nobara, NomadBSD, Nurunner, NuTyX, Obarun, OBRevenge,
 # OmniOS, Open Source Media Center, OpenBSD, openEuler, OpenIndiana, openKylin, openmamba,
@@ -6579,7 +6579,7 @@ ASCII:
                                 KaOS, KDE, Kibojoe, Kogaion, Korora, KrassOS, KSLinux, Kubuntu,
                                 LainOS, LangitKetujuh, LaxerOS, LEDE, LibreELEC, Linspire, Linux,
                                 Linux Lite, Linux Mint, Linux Mint Old, Live Raizo, LMDE, Lubuntu,
-                                Lunar, mac, Mageia, MagpieOS, MainsailOS, Mandriva, Manjaro, MassOS,
+                                Lunar, mac, Mageia, Magix,MagpieOS, MainsailOS, Mandriva, Manjaro, MassOS,
                                 MatuusOS, Maui, Meowix, Mer, Minix, MIRACLE LINUX, MX, Namib, NekOS,
                                 Neptune, NetBSD, Netrunner, Nitrux, NixOS, Nobara, NomadBSD,
                                 Nurunner, NuTyX, Obarun, OBRevenge, OmniOS, Open Source Media
@@ -11304,6 +11304,30 @@ lOO.                .OO:
 EOF
         ;;
 
+        "Magix"*)
+            set_colors 206 39
+            read -rd '' ascii_data <<'EOF'
+${c2}                  @
+             @@--=====@@
+        @@--==@@     @@====+@
+       @-@@               @==@
+      @=@
+     @=@${c1}   @=@  @-====  @=@${c2}
+    @=@${c1}    @-===@==++@===+@${c2}
+   @=@${c1}     @--====@@=====+@${c2}
+  -=@${c1}      @--==========++@${c2}
+  ==${c1}       @--==========++@${c2}     @=@
+  @==${c1}      @--=======@==++@${c2}    @=+@
+   @==${c1}      @-==========++${c2}    @=@
+    @==${c1}      @-=======@=%${c2}    @=@
+     @==${c1}        @@@@@@${c2}      @=@
+      @====@@@         @@===+%
+          @@=====@@==++++@@
+                =#@=@
+               @==@++@
+                 @@@
+EOF
+            ;;
         "MagpieOS"*)
             set_colors 2 1 3 5
             read -rd '' ascii_data <<'EOF'
