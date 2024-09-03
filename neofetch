@@ -3429,15 +3429,6 @@ get_gpu() {
 
             IFS=$'\n' read -d "" -ra gpus <<< "$gpu_cmd"
 
-            # Remove duplicate Intel Graphics outputs.
-            # This fixes cases where the outputs are both
-            # Intel but not entirely identical.
-            #
-            # Checking the first two array elements should
-            # be safe since there won't be 2 intel outputs if
-            # there's a dedicated GPU in play.
-            [[ "${gpus[0]}" == *Intel* && "${gpus[1]}" == *Intel* ]] && unset -v "gpus[0]"
-
             for gpu in "${gpus[@]}"; do
                 # GPU shorthand tests.
                 [[ "$gpu_type" == "dedicated" && "$gpu" == *Intel* ]] || \
