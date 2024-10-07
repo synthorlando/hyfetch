@@ -900,4 +900,27 @@ PRESETS: dict[str, ColorProfile] = {
         '#243897',
         '#6F0A82',
     ])
+	
+    # Start of Extras by synthorlando
+    # colorpicked from https://es.wikipedia.org/wiki/Butch#/media/Archivo:Butch_Flag.png
+    'butch1' : ColorProfile([
+        "#D62C00",
+	"#f07528",
+        "#FF9B57",
+        "#FFFFFF",
+        "#FFFCEE",
+	"#ffad09",	
+        "#A16F00",
+    ]),
+
+    # hex codes from https://www.sexualdiversity.org/edu/flags/1097.php
+    'butch2' : ColorProfile([
+        "#1b3486",
+        "#697db6",
+        "#8a92a9",
+        "#FFFFFF",
+        "#d1c6e8",
+        "#600fd6",
+        "#51038a",
+    ]),
 }
